@@ -12,9 +12,19 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-2.1.0.min.js"></script>
-        <title>JSP Page</title>
+        <title>HYENIX</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="panel">
+            <div class="panel panel-title">
+                <h1>HIENIX</h1>
+            </div>
+            <div class="panel panel-body">
+                <p>Algo relativamente pro ira aqui</p>
+            </div>
+            <div class="panel panel-footer">
+                <p>Desarrollado por HIENIX</p>
+            </div>
+        </div>
     </body>
 </html>

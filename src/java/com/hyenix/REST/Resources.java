@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author santiago
  */
-@Path("/Resources")
+@Path("/Usuarios")
 public class Resources {
     /**
      *
@@ -50,6 +50,7 @@ public class Resources {
         int id=new JSONObject(sourceInfo).getInt("id");
         String nombre=new JSONObject(sourceInfo).getString("nombre");
         String direccion=new JSONObject(sourceInfo).getString("direccion");
+        boolean administrador=new JSONObject(sourceInfo).getBoolean("administrador");
         try{
              try
             {
@@ -72,7 +73,7 @@ public class Resources {
             }
             else
             {
-                st.executeUpdate("INSERT INTO usuarios(correo,password,id,nombre,direccion) VALUES('"+correo+"','"+password+"',"+id+",'"+nombre+"','"+direccion+"');");
+                st.executeUpdate("INSERT INTO usuarios(correo,password,id,nombre,direccion,administrador) VALUES('"+correo+"','"+password+"',"+id+",'"+nombre+"','"+direccion+"',"+administrador+");");
                 mensaje.put("Mensaje", "Se ha registrado el usuario con el correo "+correo);
                 mensaje.put("Registrado", true);
             }
@@ -97,6 +98,7 @@ public class Resources {
         JSONObject mensaje=new JSONObject();
         String correo=new JSONObject(sourceInfo).getString("correo");
         String password=new JSONObject(sourceInfo).getString("password");
+        boolean admin=new JSONObject(sourceInfo).getBoolean("administrador");
         try{
             try
             {
@@ -105,26 +107,38 @@ public class Resources {
             catch(ClassNotFoundException cnfEx)
             {
                 mensaje.put("Sesion", false);
+                mensaje.put("Admin_User", false);
                 mensaje.put("Mensaje", "No se ha encontrado el driver");
             }
             Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
-            PreparedStatement query = conexion.prepareStatement("SELECT * FROM usuarios WHERE correo=? AND password=?"); 
+            PreparedStatement query = conexion.prepareStatement("SELECT * FROM usuarios WHERE correo=? AND password=? AND administrador=?"); 
             query.setString(1, correo); 
             query.setString(2, password); 
+            query.setBoolean(3, admin);
             ResultSet rset = query.executeQuery();
             if(rset.next())
             {
-                mensaje.put("Sesion", true);
-                mensaje.put("Mensaje","Has iniciado sesion");
+                if(admin){
+                    mensaje.put("Sesion", true);
+                    mensaje.put("Admin_User", true);
+                    mensaje.put("Mensaje","Has iniciado sesion");
+                }
+                else{
+                    mensaje.put("Sesion", true);
+                    mensaje.put("Admin_User", false);
+                    mensaje.put("Mensaje","Has iniciado sesion");
+                }
             }
             else{
                 mensaje.put("Sesion", false);
+                mensaje.put("Admin_User", false);
                 mensaje.put("Mensaje", "No se ha encontrado el usuario");
             }
         }
         catch(SQLException sqlEx)
         {
             mensaje.put("Sesion", false);
+            mensaje.put("Admin_User", false);
             mensaje.put("Mensaje", "Ha ocurrido un problema");
         }
         return mensaje.toString();
@@ -166,6 +180,7 @@ public class Resources {
                 mensaje.put("ID", rset.getInt("id"));
                 mensaje.put("Nombre",rset.getString("nombre"));
                 mensaje.put("Direccion", rset.getString("direccion"));
+                mensaje.put("Administrador", rset.getBoolean("administrador"));
             }
             else{
                 mensaje.put("Busqueda", false);
@@ -206,6 +221,7 @@ public class Resources {
                 JSONArray id=new JSONArray();
                 JSONArray nombre=new JSONArray();
                 JSONArray direccion=new JSONArray();
+                JSONArray administrador=new JSONArray();
                 rset.beforeFirst();
                 while(rset.next())
                 {
@@ -213,12 +229,14 @@ public class Resources {
                     id.put(rset.getInt("id"));
                     nombre.put(rset.getString("nombre"));
                     direccion.put(rset.getString("direccion"));
+                    administrador.put(rset.getBoolean("administrador"));
                 }
                 mensaje.put("Busqueda", true);
                 mensaje.put("Correo", correo);
                 mensaje.put("ID", id);
                 mensaje.put("Nombre", nombre);
                 mensaje.put("Direccion", direccion);
+                mensaje.put("Administrador", administrador);
             }
             else{
                 mensaje.put("Busqueda", false);

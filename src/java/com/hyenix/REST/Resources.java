@@ -8,6 +8,7 @@ package com.hyenix.REST;
 
 import org.json.*;
 import java.sql.*;
+import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author santiago
  */
+@Stateless
 @Path("/Usuarios")
 public class Resources {
     /**

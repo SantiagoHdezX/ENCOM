@@ -5,7 +5,11 @@
         <group>
             <file>file:/Users/santiago/NetBeansProjects/ENCOM/src/java/org/netbeans/rest/application/config/ApplicationConfig.java</file>
             <file>file:/Users/santiago/NetBeansProjects/ENCOM/web/index.jsp</file>
+            <file>file:/Users/santiago/NetBeansProjects/ENCOM/src/java/com/hyenix/REST/Incidencias.java</file>
             <file>file:/Users/santiago/NetBeansProjects/ENCOM/src/java/com/hyenix/REST/Resources.java</file>
+            <file>file:/Users/santiago/NetBeansProjects/ENCOM/src/java/com/hyenix/REST/Eventos.java</file>
+            <file>file:/Users/santiago/NetBeansProjects/ENCOM/web/js/client.js</file>
+            <file>file:/Users/santiago/NetBeansProjects/ENCOM/src/java/com/hyenix/REST/Horarios.java</file>
         </group>
     </open-files>
 </project-private>

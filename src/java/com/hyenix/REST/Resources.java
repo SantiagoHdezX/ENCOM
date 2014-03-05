@@ -65,13 +65,14 @@ public class Resources {
             }
             Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
             Statement st=conexion.createStatement();
-            PreparedStatement query=conexion.prepareStatement("SELECT nombre FROM usuarios WHERE correo=?");
+            PreparedStatement query=conexion.prepareStatement("SELECT nombre FROM usuarios WHERE correo=? OR id=?");
             query.setString(1,correo);
+            query.setInt(2,id);
             ResultSet rset = query.executeQuery();
             if(rset.next())
             {
                 mensaje.put("Registrado", false);
-                mensaje.put("Mensaje", "Ya existe un usuario registrado con el correo "+correo);
+                mensaje.put("Mensaje", "Ya existe un usuario registrado con el correo "+correo+" o con el ID "+id);
             }
             else
             {

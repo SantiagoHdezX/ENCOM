@@ -18,16 +18,16 @@
     <body>
         <div class="panel">
             <div class="panel panel-heading">
-                <h1>HIENIX</h1>
+                <h1>HYENIX</h1>
             </div>
             <div class="panel panel-body">
                 <div class="well">
                     <p>Iniciar Sesion</p>
-                    <form method="post">
+                    <form method="post" role="form" autocomplete="off">
                         <label for="correo">Correo Electronico</label><br />
-                        <input type="email" name="correo" id="correo" required><br />
+                        <input type="email" class="form-control" name="correo" id="correo" required ><br />
                         <label for="passwd">Password</label><br />
-                        <input type="password" name="passwd" id="passwd" required><br />
+                        <input type="password" class="form-control" name="passwd" id="passwd" required><br />
                         <input type="radio" name="typeusr" value="0">Profesor &nbsp;
                         <input type="radio" name="typeusr" value="1">Administrador<br />
                         <button class="btn btn-default" id="btnSession" onclick="return iniciarSesion()">Iniciar Sesion</button>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="panel panel-footer">
-                <p>Desarrollado por HIENIX</p>
+                <p>Desarrollado por HYENIX</p>
             </div>
         </div>
     </body>

@@ -31,12 +31,12 @@ function iniciarSesion(){
                             if(data.Admin_User==true){
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",true);
-                                window.location="menuAdministrador.jsp";
+                                window.location="Administrador/menuAdministrador.jsp";
                             }
                             else{
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",false);
-                                window.location="menuUsuario.jsp";
+                                window.location="Profesor/menuUsuario.jsp";
                             }
                         }
                         else{
@@ -52,17 +52,3 @@ function iniciarSesion(){
                 });
                 return false;
             }
-function verificarSesionMenu(){
-    if(JSON.parse(localStorage.getItem("Sesion"))==true){
-        if(JSON.parse(localStorage.getItem("Admin"))==true){
-            document.write("<p>Bienvenido, usuario administrador</p>");
-        }
-        else{
-            document.write("<p>Bienvenido, usuario profesor </p>")
-        }
-    }
-    else{
-        alert("No tienes acceso a esta pagina");
-        window.location="index.jsp";
-    }
-}

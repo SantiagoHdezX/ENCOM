@@ -23,11 +23,35 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/Incidencias")
 public class Incidencias {
-    @Path("/RegistrarIncidencia")
+    @Path("/RegistrarAsistencia")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String RegistrarIncidencia(String sourceInfo){
+    public String RegistrarAsistencia(String srcInfo){
+        JSONObject mensaje=new JSONObject();
+        JSONObject src=new JSONObject(srcInfo);
+        String nameEvento=src.getString("Nombre");
+        String descrpt=src.getString("Descripcion");
+        String fecha=src.getString("Fecha");
+        String hora=src.getString("Hora");
+        int duracion=src.getInt("Duracion");
+        try{
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+            }
+            catch(ClassNotFoundException cnfEx){
+                mensaje.put("Mensaje", "No se ha podido cargar el driver");
+                mensaje.put("Registrado",false);
+            }
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
+            PreparedStatement query=conexion.prepareStatement("call registrarEventos(?,?,?,?,?,@)");
+            query.setString(1,nameEvento);
+        }
+        catch(SQLException sqlEx){
+            
+        }
+        
+        
         return null;
     }
 }

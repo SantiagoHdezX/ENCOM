@@ -52,3 +52,29 @@ function iniciarSesion(){
                 });
                 return false;
             }
+            function registrarEvento(){
+                var sourceInfo={};
+                sourceInfo.Nombre=jQuery("#nombre").val();
+                sourceInfo.Descripcion=jQuery("#descripcion").val();
+                sourceInfo.Fecha=jQuery("#fecha").val();
+                sourceInfo.Hora=jQuery("#hora").val()+":00";
+                sourceInfo.Duracion=jQuery("#duracion").val();
+                
+                var jsonString=JSON.stringify(sourceInfo);
+                $.ajax({
+                            async:true,
+                            type:'POST',
+                            contentType:'application/json',
+                            url:'http://localhost:8080/ENCOM/API/Eventos/RegistrarEvento',
+                            dataType:"json",
+                            data:jsonString,
+                            success:function(data){
+                                alert(data.Mensaje);
+                            },
+                            error:function(xhr ,ajaxOptions, thrownError ){
+                                alert(JSON.stringify(xhr));
+                            }
+                        }
+                        );
+                return false;
+            }

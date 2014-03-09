@@ -24,10 +24,13 @@
                 <div class="well">
                     <p>Iniciar Sesion</p>
                     <form method="post" role="form" autocomplete="off">
-                        <label for="correo">Correo Electronico</label><br />
-                        <input type="email" class="form-control" name="correo" id="correo" required ><br />
-                        <label for="passwd">Password</label><br />
-                        <input type="password" class="form-control" name="passwd" id="passwd" required><br />
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span><input type="email" class="form-control" name="correo" id="correo" required autofocus ><br />
+                        </div>
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-addon"> #</span><input type="password" class="form-control" name="passwd" id="passwd" required><br />
+                        </div>
                         <input type="radio" name="typeusr" value="0">Profesor &nbsp;
                         <input type="radio" name="typeusr" value="1">Administrador<br />
                         <button class="btn btn-default" id="btnSession" onclick="return iniciarSesion()">Iniciar Sesion</button>

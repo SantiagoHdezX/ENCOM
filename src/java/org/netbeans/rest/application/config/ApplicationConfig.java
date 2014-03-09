@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.hyenix.REST.Eventos.class);
         resources.add(com.hyenix.REST.Horarios.class);
         resources.add(com.hyenix.REST.Incidencias.class);
         resources.add(com.hyenix.REST.Resources.class);

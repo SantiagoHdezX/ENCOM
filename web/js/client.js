@@ -70,6 +70,7 @@ function iniciarSesion(){
                             data:jsonString,
                             success:function(data){
                                 alert(data.Mensaje);
+                                window.location="ConsultaEventos.jsp";
                             },
                             error:function(xhr ,ajaxOptions, thrownError ){
                                 alert(JSON.stringify(xhr));
@@ -172,6 +173,7 @@ function iniciarSesion(){
                             data:jsonString,
                             success:function(data){
                                 alert(data.Mensaje);
+                                window.location="ConsultaEventos.jsp";
                             },
                             error:function(xhr ,ajaxOptions, thrownError ){
                                 alert(JSON.stringify(xhr));

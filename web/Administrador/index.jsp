@@ -14,6 +14,15 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script src="../js/client.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+               jQuery("#eventos").hide();
+            });
+            
+            function ShowEventos(){
+                jQuery("#eventos").show();
+            }
+        </script>
     </head>
     <body>
         <ol class="breadcrumb">
@@ -25,11 +34,20 @@
                 Menu Administrador
             </div>
             <div class="panel panel-body">
-                <a href="Eventos.jsp">Panel Eventos</a><br />
+                <a href="#" onclick="return ShowEventos()">Panel Eventos</a><br />
+                <div id="eventos">
+                    <ol>
+                        <li><a href="Eventos.jsp">Registrar Eventos</a></li>
+                        <li><a href="ConsulaEventos.jsp">Consultar Eventos</a></li>
+                        <li><a href="ModificarEvento.jsp">Modificar Eventos</a></li>
+                        <li><a href="CaducarEvento.jsp">Caducar Eventos</a></li>
+                    </ol>
+                </div>
                 <a href="#">Panel Usuarios(Proximamente)</a><br />
                 <a href="#">Panel Horarios(Proximamente)</a><br />
                 <a href="#">Panel Usuarios(Proximamente)</a><br />
             </div>
         </div>
+        
     </body>
 </html>

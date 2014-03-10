@@ -23,17 +23,17 @@ JSON, MySQL JDBC y ya
 Modulos
 ------------------
 	-Usuarios
-		-Terminado:Solo RESTful
+		-Terminado:Solo API REST
 		-Falta:Cliente JavaScript
 	-Eventos
 		-Terminado:Todo
 		-Falta:Arreglar algunas cosas y optimizar cliente JavaScript
 	-Incidencias
 		-Terminado:Nada
-		-Falta:Web Service RESTful, cliente JavaScript
+		-Falta:API REST, cliente JavaScript
 	-Horarios
-		-Terminado:WebService(Solo Registrar Horario)
-		-Falta:Demas WebService y cliente JavaScript
+		-Terminado:Nada
+		-Falta:API REST y cliente JavaScript
 	-Chat
 		-Terminado:Nada
-		-Falta:Servidor y Cliente Node.js
+		-Falta:Servidor y cliente Node.js

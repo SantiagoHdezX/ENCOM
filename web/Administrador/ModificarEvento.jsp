@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Eventos
-    Created on : 9/03/2014, 01:58:20 PM
+    Document   : ModificarEvento
+    Created on : 9/03/2014, 10:17:27 PM
     Author     : Santiago
 --%>
 
@@ -13,19 +13,32 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script src="../js/client.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <title>Eventos</title>
+        <script>
+             $(document).ready(function(){
+               jQuery("#busqueda").show();
+               jQuery("#modificar").hide();
+            });
+        </script>
+        <title>Modificar Evento</title>
     </head>
     <body>
-        <div>
-            <ol class="breadcrumb">
+        <ol class="breadcrumb">
             <li><a href="#">Inicio</a></li>
             <li><a href="index.jsp">Menu Administrador</a></li>
-            <li class="active">Registrar Eventos</li>
-            </ol>
-            <h1>Registrar evento</h1>
+            <li class="active">Modificar Eventos</li>
+        </ol>
+        <div id="busqueda">
+            <h1>Buscar Evento</h1>
             <form method="post">
-                <label for="nombre">Nombre del evento</label><br />
-                <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del evento" required autofocus><br>
+                <label for="nombre">Nombre del Evento(Tal y como fue creado)</label><br />
+                <input type="text" name="Nombre" id="nombre" required><br /><br />
+                <button type="submit" class="btn btn-default" onclick="return obtenerEventoIndividual()">Obtener datos</button>
+            </form>
+        </div>
+        <div id="modificar">
+            <form method="post">
+                <label for="nombre2">Nombre del evento</label><br />
+                <input type="text" id="nombre2" name="nombre" readonly><br>
                 <label for="fecha">Fecha</label><br />
                 <input type="date" id="fecha" name="fecha" required><br />
                 <label for="hora">Hora</label><br />
@@ -34,8 +47,7 @@
                 <input type="number" name="duracion" value=1 id="duracion" min="1" max="5"><br />
                 <label for="descripcion">Descripcion del evento</label><br />
                 <textarea id="descripcion" name="descripcion" required></textarea><br />
-                <button type="submit" class="btn btn-success" onclick="return registrarEvento()">Registrar Evento</button>
-                <button type="reset" class="btn btn-warning">Reset</button>
+                <button type="submit" class="btn btn-success" onclick="return actualizarEvento()">Registrar Evento</button>
             </form>
         </div>
     </body>

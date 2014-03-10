@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Usuarios
-    Created on : 9/03/2014, 01:58:41 PM
+    Document   : index
+    Created on : 9/03/2014, 10:17:56 PM
     Author     : Santiago
 --%>
 
@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="../"
         <title>JSP Page</title>
     </head>
     <body>

@@ -104,27 +104,20 @@ public class Eventos {
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
             PreparedStatement query=con.prepareStatement("SELECT * FROM eventos WHERE Habilitado=TRUE");
             ResultSet rset=query.executeQuery();
-            if(rset.next())
-            {
-                JSONArray nombres=new JSONArray();
-                JSONArray descripciones=new JSONArray();
-                JSONArray fechas=new JSONArray();
-                JSONArray horas=new JSONArray();
-                JSONArray duraciones=new JSONArray();
+            if(rset.next()){
+                JSONArray data=new JSONArray();
                 rset.beforeFirst();
                 while(rset.next()){
-                    nombres.put(rset.getString("Nombre_Evento"));
-                    descripciones.put(rset.getString("Descripcion"));
-                    fechas.put(rset.getDate("Fecha"));
-                    horas.put(rset.getTime("Hora"));
-                    duraciones.put(rset.getInt("Duracion"));
+                    JSONObject temporal=new JSONObject();
+                    temporal.put("Nombre",rset.getString("Nombre_Evento"));
+                    temporal.put("Descripcion",rset.getString("Descripcion"));
+                    temporal.put("Fecha",rset.getDate("Fecha"));
+                    temporal.put("Hora",rset.getTime("Hora"));
+                    temporal.put("Duracion",rset.getInt("Duracion"));
+                    data.put(temporal);
                 }
                 mensaje.put("Busqueda", true);
-                mensaje.put("Nombres", nombres);
-                mensaje.put("Descripciones", descripciones);
-                mensaje.put("Fechas",fechas);
-                mensaje.put("Horas", horas);
-                mensaje.put("Duraciones",duraciones);
+                mensaje.put("Eventos", data);
             }
             else
             {
@@ -134,6 +127,49 @@ public class Eventos {
         }catch(SQLException sqlEx){
             mensaje.put("Busqueda", false);
             mensaje.put("Mensaje", "Ha ocurrido un error");
+        }
+        return mensaje.toString();
+    }
+    
+    @Path("/ObtenerDatosEvento")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ObtenerEventoIndividual(String src){
+        JSONObject mensaje=new JSONObject();
+        String nombre=new JSONObject(src).getString("Nombre");
+        try{
+            try
+            {
+                Class.forName("com.mysql.jdbc.Driver");
+            }
+            catch(ClassNotFoundException cnfEx)
+            {
+                mensaje.put("Busqueda", false);
+                mensaje.put("Mensaje", "No se ha encontrado el driver");
+            }
+            Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
+            PreparedStatement query = conexion.prepareStatement("SELECT * FROM eventos WHERE Nombre_Evento=? AND Habilitado=TRUE"); 
+            query.setString(1, nombre); 
+            ResultSet rset = query.executeQuery();
+            if(rset.next())
+            {
+                mensaje.put("Busqueda", true);
+                mensaje.put("Nombre",rset.getString("Nombre_Evento"));
+                mensaje.put("Descripcion",rset.getString("Descripcion"));
+                mensaje.put("Fecha",rset.getDate("Fecha"));
+                mensaje.put("Hora",rset.getTime("Hora"));
+                mensaje.put("Duracion",rset.getInt("Duracion"));
+            }
+            else{
+                mensaje.put("Busqueda", false);
+                mensaje.put("Mensaje", "El evento no ha sido encontrado");
+            }
+        }
+        catch(SQLException sqlEx)
+        {
+            mensaje.put("Busqueda", false);
+            mensaje.put("Mensaje", "Ha ocurrido un problema");
         }
         return mensaje.toString();
     }

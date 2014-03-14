@@ -57,7 +57,13 @@ function iniciarSesion(){
                 sourceInfo.Nombre=jQuery("#nombre").val();
                 sourceInfo.Descripcion=jQuery("#descripcion").val();
                 sourceInfo.Fecha=jQuery("#fecha").val();
-                sourceInfo.Hora=jQuery("#hora").val()+":00";
+                var tmpHora=jQuery("#hora").val();
+                if(tmpHora.length==8){
+                    sourceInfo.Hora=tmpHora;
+                }
+                else{
+                    sourceInfo.Hora=tmpHora+":00";
+                }
                 sourceInfo.Duracion=jQuery("#duracion").val();
                 
                 var jsonString=JSON.stringify(sourceInfo);
@@ -212,4 +218,37 @@ function iniciarSesion(){
                 return false;
             }
             return false;
+        }
+        
+        function registrarUsuario(){
+            var src={};
+            src.correo=jQuery("#correo").val();
+            src.password=jQuery("#passwd").val();
+            src.id=jQuery("#idW").val();
+            src.nombre=jQuery("#nombre").val();
+            src.direccion=jQuery("#direccion").val();
+            var admin=$('input:radio[name=typeusr]:checked').val();
+            if(admin == "1"){
+                src.administrador = true;
+            }
+            else{
+                src.administrador = false;
+            }
+            var jstring=JSON.stringify(src);
+            $.ajax({
+                            async:true,
+                            type:'POST',
+                            contentType:'application/json',
+                            url:'http://localhost:8080/ENCOM/API/Usuarios/RegistrarUsuario',
+                            dataType:"json",
+                            data:jstring,
+                            success:function(data){
+                                alert(data.Mensaje);
+                            },
+                            error:function(xhr ,ajaxOptions, thrownError ){
+                                alert(JSON.stringify(xhr));
+                            }
+                        }
+                        );
+                return false;
         }

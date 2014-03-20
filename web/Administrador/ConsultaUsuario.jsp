@@ -30,13 +30,13 @@
         <h1>Consulta Individual de Usuario</h1>
         <div id="busqueda">
             <form>
-                <label for="idW">ID Trabajador</label><br />
-                <input type="number" id="idW" name="idW" required><br />
+                <label for="idW">Correo Trabajador</label><br />
+                <input type="email" id="idW" name="idW" required><br /><br />
                 <button type="submit" class="btn btn-info" onclick="return busquedaUsuario()">Buscar Usuario</button>
             </form>
         </div>
         <div id="mostrar">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tabla">
                 <tr>
                     <th>Correo</th>
                     <th>Password</th>

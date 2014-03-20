@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : 9/03/2014, 10:17:56 PM
-    Author     : Santiago
+    Document   : ModificarUsuario
+    Created on : 19/03/2014, 10:54:31 AM
+    Author     : Alumnos
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,7 +13,7 @@
         <script src="../js/jquery-1.11.0.min.js"></script>
         <script src="../js/client.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <title>Caducar Evento</title>
+        <title>Modificar Usuario</title>
     </head>
     <body>
         <h1>Hello World!</h1>

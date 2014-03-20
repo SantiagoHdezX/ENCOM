@@ -13,6 +13,20 @@
         <script src="js/jquery-1.11.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/client.js"></script>
+        <script>
+            
+            $(document).ready(function(){
+                if(JSON.parse(localStorage.getItem("Sesion"))==true){
+                    if(JSON.parse(localStorage.getItem("Admin")==true)){
+                        window.location("Administrador/index.jsp");
+                    }
+                    else{
+                        window.location("Profesor/index.jsp");
+                    }
+                }
+            });
+            
+        </script>
         <title>HYENIX</title>
     </head>
     <body>

@@ -216,30 +216,23 @@ public class Resources {
                 mensaje.put("Mensaje", "No se ha encontrado el driver");
             }
             Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
-            PreparedStatement query = conexion.prepareStatement("SELECT correo,id,nombre,direccion FROM usuarios"); 
-            ResultSet rset = query.executeQuery();
+            Statement query = conexion.createStatement(); 
+            ResultSet rset = query.executeQuery("SELECT correo,id,nombre,direccion FROM usuarios WHERE administrador=0;");
             if(rset.next())
             {
-                JSONArray correo=new JSONArray();
-                JSONArray id=new JSONArray();
-                JSONArray nombre=new JSONArray();
-                JSONArray direccion=new JSONArray();
-                JSONArray administrador=new JSONArray();
+                JSONArray data=new JSONArray();
                 rset.beforeFirst();
                 while(rset.next())
                 {
-                    correo.put(rset.getString("correo"));
-                    id.put(rset.getInt("id"));
-                    nombre.put(rset.getString("nombre"));
-                    direccion.put(rset.getString("direccion"));
-                    administrador.put(rset.getBoolean("administrador"));
+                    JSONObject temporal=new JSONObject();
+                    temporal.put("Correo",rset.getString("correo"));
+                    temporal.put("ID",rset.getInt("id"));
+                    temporal.put("Nombre",rset.getString("nombre"));
+                    temporal.put("Direccion",rset.getString("direccion"));
+                    data.put(temporal);
                 }
                 mensaje.put("Busqueda", true);
-                mensaje.put("Correo", correo);
-                mensaje.put("ID", id);
-                mensaje.put("Nombre", nombre);
-                mensaje.put("Direccion", direccion);
-                mensaje.put("Administrador", administrador);
+                mensaje.put("Usuarios", data);
             }
             else{
                 mensaje.put("Busqueda", false);

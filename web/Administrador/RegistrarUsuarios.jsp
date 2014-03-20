@@ -35,7 +35,7 @@
                 <input type="text" id="direccion" name="direccion" required><br />
                 <input type="radio" name="typeusr" value="0">Profesor &nbsp;
                 <input type="radio" name="typeusr" value="1">Administrador<br />
-                <button type="submit" class="btn btn-success" onclick="return registrarUsuario()">Registrar Evento</button>
+                <button type="submit" class="btn btn-success" onclick="return registrarUsuario()">Registrar Usuario</button>
                 <button type="reset" class="btn btn-warning">Reset</button>
             </form>
     </body>

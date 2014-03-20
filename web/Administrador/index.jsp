@@ -17,10 +17,16 @@
         <script>
             $(document).ready(function(){
                jQuery("#eventos").hide();
+               jQuery("#usuarios").hide();
             });
             
             function ShowEventos(){
                 jQuery("#eventos").show();
+                jQuery("#usuarios").hide();
+            }
+            function ShowUsuarios(){
+                jQuery("#eventos").hide();
+                jQuery("#usuarios").show();
             }
         </script>
     </head>
@@ -43,7 +49,16 @@
                         <li><a href="CaducarEvento.jsp">Caducar Eventos</a></li>
                     </ol>
                 </div>
-                <a href="#">Panel Usuarios(Proximamente)</a><br />
+                <a href="#" onclick="return ShowUsuarios()">Panel Usuarios</a><br />
+                <div id="usuarios">
+                    <ol>
+                        <li><a href="RegistrarUsuarios.jsp">Registrar Usuarios</a></li>
+                        <li><a href="ConsultarUsuario.jsp">Consulta General Usuarios</a></li>
+                        <li><a href="ConsultaUsuario.jsp">Consulta Individual Usuario</a></li>
+                        <li><a href="#">Modificar Usuario(No habilitado)</a></li>
+                        <li><a href="#">Eliminar Usuario(No habilitado)</a></li>
+                    </ol>
+                </div>
                 <a href="#">Panel Horarios(Proximamente)</a><br />
                 <a href="#">Panel Usuarios(Proximamente)</a><br />
             </div>

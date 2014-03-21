@@ -50,8 +50,6 @@ public class Incidencias {
         catch(SQLException sqlEx){
             
         }
-        
-        
         return null;
     }
 }

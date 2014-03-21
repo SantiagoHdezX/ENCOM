@@ -409,6 +409,37 @@ function updateUser(){
     });
     return false;
 }
+function EliminarUsuario(){
+    var x=confirm("Se eliminara permanentemente al usuario, sea administrador o profesor, ¿desea continuar?");
+    if(x==true){
+        var src={};
+        src.correo=jQuery("#idW").val();
+        var jsonString=JSON.stringify(src);
+
+        $.ajax({
+            type:'POST',
+            contentType:'application/json',
+            url:'http://localhost:8080/ENCOM/API/Usuarios/EliminarUsuario',
+            dataType:'json',
+            data:jsonString,
+            success: function(data){
+                if(data.Eliminado==true){
+                    alert(data.Mensaje);
+                    window.location("ConsultarUsuario.jsp");
+                }else{
+                    alert(data.Mensaje);
+                }
+            },
+            error: function(xhr,ajaxOptions,thrownError){
+                alert(xhr.statusText);
+            }
+        });
+        return false;
+    }
+    else{
+        return false;
+    }
+}
 
             
             

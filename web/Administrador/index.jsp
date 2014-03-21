@@ -56,11 +56,11 @@
                         <li><a href="Usuarios/ConsultarUsuario.jsp">Consulta General Usuarios</a></li>
                         <li><a href="Usuarios/ConsultaUsuario.jsp">Consulta Individual Usuario</a></li>
                         <li><a href="Usuarios/ModificarUsuario.jsp">Modificar Usuario</a></li>
-                        <li><a href="#">Eliminar Usuario(No habilitado)</a></li>
+                        <li><a href="Usuarios/EliminarUsuario.jsp">Eliminar Usuario</a></li>
                     </ol>
                 </div>
                 <a href="#">Panel Horarios(Proximamente)</a><br />
-                <a href="#">Panel Usuarios(Proximamente)</a><br />
+                <a href="#">Panel Incidencias(Proximamente)</a><br />
             </div>
         </div>
         

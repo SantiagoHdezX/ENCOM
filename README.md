@@ -18,16 +18,16 @@ Si por alguna razon, el proyecto no abre, agregar carpeta WEB-INF a "Web Pages "
 
 JSON, MySQL JDBC y ya
 
-"Como se consume el web service?":Con JavaScript
+"Como se consume el web service?"
+---------------------------------
+Con JavaScript, JSON, y mucha paciencia
 
 Modulos
 ------------------
 	-Usuarios
-		-Terminado:Solo API REST
-		-Falta:Cliente JavaScript
+		TERMINADO
 	-Eventos
-		-Terminado:Todo
-		-Falta:Arreglar algunas cosas y optimizar cliente JavaScript
+		TERMINADO
 	-Incidencias
 		-Terminado:Nada
 		-Falta:API REST, cliente JavaScript

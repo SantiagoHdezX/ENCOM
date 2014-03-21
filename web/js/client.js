@@ -47,7 +47,7 @@ function iniciarSesion(){
                         }
                     },
                     error:function(xhr ,ajaxOptions, thrownError ){
-                        alert(JSON.stringify(xhr));
+                        alert(xhr.statusText);
                     }
                 });
                 return false;
@@ -79,7 +79,7 @@ function registrarEvento(){
                     window.location="ConsultaEventos.jsp";
                 },
                 error:function(xhr ,ajaxOptions, thrownError ){
-                    alert(JSON.stringify(xhr));
+                    alert(xhr.statusText);
                 }
             }
             );
@@ -119,7 +119,7 @@ function obtenerEventos(){
             }
         },
         error:function(xhr ,ajaxOptions, thrownError ){
-            alert(JSON.stringify(xhr));
+            alert(xhr.statusText);
         }
     });
     return false;
@@ -150,7 +150,7 @@ function obtenerEventoIndividual(){
             }
         },
         error:function(xhr ,ajaxOptions, thrownError ){
-                    alert(JSON.stringify(xhr));
+                    alert(xhr.statusText);
         }
     });
     return false;
@@ -182,7 +182,7 @@ function actualizarEvento(){
                     window.location="ConsultaEventos.jsp";
                 },
                 error:function(xhr ,ajaxOptions, thrownError ){
-                    alert(JSON.stringify(xhr));
+                    alert(xhr.statusText);
                 }
             }
             );
@@ -210,7 +210,7 @@ function CaducarEvento(){
                 }
             },
             error:function(xhr ,ajaxOptions, thrownError ){
-                        alert(JSON.stringify(xhr));
+                        alert(xhr.statusText);
             }
     });
 }
@@ -247,7 +247,7 @@ function registrarUsuario(){
                         window.location="ConsultarUsuario.jsp";
                     },
                     error:function(xhr ,ajaxOptions, thrownError ){
-                        alert(JSON.stringify(xhr));
+                        alert(xhr.statusText);
                     }
                 }
                 );
@@ -283,7 +283,7 @@ function obtenerUsuarios(){
                 }
             },
             error:function(xhr ,ajaxOptions, thrownError ){
-                alert(JSON.stringify(xhr));
+                alert(xhr.statusText);
             }
         });
     return false;
@@ -339,7 +339,72 @@ function busquedaUsuario(){
             }
         },
         error:function(xhr ,ajaxOptions, thrownError ){
-                    alert(JSON.stringify(xhr));
+                    alert(xhr.statusText);
+        }
+    });
+    return false;
+}
+function busquedaUsuarioM(){
+    var src={};
+    src.correo=jQuery("#idWT").val();
+    var jsonString=JSON.stringify(src);
+    $.ajax({
+        type: 'POST',
+        contentType:'application/json',
+        url: 'http://localhost:8080/ENCOM/API/Usuarios/ObtenerDatosPersonales',
+        dataType: "json",
+        data:jsonString,
+        success: function(data){
+            if(data.Busqueda==true)
+            {
+                jQuery("#correo").val(data.Correo);
+                jQuery("#passwd").val(data.Password);
+                jQuery("#idW").val(data.ID);
+                jQuery("#nombre").val(data.Nombre);
+                jQuery("#direccion").val(data.Direccion);
+                if(data.Administrador==true){
+                    jQuery("#typeusr").val("Permisos de administrador");
+                }
+                else{
+                    jQuery("#typeusr").val("Permisos de usuario estandar");
+                }
+                $("#search").hide();
+                $("#change").show();
+            }
+            else{
+                alert(data.Mensaje);
+            }
+        },
+        error:function(xhr ,ajaxOptions, thrownError ){
+            alert(xhr.statusText);
+        }
+    });
+    return false;
+}
+function updateUser(){
+    var src={};
+    src.correo=jQuery("#correo").val();
+    src.password=jQuery("#passwd").val();
+    src.id=jQuery("#idW").val();
+    src.direccion=jQuery("#direccion").val();
+    var datos=JSON.stringify(src);
+    $.ajax({
+        type:'PUT',
+        contentType:'application/json',
+        url:'http://localhost:8080/ENCOM/API/Usuarios/ModificarDatosUsuario',
+        dataType:'json',
+        data:datos,
+        success: function(data){
+            if(data.Arreglado==true){
+                alert(data.Mensaje);
+                window.location("ConsultarUsuario.jsp");
+            }
+            else{
+                alert(data.Mensaje);
+            }
+        },
+        error : function(xhr,ajaxOptions,thrownError){
+            alert(xhr.statusText);
         }
     });
     return false;

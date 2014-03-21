@@ -43,19 +43,19 @@
                 <a href="#" onclick="return ShowEventos()">Panel Eventos</a><br />
                 <div id="eventos">
                     <ol>
-                        <li><a href="Eventos.jsp">Registrar Eventos</a></li>
-                        <li><a href="ConsultaEventos.jsp">Consultar Eventos</a></li>
-                        <li><a href="ModificarEvento.jsp">Modificar Eventos</a></li>
-                        <li><a href="CaducarEvento.jsp">Caducar Eventos</a></li>
+                        <li><a href="Eventos/RegistrarEvento.jsp">Registrar Eventos</a></li>
+                        <li><a href="Eventos/ConsultaEventos.jsp">Consultar Eventos</a></li>
+                        <li><a href="Eventos/ModificarEvento.jsp">Modificar Eventos</a></li>
+                        <li><a href="Eventos/CaducarEvento.jsp">Caducar Eventos</a></li>
                     </ol>
                 </div>
                 <a href="#" onclick="return ShowUsuarios()">Panel Usuarios</a><br />
                 <div id="usuarios">
                     <ol>
-                        <li><a href="RegistrarUsuarios.jsp">Registrar Usuarios</a></li>
-                        <li><a href="ConsultarUsuario.jsp">Consulta General Usuarios</a></li>
-                        <li><a href="ConsultaUsuario.jsp">Consulta Individual Usuario</a></li>
-                        <li><a href="#">Modificar Usuario(No habilitado)</a></li>
+                        <li><a href="Usuarios/RegistrarUsuarios.jsp">Registrar Usuarios</a></li>
+                        <li><a href="Usuarios/ConsultarUsuario.jsp">Consulta General Usuarios</a></li>
+                        <li><a href="Usuarios/ConsultaUsuario.jsp">Consulta Individual Usuario</a></li>
+                        <li><a href="Usuarios/ModificarUsuario.jsp">Modificar Usuario</a></li>
                         <li><a href="#">Eliminar Usuario(No habilitado)</a></li>
                     </ol>
                 </div>

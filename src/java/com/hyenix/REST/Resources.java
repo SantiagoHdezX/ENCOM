@@ -198,7 +198,10 @@ public class Resources {
         return mensaje.toString();
     }
     
-    
+    /**
+     *
+     * @return JSON
+     */
     @Path("/ObtenerDatosGenerales")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -217,7 +220,7 @@ public class Resources {
             }
             Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
             Statement query = conexion.createStatement(); 
-            ResultSet rset = query.executeQuery("SELECT correo,id,nombre,direccion FROM usuarios WHERE administrador=0;");
+            ResultSet rset = query.executeQuery("SELECT correo,id,nombre,direccion FROM usuarios;");
             if(rset.next())
             {
                 JSONArray data=new JSONArray();

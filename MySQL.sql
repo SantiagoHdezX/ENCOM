@@ -4,7 +4,7 @@ USE `encom`;
 --
 -- Host: localhost    Database: encom
 -- ------------------------------------------------------
--- Server version	5.6.16
+-- Server version	5.5.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -47,6 +47,92 @@ INSERT INTO `eventos` VALUES (15,'inFamous Second Son','Keynote de ENCOM','2014-
 UNLOCK TABLES;
 
 --
+-- Table structure for table `horario`
+--
+
+DROP TABLE IF EXISTS `horario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horario` (
+  `idHorario` int(11) NOT NULL,
+  `LEntrada` time DEFAULT NULL,
+  `LSalida` time DEFAULT NULL,
+  `MEntrada` time DEFAULT NULL,
+  `MSalida` time DEFAULT NULL,
+  `MiEntrada` time DEFAULT NULL,
+  `MiSalida` time DEFAULT NULL,
+  `JEntrada` time DEFAULT NULL,
+  `JSalida` time DEFAULT NULL,
+  `VEntrada` time DEFAULT NULL,
+  `VSalida` time DEFAULT NULL,
+  `idProfe_Mat` int(11) NOT NULL,
+  PRIMARY KEY (`idHorario`),
+  KEY `idProfe_Mat_idx` (`idProfe_Mat`),
+  CONSTRAINT `idProfe_Mat` FOREIGN KEY (`idProfe_Mat`) REFERENCES `profesoresmateria` (`idProfe_Mat`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `horario`
+--
+
+LOCK TABLES `horario` WRITE;
+/*!40000 ALTER TABLE `horario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `horario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `materia`
+--
+
+DROP TABLE IF EXISTS `materia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `materia` (
+  `idMateria` int(11) NOT NULL,
+  `Nombre_materia` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idMateria`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `materia`
+--
+
+LOCK TABLES `materia` WRITE;
+/*!40000 ALTER TABLE `materia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `materia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profesoresmateria`
+--
+
+DROP TABLE IF EXISTS `profesoresmateria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profesoresmateria` (
+  `idProfe_Mat` int(11) NOT NULL,
+  `Correo` varchar(45) DEFAULT NULL,
+  `idMateria` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idProfe_Mat`),
+  KEY `idMateria_idx` (`idMateria`),
+  KEY `Correo_idx` (`Correo`),
+  CONSTRAINT `idMateria` FOREIGN KEY (`idMateria`) REFERENCES `materia` (`idMateria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Correo` FOREIGN KEY (`Correo`) REFERENCES `usuarios` (`correo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profesoresmateria`
+--
+
+LOCK TABLES `profesoresmateria` WRITE;
+/*!40000 ALTER TABLE `profesoresmateria` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profesoresmateria` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuarios`
 --
 
@@ -84,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-10  0:00:54
+-- Dump completed on 2014-03-27  8:42:50

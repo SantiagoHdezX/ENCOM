@@ -53,37 +53,7 @@ public class Horarios {
                 JSONArray grupo=snt.getJSONArray("Horario");
                 for(int j=0;i<snt.length();j++){
                     JSONObject currentGroup=grupo.getJSONObject(j);
-                    String cntGp=currentGroup.getString("Grupo");
-                    if((currentGroup.getJSONObject("Lunes").getBoolean("Clase"))==true){
-                        String LEntrada=currentGroup.getJSONObject("Lunes").getString("Entrada");
-                        String LSalida=currentGroup.getJSONObject("Lunes").getString("Salida");
-                    }
-                    else{
-                        String LEntrada=null;
-                        String LSalida=null;
-                    }
-                    
-                    if(currentGroup.getJSONObject("Martes").getBoolean("Clase")){
-                        String MEntrada=currentGroup.getJSONObject("Martes").getString("Entrada");
-                        String MSalida=currentGroup.getJSONObject("Martes").getString("Salida");
-                    }
-                    else{
-                        String MEntrada=null;
-                        String MSalida=null;
-                    }
-                    
-                    if(currentGroup.getJSONObject("Miercoles").getBoolean("Clase")){
-                        String MiEntrada=currentGroup.getJSONObject("Miercoles").getString("Entrada");
-                        String MiSalida=currentGroup.getJSONObject("Miercoles").getString("Salida");
-                    }
-                    else{
-                        String MiEntrada=null;
-                        String MiSalida=null;
-                    }
-                    
-                    if(currentGroup.getJSONObject("Jueves").getBoolean("Clase")){
-                        String JEntrada=currentGroup.getJSONObject("Jueves").getString("Entrada");
-                    }
+                    boolean notificacion=Reg_Grupo(conn,Profesor, Type_Schedule, nombre_materia, currentGroup.toString());
                 }
             }
             
@@ -99,4 +69,62 @@ public class Horarios {
        
    }
    
+   public boolean Reg_Grupo(Connection conn,int Profesor, char Type, String Nombre_Materia, String datosGrupo){
+        JSONObject currentGroup=new JSONObject(datosGrupo);
+        String cntGp=currentGroup.getString("Grupo");
+        if((currentGroup.getJSONObject("Lunes").getBoolean("Clase"))==true){
+            String LEntrada=currentGroup.getJSONObject("Lunes").getString("Entrada");
+            String LSalida=currentGroup.getJSONObject("Lunes").getString("Salida");
+        }
+        else{
+            String LEntrada=null;
+            String LSalida=null;
+        }
+
+        if(currentGroup.getJSONObject("Martes").getBoolean("Clase")){
+            String MEntrada=currentGroup.getJSONObject("Martes").getString("Entrada");
+            String MSalida=currentGroup.getJSONObject("Martes").getString("Salida");
+        }
+        else{
+            String MEntrada=null;
+            String MSalida=null;
+        }
+
+        if(currentGroup.getJSONObject("Miercoles").getBoolean("Clase")){
+            String MiEntrada=currentGroup.getJSONObject("Miercoles").getString("Entrada");
+            String MiSalida=currentGroup.getJSONObject("Miercoles").getString("Salida");
+        }
+        else{
+            String MiEntrada=null;
+            String MiSalida=null;
+        }
+
+        if(currentGroup.getJSONObject("Jueves").getBoolean("Clase")){
+            String JEntrada=currentGroup.getJSONObject("Jueves").getString("Entrada");
+            String JSalida=currentGroup.getJSONObject("Jueves").getString("Salida");
+        }
+        else{
+            String JEntrada=null;
+            String JSalida=null;
+        }
+        if(currentGroup.getJSONObject("Viernes").getBoolean("Clase")){
+            String VEntrada=currentGroup.getJSONObject("Viernes").getString("Entrada");
+            String VSalida=currentGroup.getJSONObject("Viernes").getString("Salida");
+        }
+        else{
+            String VEntrada=null;
+            String VSalida=null;
+        }
+        try
+        {
+            Statement stmt=conn.createStatement();
+            stmt.executeUpdate("INSERT INTO ");
+            
+        }
+        catch(SQLException sqlEx){
+            
+        }
+        
+       return false;
+   }  
 }

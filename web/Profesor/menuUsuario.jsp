@@ -17,7 +17,7 @@
     <script>
         
         if(localStorage.getItem("Sesion")!=null){
-            if(localStorage.getItem("Admin").tostring()==true){
+            if(localStorage.getItem("Admin").toString()=="true"){
                 window.location.href="../index.jsp";
             }
         } else{

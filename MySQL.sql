@@ -32,7 +32,7 @@ CREATE TABLE `catalogo_grupo` (
   `Tag` varchar(45) NOT NULL,
   PRIMARY KEY (`ID_Grupo`),
   UNIQUE KEY `tag_UNIQUE` (`Tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,8 @@ CREATE TABLE `catalogo_materias` (
   `ID_Materia` varchar(4) NOT NULL,
   `nombreMat` text NOT NULL,
   `semestre` int(11) NOT NULL,
-  PRIMARY KEY (`ID_Materia`)
+  PRIMARY KEY (`ID_Materia`),
+  UNIQUE KEY `ID_Materia_UNIQUE` (`ID_Materia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,6 +101,41 @@ INSERT INTO `eventos` VALUES (15,'inFamous Second Son','Keynote de ENCOM','2014-
 UNLOCK TABLES;
 
 --
+-- Table structure for table `horario`
+--
+
+DROP TABLE IF EXISTS `horario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horario` (
+  `idhorario` int(11) NOT NULL AUTO_INCREMENT,
+  `idProfesor` int(11) NOT NULL,
+  `ID_Materia` time NOT NULL,
+  `Tag` time NOT NULL,
+  `LEntrada` time DEFAULT NULL,
+  `LSalida` time DEFAULT NULL,
+  `MEntrada` time DEFAULT NULL,
+  `MSalida` time DEFAULT NULL,
+  `MiEntrada` time DEFAULT NULL,
+  `MiSalida` time DEFAULT NULL,
+  `JEntrada` time DEFAULT NULL,
+  `JSalida` time DEFAULT NULL,
+  `VEntrada` time DEFAULT NULL,
+  `VSalida` time DEFAULT NULL,
+  PRIMARY KEY (`idhorario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `horario`
+--
+
+LOCK TABLES `horario` WRITE;
+/*!40000 ALTER TABLE `horario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `horario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuarios`
 --
 
@@ -137,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-29  1:13:22
+-- Dump completed on 2014-03-29  8:45:43

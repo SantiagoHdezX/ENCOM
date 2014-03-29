@@ -25,7 +25,6 @@
             $(document).ready(function(){
                jQuery("#eventos").hide();
                jQuery("#usuarios").hide();
-               alert(localStorage.getItem("ID"));
             });
             
             function ShowEventos(){

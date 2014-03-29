@@ -44,16 +44,14 @@ public class Horarios {
              Registro de Materia
              */
             int Profesor = horario.getInt("Profesor");
-            char Type_Schedule = horario.getString("Type_Schedule").charAt(0);
             JSONArray materias = horario.getJSONArray("Materia");
             for (int i = 0; i < materias.length(); i++) {
                 JSONObject snt = materias.getJSONObject(i);
-                int idMat = snt.getInt("ID_Materia");
-                String nombre_materia = snt.getString("Nombre");
+                String idMat = snt.getString("idMateria");
                 JSONArray grupo = snt.getJSONArray("Horario");
                 for (int j = 0; i < snt.length(); j++) {
                     JSONObject currentGroup = grupo.getJSONObject(j);
-                    boolean notificacion = Reg_Grupo(conn, Profesor, Type_Schedule, idMat, nombre_materia, currentGroup.toString());
+                    boolean notificacion = Reg_Grupo(conn, Profesor, idMat, currentGroup.toString());
                 }
             }
 
@@ -63,61 +61,86 @@ public class Horarios {
             return rtnStmt.toString();
         }
         return "{'Nada':0}";
-
     }
 
-    public boolean Reg_Grupo(Connection conn, int Profesor, char Type, int idMat, String Nombre_Materia, String datosGrupo) {
+    public boolean Reg_Grupo(Connection conn, int Profesor, String idMat, String datosGrupo) {
+        boolean dtr=true;
+        String nullHour="00:00:00";
+        String LEntrada,LSalida,MEntrada,MSalida, MiEntrada,MiSalida,JEntrada,JSalida,VEntrada,VSalida;
         JSONObject currentGroup = new JSONObject(datosGrupo);
         String cntGp = currentGroup.getString("Grupo");
         if ((currentGroup.getJSONObject("Lunes").getBoolean("Clase")) == true) {
-            String LEntrada = currentGroup.getJSONObject("Lunes").getString("Entrada");
-            String LSalida = currentGroup.getJSONObject("Lunes").getString("Salida");
+            LEntrada = currentGroup.getJSONObject("Lunes").getString("Entrada");
+            LSalida = currentGroup.getJSONObject("Lunes").getString("Salida");
         } else {
-            String LEntrada = null;
-            String LSalida = null;
+            LEntrada = nullHour;
+            LSalida = nullHour;
         }
 
         if (currentGroup.getJSONObject("Martes").getBoolean("Clase")) {
-            String MEntrada = currentGroup.getJSONObject("Martes").getString("Entrada");
-            String MSalida = currentGroup.getJSONObject("Martes").getString("Salida");
+            MEntrada = currentGroup.getJSONObject("Martes").getString("Entrada");
+            MSalida = currentGroup.getJSONObject("Martes").getString("Salida");
         } else {
-            String MEntrada = null;
-            String MSalida = null;
+            MEntrada = nullHour;
+            MSalida = nullHour;
         }
 
         if (currentGroup.getJSONObject("Miercoles").getBoolean("Clase")) {
-            String MiEntrada = currentGroup.getJSONObject("Miercoles").getString("Entrada");
-            String MiSalida = currentGroup.getJSONObject("Miercoles").getString("Salida");
+            MiEntrada = currentGroup.getJSONObject("Miercoles").getString("Entrada");
+            MiSalida = currentGroup.getJSONObject("Miercoles").getString("Salida");
         } else {
-            String MiEntrada = null;
-            String MiSalida = null;
+            MiEntrada = nullHour;
+            MiSalida = nullHour;
         }
 
         if (currentGroup.getJSONObject("Jueves").getBoolean("Clase")) {
-            String JEntrada = currentGroup.getJSONObject("Jueves").getString("Entrada");
-            String JSalida = currentGroup.getJSONObject("Jueves").getString("Salida");
+            JEntrada = currentGroup.getJSONObject("Jueves").getString("Entrada");
+            JSalida = currentGroup.getJSONObject("Jueves").getString("Salida");
         } else {
-            String JEntrada = null;
-            String JSalida = null;
+            JEntrada = nullHour;
+            JSalida = nullHour;
         }
         if (currentGroup.getJSONObject("Viernes").getBoolean("Clase")) {
-            String VEntrada = currentGroup.getJSONObject("Viernes").getString("Entrada");
-            String VSalida = currentGroup.getJSONObject("Viernes").getString("Salida");
+            VEntrada = currentGroup.getJSONObject("Viernes").getString("Entrada");
+            VSalida = currentGroup.getJSONObject("Viernes").getString("Salida");
         } else {
-            String VEntrada = null;
-            String VSalida = null;
+            VEntrada = nullHour;
+            VSalida = nullHour;
         }
         try {
-            Statement stmt = conn.createStatement();
-
+            PreparedStatement query=conn.prepareStatement("INSERT INTO horario(idProfesor,ID_Materia,Tag,LEntrada,LSalida, MEntrada,MSalida,MiEntrada,MiSalida,JEntrada,JSalida,VEntrada,VSalida) VALUES(?)");
+            query.setInt(1, Profesor);
+            query.setString(2, idMat);
+            query.setString(3, cntGp);
+            query.setTime(4, java.sql.Time.valueOf(LEntrada));
+            query.setTime(5, java.sql.Time.valueOf(LSalida));
+            query.setTime(6, java.sql.Time.valueOf(MEntrada));
+            query.setTime(7, java.sql.Time.valueOf(MSalida));
+            query.setTime(8, java.sql.Time.valueOf(MiEntrada));
+            query.setTime(9, java.sql.Time.valueOf(MiSalida));
+            query.setTime(10, java.sql.Time.valueOf(JEntrada));
+            query.setTime(11, java.sql.Time.valueOf(JSalida));
+            query.setTime(12, java.sql.Time.valueOf(VEntrada));
+            query.setTime(13, java.sql.Time.valueOf(VSalida));
+            query.executeQuery();
+            PreparedStatement query2=conn.prepareStatement("SELECT COUNT(*) FROM horario WHERE idProfesor=? AND ID_Materia=? AND Tag=?");
+            query2.setInt(1, Profesor);
+            query2.setString(2, idMat);
+            query2.setString(3, cntGp);
+            ResultSet rset=query2.executeQuery();
+            if(rset.next()){
+                dtr=true;
+            }
+            else{
+                dtr=false;
+            }
         } catch (SQLException sqlEx) {
-
+            dtr=false;
         }
-
-        return false;
+        return dtr;
     }
 
-    /*@Path("/RegistrarMateria")
+    @Path("/RegistrarMateria")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -134,14 +157,24 @@ public class Horarios {
                 return dataReturn.toString();
             }
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            String idMat=dataJS.getString("idMat");
             String nombreMat=dataJS.getString("nombreMat");
             int semestre=dataJS.getInt("Semestre");
-            PreparedStatement update= conn.prepareStatement("INSERT INTO catalogo_materias (nombreMat, semestre) VALUES(?,?);");
-            update.setString(1, nombreMat);
-            update.setInt(2, semestre);
+            Statement stmt=conn.createStatement();
+            ResultSet rset=stmt.executeQuery("SELECT COUNT(*) FROM catalogo_materias WHERE ID_Materia='"+idMat+"'");
+            if(rset.next()){
+            PreparedStatement update= conn.prepareStatement("INSERT INTO catalogo_materias (ID_Materia, nombreMat, semestre) VALUES(?,?);");
+            update.setString(1, idMat);
+            update.setString(2, nombreMat);
+            update.setInt(3, semestre);
             update.executeUpdate();
             dataReturn.put("Registrado", true);
-            dataReturn.put("Mensaje", "La materia '"+nombreMat+"' para el semestre "+semestre+" ha sido registrada con exito");
+            dataReturn.put("Mensaje", "La materia '"+nombreMat+"' con el ID '"+idMat+"' para el semestre "+semestre+" ha sido registrada con exito");
+            }
+            else{
+                dataReturn.put("Registrado", false);
+                dataReturn.put("Mensaje", "Ya existe una materia con ese ID");
+            }
         }
         catch(SQLException sqlEx){
             dataReturn.put("Registrado", false);
@@ -149,5 +182,5 @@ public class Horarios {
             return dataReturn.toString();
         }
         return dataReturn.toString();
-    }*/
+    }
 }

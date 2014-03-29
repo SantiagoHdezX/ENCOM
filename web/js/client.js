@@ -29,13 +29,17 @@ function iniciarSesion(){
                     success:function(data){
                         if(data.Sesion == true){
                             if(data.Admin_User==true){
+                                alert(data.ID);
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",true);
+                                localStorage.setItem("ID", data.ID)
                                 window.location="Administrador/index.jsp";
                             }
                             else{
+                                alert(data.ID);
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",false);
+                                localStorage.setItem("ID", data.ID)
                                 window.location="Profesor/menuUsuario.jsp";
                             }
                         }

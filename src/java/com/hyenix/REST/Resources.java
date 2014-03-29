@@ -124,11 +124,13 @@ public class Resources {
                 if(admin){
                     mensaje.put("Sesion", true);
                     mensaje.put("Admin_User", true);
+                    mensaje.put("ID", rset.getInt("id"));
                     mensaje.put("Mensaje","Has iniciado sesion");
                 }
                 else{
                     mensaje.put("Sesion", true);
                     mensaje.put("Admin_User", false);
+                    mensaje.put("ID", rset.getInt("id"));
                     mensaje.put("Mensaje","Has iniciado sesion");
                 }
             }

@@ -15,6 +15,13 @@
         <script src="../js/client.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script>
+            
+            if(localStorage.getItem("Sesion")!=null){
+                 if(localStorage.getItem("Admin")!=true){
+                     window.location.href="../index.jsp";
+                 }
+             }
+             
             $(document).ready(function(){
                jQuery("#eventos").hide();
                jQuery("#usuarios").hide();

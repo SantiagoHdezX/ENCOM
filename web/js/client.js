@@ -4,9 +4,22 @@
  * and open the template in the editor.
  */
 
+function sesionTrue(){
+        var anim= $(".well, .input-group-addon");
+        anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(0,255,0,.7)', borderColor: 'rgb(0,255,0)'},"fast");
+}
 
+function sesionFalse(men){
+    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color: red; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
+    var anim= $(".well, .input-group-addon");
+        anim.animate({left: '15px'},100);
+        anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100,function(){$("#msg").fadeIn("fast")});
+        anim.animate({right: '0px', left: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100);
+        anim.animate({left: '0px', backgroundColor: 'rgb(245,245,245)', borderColor: '#E3E3E3'},100); 
+}
 
 function iniciarSesion(){
+                $("#msg").fadeOut("fast").remove();
                 var sourceInfo={};
                 sourceInfo.correo = jQuery("#correo").val();
                 sourceInfo.password = jQuery("#passwd").val();
@@ -30,29 +43,26 @@ function iniciarSesion(){
                     success:function(data){
                         if(data.Sesion == true){
                             if(data.Admin_User==true){
-                                alert(data.Mensaje);
+                                sesionTrue();                                          
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",true);
-                                localStorage.setItem("ID", data.ID)
+                                localStorage.setItem("ID", data.ID);
+                                localStorage.setItem("Nombre", data.Nombre);
                                 window.location="Administrador/index.jsp";
                             }
                             else{
-                                alert(data.Mensaje);
+                                sesionTrue();
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",false);
-                                localStorage.setItem("ID", data.ID)
+                                localStorage.setItem("ID", data.ID);
+                                localStorage.setItem("Nombre", data.Nombre);
                                 window.location="Profesor/menuUsuario.jsp";
                             }
                         }
                         else{
                             localStorage.setItem("Sesion",false);
                             localStorage.setItem("Admin",false);
-                            $("#rdBtns").append("<span id='msg' style='display:none; color: red; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>Los datos son<br/>incorrectos.</span>");
-                            var anim= $(".well");
-                                anim.animate({left: '15px'},100);
-                                anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100,function(){$("#msg").fadeIn("fast")});
-                                anim.animate({right: '0px', left: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100);
-                                anim.animate({left: '0px', backgroundColor: 'rgb(245,245,245)', borderColor: '#E3E3E3'},100);                               
+                            sesionFalse(data.Mensaje);                              
                             //window.location="index.jsp";
                         }
                     },

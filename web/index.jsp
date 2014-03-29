@@ -21,22 +21,19 @@
         <script src="js/index.js"></script>
         <script>
             /*Nota
-             * Por alguna razon curiosa, esta funcion nomas funca en IE y en Firefox
+             * Ya funciona :)
              * 
-             * EN CHROME NO!
+             * JI JI JI
              * */
-            $(document).ready(function(){
-                if(JSON.parse(localStorage.getItem("Sesion"))!==null){
-                    if(JSON.parse(localStorage.getItem("Sesion"))==true){
-                        if(JSON.parse(localStorage.getItem("Admin"))==true){
-                            window.location("Administrador/index.jsp");
-                        }
-                        else{
-                            window.location("Profesor/index.jsp");
-                        }
-                    }
+            if(localStorage.getItem("Sesion")!==null){
+                if(localStorage.getItem("Admin")==true){
+                    window.location.href="Administrador/index.jsp";
                 }
-            });
+                else{
+                    window.location.href="Profesor/menuUsuario.jsp";
+                }
+            }
+            
         </script>
         <style>
             div.well{

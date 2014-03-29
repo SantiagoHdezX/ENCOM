@@ -137,7 +137,7 @@ public class Resources {
             else{
                 mensaje.put("Sesion", false);
                 mensaje.put("Admin_User", false);
-                mensaje.put("Mensaje", "Correo electronico o password incorrectos");
+                mensaje.put("Mensaje", "Los datos introducidos son incorrectos");
             }
         }
         catch(SQLException sqlEx)

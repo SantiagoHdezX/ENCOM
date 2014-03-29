@@ -10,11 +10,12 @@ function iniciarSesion(){
                 var sourceInfo={};
                 sourceInfo.correo = jQuery("#correo").val();
                 sourceInfo.password = jQuery("#passwd").val();
+                sourceInfo.administrador = false; //default
                 var admin=$('input:radio[name=typeusr]:checked').val();
                 if(admin == "1"){
                     sourceInfo.administrador = true;
                 }
-                else{
+                else if(admin == "0"){
                     sourceInfo.administrador = false;
                 }
                 var JSONsrcInfo=JSON.stringify(sourceInfo);
@@ -29,14 +30,14 @@ function iniciarSesion(){
                     success:function(data){
                         if(data.Sesion == true){
                             if(data.Admin_User==true){
-                                alert(data.ID);
+                                alert(data.Mensaje);
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",true);
                                 localStorage.setItem("ID", data.ID)
                                 window.location="Administrador/index.jsp";
                             }
                             else{
-                                alert(data.ID);
+                                alert(data.Mensaje);
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",false);
                                 localStorage.setItem("ID", data.ID)
@@ -46,8 +47,13 @@ function iniciarSesion(){
                         else{
                             localStorage.setItem("Sesion",false);
                             localStorage.setItem("Admin",false);
-                            alert(data.Mensaje);
-                            window.location="index.jsp";
+                            $("#rdBtns").append("<span id='msg' style='display:none; color: red; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>Los datos son<br/>incorrectos.</span>");
+                            var anim= $(".well");
+                                anim.animate({left: '15px'},100);
+                                anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100,function(){$("#msg").fadeIn("fast")});
+                                anim.animate({right: '0px', left: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100);
+                                anim.animate({left: '0px', backgroundColor: 'rgb(245,245,245)', borderColor: '#E3E3E3'},100);                               
+                            //window.location="index.jsp";
                         }
                     },
                     error:function(xhr ,ajaxOptions, thrownError ){

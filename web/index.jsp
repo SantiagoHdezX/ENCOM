@@ -44,6 +44,7 @@
                 height: 250px;
                 float: right;
                 margin-right: 20px;
+                position: relative;
             }
             div.well button{
                 float: right;
@@ -53,14 +54,15 @@
                 margin-left: 50px;
                 width: 250px; 
                 height: 250px;
-                float: left;                 
-                display:none;
+                float: left;                
             }
             div.sesion-image-prof{
                 background-image: url('images/profesor.png');
+                display: block;
             }
             div.sesion-image-admin{
                 background-image: url('images/admin.png');
+                display:none;
             }
         </style>
         <title>Home Page</title>
@@ -88,17 +90,17 @@
                 <div class="cont-box">
                     <div class="well">
                         <p>Iniciar Sesion</p>
-                        <form method="post" role="form" autocomplete="off">
+                        <form method="post" role="form">
                             <div class="input-group">
-                                <span class="input-group-addon" title="Usuario">@</span><input type="email" class="form-control" name="correo" id="correo" required autofocus ><br />
+                                <span class="input-group-addon" title="E-mail">@</span><input type="email" class="form-control" name="correo" id="correo" required autofocus ><br />
                             </div>
                             <br />
                             <div class="input-group">
                                 <span class="input-group-addon" title="Contraseña">&nbsp;#&nbsp;</span><input type="password" class="form-control" name="passwd" id="passwd" required><br />
                             </div>
                             <br />
-                            <p align="right" style="padding: 0; margin: 0;">
-                                <input type="radio" name="typeusr" id="rdProf" value="0"> Profesor &nbsp;
+                            <p id="rdBtns" align="right" style="padding: 0; margin: 0;">
+                                <input type="radio" name="typeusr" id="rdProf" value="0" checked="checked"> Profesor &nbsp;
                                 <input type="radio" name="typeusr" id="rdAdmin" value="1"> Administrador<br />
                             </p>
                             <br />

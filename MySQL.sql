@@ -53,11 +53,11 @@ DROP TABLE IF EXISTS `catalogo_materias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `catalogo_materias` (
-  `ID_Materia` int(11) NOT NULL AUTO_INCREMENT,
-  `nombreMat` varchar(45) NOT NULL,
+  `ID_Materia` varchar(4) NOT NULL,
+  `nombreMat` text NOT NULL,
   `semestre` int(11) NOT NULL,
   PRIMARY KEY (`ID_Materia`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `catalogo_materias` (
 
 LOCK TABLES `catalogo_materias` WRITE;
 /*!40000 ALTER TABLE `catalogo_materias` DISABLE KEYS */;
-INSERT INTO `catalogo_materias` VALUES (1,'Desarrollo Web',6);
+INSERT INTO `catalogo_materias` VALUES ('P309','Laboratorio de Proyectos 1',3),('P310','Administracion de Proyectos 1',3),('P321','Programacion Orientada a Objetos',3),('P367','Soporte de Software',6),('P409','Administracion de Proyectos 2',4),('P410','Tecnicas de Programacion Personal con Calidad',4),('P411','Software de Diseño Electronico',4),('P425','Programacion y Servicio Web',4),('P426','Base de Datos',4),('P427','Laboratorio de Proyectos 2',4),('P509','Laboratorio de Proyectos 3',5),('P510','Automatizacion de Pruebas',5),('P530','Introduccion a los Sistemas Distribuidos',5),('P531','Introduccion a la Ingenieria de Pruebas',5),('P532','Seguridad Web y Aplicaciones',5),('P609','Laboratorio de Proyectos 4',6),('P610','Proyecto Integrador',6),('P636','Metodos Agiles de Programacion',6),('P638','Ingenieria de Software Basica',6);
 /*!40000 ALTER TABLE `catalogo_materias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-03-29  0:51:01
+-- Dump completed on 2014-03-29  1:13:22

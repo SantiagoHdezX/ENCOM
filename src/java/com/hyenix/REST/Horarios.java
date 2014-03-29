@@ -117,7 +117,7 @@ public class Horarios {
         return false;
     }
 
-    @Path("/RegistrarMateria")
+    /*@Path("/RegistrarMateria")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -149,5 +149,5 @@ public class Horarios {
             return dataReturn.toString();
         }
         return dataReturn.toString();
-    }
+    }*/
 }

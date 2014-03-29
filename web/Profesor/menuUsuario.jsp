@@ -20,6 +20,8 @@
             if(localStorage.getItem("Admin").tostring()==true){
                 window.location.href="../index.jsp";
             }
+        } else{
+            window.location.href="../index.jsp";
         }
                 
             $(document).ready(function(){       

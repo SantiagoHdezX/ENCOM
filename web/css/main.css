@@ -4,6 +4,10 @@ body{
 	margin: 0;
 }
 
+a:hover{
+    text-decoration: none;
+}
+
 div.ipn-header{
 	width: 100%;
 	min-width: 900px;	
@@ -91,25 +95,26 @@ div.nav-bar{
 	width: 800px;
 	height: 130px;
 	margin: auto;
-	padding-top: 10px;
+        margin-bottom: 40px;
+	padding-top: 25px;
 }
 
 div.nav-bar div{
 	position: relative;
 }
 
-div.nav-bar div.first{
+div.nav-bar div.firstln{
 	height: 10px;
-	top: 55px;
+	top: 40px;
 	width: 30px;
 	border-radius: 5px 0 0 5px;
 	background-color: rgb(200,200,200);
 }
 
-div.nav-bar div.next{
+div.nav-bar div.nextln{
 	height: 10px;
 	width: 770px;
-	top: 45px;
+	top: 30px;
 	left: 30px;
 	background-color: rgb(200,200,200);
 }
@@ -117,8 +122,12 @@ div.nav-bar div.next{
 div.nav-bar div.session{
 	height: 70px;
 	width: 150px;
-	top: 5px;
+	top: -10px;
 	left: 650px;
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: small;
 	border-radius: 10px;
 	background-color: rgb(200,200,200);
 }
@@ -126,6 +135,52 @@ div.nav-bar div.session{
 div.nav-bar section{
 	left: 30px;
 	bottom: 110px;
+}
+
+
+div.scnd-menu{
+    top: -135px;
+    height: 0px;
+}
+
+div.scnd-menu div.bottomln{
+        width: 10px;
+        height: 20px;   
+        display: none;
+        background-color: rgb(200,200,200);
+}
+
+div.scnd-menu div.next-menu{
+        height: 40px;
+        border-radius: 5px;
+        display: none;
+        background-color: rgb(200,200,200);
+}
+
+.li1 .bottomln{
+    left: 75px;
+}
+
+.li2 .bottomln{
+    left: 195px;
+}
+
+.li3 .bottomln{
+    left: 311px;
+}
+
+.li4 .bottomln{
+    left: 432px;
+}
+
+ul.scnd-menu-options{
+    padding: 10px;
+}
+
+ul.scnd-menu-options li{
+    display: inline;
+    margin: 0 15px;
+    height: 30px;
 }
 
 div.cont-box{

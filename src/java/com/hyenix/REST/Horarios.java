@@ -332,6 +332,10 @@ public class Horarios {
             } catch (ClassNotFoundException cnfEx) {
                 dataReturn.put("Encontrado", false);
                 dataReturn.put("Mensaje", "No se encuentra el Driver");
+                data2="{";
+                data2+="\"Encontrado\":false,";
+                data2+="\"Mensaje\":\"No se ha cargado el driver correctamente\"";
+                data2+="}";
             }
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
             String idMat = dataJS.getString("ID");
@@ -352,11 +356,20 @@ public class Horarios {
             } else {
                 dataReturn.put("Encontrado", false);
                 dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
+                data2="{";
+                data2+="\"Encontrado\":false,";
+                data2+="\"Mensaje\":\"No se ha encontrado la materia\"";
+                data2+="}";
             }
         } catch (SQLException sqlEx) {
+            data2="{";
+            data2+="\"Encontrado\":false,";
+            data2+="\"Mensaje\":\"Ha ocurrido un error SQL\"";
+            data2+="}";
             dataReturn.put("Encontrado", false);
             dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
         }
         return data2;
     }
+    
 }

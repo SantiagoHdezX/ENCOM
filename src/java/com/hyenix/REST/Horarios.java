@@ -339,7 +339,12 @@ public class Horarios {
             query.setString(1, idMat);
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
-                data2="{\"Encontrado\":true}";
+                /*Debido a un error, hubo que crear el JSON a mano*/
+                data2="{\"Encontrado\":true,";
+                data2+="\"ID\":\""+rset.getString("ID_Materia")+"\",";
+                data2+="\"Nombre\":\""+rset.getString("nombreMat")+"\",";
+                data2+="\"Semestre\":"+rset.getInt("semestre");
+                data2+="}";
                 dataJS.put("Encontrado", true);
                 dataJS.put("ID", rset.getString("ID_Materia"));
                 dataJS.put("Nombre", rset.getString("nombreMat"));

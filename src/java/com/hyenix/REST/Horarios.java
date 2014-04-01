@@ -32,41 +32,24 @@ public class Horarios {
     public String RegistrarHorario(String srt) {
         JSONObject horario = new JSONObject(srt);
         JSONObject rtnStmt = new JSONObject();
-        try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException cnfEx) {
-                rtnStmt.put("Registro", false);
-                rtnStmt.put("Mensaje", "Driver no encontrado");
-                return rtnStmt.toString();
-            }
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
-            Statement stmt = conn.createStatement();
-            /*
-             Registro de Materia
-             */
-            int Profesor = horario.getInt("Profesor");
-            JSONArray materias = horario.getJSONArray("Materia");
-            for (int i = 0; i < materias.length(); i++) {
-                JSONObject snt = materias.getJSONObject(i);
-                String idMat = snt.getString("idMateria");
-                JSONArray grupo = snt.getJSONArray("Horario");
-                for (int j = 0; j < grupo.length(); j++) {
-                    JSONObject currentGroup = grupo.getJSONObject(j);
-                    String notificacion = Reg_Grupo(conn, Profesor, idMat, currentGroup.toString());
-                    rtnStmt.put("Mensaje N" + j, notificacion);
-                }
-            }
 
-        } catch (SQLException sqlEx) {
-            rtnStmt.put("Registro", false);
-            rtnStmt.put("Mensaje", "SQLException");
-            return rtnStmt.toString();
+        int Profesor = horario.getInt("Profesor");
+        JSONArray materias = horario.getJSONArray("Materia");
+        for (int i = 0; i < materias.length(); i++) {
+            JSONObject snt = materias.getJSONObject(i);
+            String idMat = snt.getString("idMateria");
+            JSONArray grupo = snt.getJSONArray("Horario");
+            for (int j = 0; j < grupo.length(); j++) {
+                JSONObject currentGroup = grupo.getJSONObject(j);
+                String notificacion = Reg_Grupo(Profesor, idMat, currentGroup.toString());
+                rtnStmt.put("Mensaje N" + j, notificacion);
+            }
         }
         return rtnStmt.toString();
     }
 
-    public String Reg_Grupo(Connection conn, int Profesor, String idMat, String datosGrupo) {
+    public String Reg_Grupo(int Profesor, String idMat, String datosGrupo) {
+        Connection conn = DataConn.connect();
         String dtr = null;
         String nullHour = "00:00:00";
         String LEntrada, LSalida, MEntrada, MSalida, MiEntrada, MiSalida, JEntrada, JSalida, VEntrada, VSalida;
@@ -165,80 +148,6 @@ public class Horarios {
         return dtr;
     }
 
-    /*
-     JSON para pruebas:
-     {
-     "Profesor":2552,
-     "Materia":
-     [
-     {"idMateria":"P301","Horario":
-     [
-     {
-     "Grupo":"3IM7",
-     "Lunes":
-     {
-     "Clase":true,
-     "Entrada":"07:00:00",
-     "Salida":"08:00:00",
-     },
-     "Martes":
-     {
-     "Clase":false,
-     },
-     "Miercoles":
-     {
-     "Clase":true,
-     "Entrada":"07:00:00",
-     "Salida":"08:00:00",
-     },
-     "Jueves":
-     {
-     "Clase":false,
-     },
-     "Viernes":
-     {
-     "Clase":false,
-     }
-     },
-     {
-     "Grupo":"3IM8",
-     "Lunes":
-     {
-     "Clase":true,
-     "Entrada":"07:00:00",
-     "Salida":"08:00:00",
-     },
-     "Martes":
-     {
-     "Clase":false,
-     },
-     "Miercoles":
-     {
-     "Clase":true,
-     "Entrada":"07:00:00",
-     "Salida":"08:00:00",
-     },
-     "Jueves":
-     {
-     "Clase":false,
-     },
-     "Viernes":
-     {
-     "Clase":false,
-     }
-     },
-     ]
-     }
-     ]
-     }
-    
-     Cliente para REST:
-    
-     chrome://restclient/content/restclient.html
-    
-     Como usarla:
-     http://somersetson.com/?p=41
-     */
     @Path("/RegistrarMateria")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -247,14 +156,7 @@ public class Horarios {
         JSONObject dataJS = new JSONObject(data);
         JSONObject dataReturn = new JSONObject();
         try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException cnfEx) {
-                dataReturn.put("Registrado", false);
-                dataReturn.put("Mensaje", "No se ha cargado el driver");
-                return dataReturn.toString();
-            }
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            Connection conn = DataConn.connect();
             String idMat = dataJS.getString("idMat");
             String nombreMat = dataJS.getString("nombreMat");
             int semestre = dataJS.getInt("Semestre");
@@ -264,7 +166,6 @@ public class Horarios {
                 dataReturn.put("Registrado", false);
                 dataReturn.put("Mensaje", "Ya existe una materia con ese ID");
             } else {
-
                 PreparedStatement update = conn.prepareStatement("INSERT INTO catalogo_materias (ID_Materia, nombreMat, semestre) VALUES(?,?,?);");
                 update.setString(1, idMat);
                 update.setString(2, nombreMat);
@@ -276,7 +177,6 @@ public class Horarios {
         } catch (SQLException sqlEx) {
             dataReturn.put("Registrado", false);
             dataReturn.put("Mensaje", "Ha ocurrido una SQLException");
-            return dataReturn.toString();
         }
         return dataReturn.toString();
     }
@@ -287,13 +187,7 @@ public class Horarios {
     public String ObtenerMaterias() {
         JSONObject dataReturn = new JSONObject();
         try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException cnfEx) {
-                dataReturn.put("Exito", false);
-                dataReturn.put("Mensaje", "Driver no encontrado");
-            }
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            Connection conn = DataConn.connect();
             PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias");
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
@@ -325,19 +219,9 @@ public class Horarios {
     public String ObtenerDatosMateria(String data) {
         JSONObject dataJS = new JSONObject(data);
         JSONObject dataReturn = new JSONObject();
-        String data2 = null;
+        String data2;
         try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException cnfEx) {
-                dataReturn.put("Encontrado", false);
-                dataReturn.put("Mensaje", "No se encuentra el Driver");
-                data2 = "{";
-                data2 += "\"Encontrado\":false,";
-                data2 += "\"Mensaje\":\"No se ha cargado el driver correctamente\"";
-                data2 += "}";
-            }
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            Connection conn = DataConn.connect();
             String idMat = dataJS.getString("ID");
             PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias WHERE ID_Materia=?");
             query.setString(1, idMat);
@@ -362,6 +246,9 @@ public class Horarios {
                 data2 += "\"Mensaje\":\"No se ha encontrado la materia\"";
                 data2 += "}";
             }
+            rset.close();
+            query.close();
+            conn.close();
         } catch (SQLException sqlEx) {
             data2 = "{";
             data2 += "\"Encontrado\":false,";
@@ -379,13 +266,7 @@ public class Horarios {
     public String ObtenerGrupos() {
         JSONObject dataReturn = new JSONObject();
         try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException cnfEx) {
-                dataReturn.put("Encontrado", false);
-                dataReturn.put("Mensaje", "No se encuentra el Driver");
-            }
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            Connection conn = DataConn.connect();
             PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_grupo");
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
@@ -406,11 +287,39 @@ public class Horarios {
                 dataReturn.put("Busqueda", false);
                 dataReturn.put("Mensaje", "No hay grupos registrados");
             }
+            rset.close();
+            query.close();
+            conn.close();
         } catch (SQLException sqlEx) {
             dataReturn.put("Busqueda", false);
             dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
         }
         return dataReturn.toString();
+    }
+
+    @Path("/ObtenerHorarioProfesor")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ObtenerHorarioProfesor(String dataR) {
+        JSONObject data = new JSONObject(dataR);
+        JSONObject returnData = new JSONObject();
+        String id = data.getString("ID");
+        try {
+            Connection conn = DataConn.connect();
+            if (conn == null) {
+                returnData.put("Busqueda", false);
+                returnData.put("Mensaje", "No se ha conseguido la conexion");
+                return returnData.toString();
+            } else {
+                PreparedStatement query = conn.prepareStatement("SELECT * FROM horario WHERE idProfesor=?");
+                query.setString(1, id);
+                
+            }
+        } catch (SQLException ex) {
+
+        }
+        return returnData.toString();
     }
 
 }

@@ -20,9 +20,13 @@ Si por alguna razon, el proyecto no abre, agregar carpeta WEB-INF a "Web Pages"
 Tecnologia
 -------------------
 Representational State Transfer (REST)
+
 JavaScript Object Notation (JSON)
+
 WebSockets(en un futuro)
+
 Asynchronous JavaScript And XML (AJAX)
+
 Relational Database (MySQL)
 
 "Librerias que utiliza"
@@ -48,6 +52,7 @@ En el caso de nuestra implementacion, jQuery hace una peticion AJAX y recibe el 
 Herramientas
 ------------------
 NetBeans 7.X
+
 RESTClient
 
 Modulos

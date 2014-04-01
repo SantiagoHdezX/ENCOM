@@ -15,7 +15,6 @@
         <script src="../js/client.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>
-        
         if(localStorage.getItem("Sesion")!=null){
             if(localStorage.getItem("Admin").toString()=="true"){
                 window.location.href="../index.jsp";
@@ -29,6 +28,14 @@
             });
         </script>
     </head>
+    <div class="news news-cont">
+                <div class="news news-cont-access" id="news-access">
+                    <span>Noticias</span>
+                </div>
+                <div class="news news-cont-box" id="news-mostrar">
+
+                </div>				
+            </div>
     <body>
         <ol class="breadcrumb">
             <li><a href="#">Inicio</a></li>
@@ -45,5 +52,6 @@
                 <th>Duracion</th>
             </tr>
         </table>
+        <div onclick="cerrarSesion()">Cerrar Sesion</div>
     </body>
 </html>

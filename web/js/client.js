@@ -4,13 +4,9 @@
  * and open the template in the editor.
  */
 
-function sesionTrue(){
-        var anim= $(".well, .input-group-addon");
-        anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(0,255,0,.7)', borderColor: 'rgb(0,255,0)'},"fast");
-}
-
-function sesionFalse(men){
-    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color: red; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
+function sesionFalse(men, status){
+    var color = (status=="Error")?"orange":"red";
+    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color:"+color+"; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
     var anim= $(".well, .input-group-addon");
         anim.animate({left: '15px'},100);
         anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100,function(){$("#msg").fadeIn("fast")});
@@ -19,7 +15,7 @@ function sesionFalse(men){
 }
 
 function iniciarSesion(){
-                $("#msg").fadeOut("fast").remove();
+                $("#msg").fadeOut("fast",function(){$(this).remove();});
                 var sourceInfo={};
                 sourceInfo.correo = jQuery("#correo").val();
                 sourceInfo.password = jQuery("#passwd").val();
@@ -41,9 +37,9 @@ function iniciarSesion(){
                     dataType:"json",
                     data: JSONsrcInfo,
                     success:function(data){
-                        if(data.Sesion == true){
+                        if(data.Sesion != null){
                             if(data.Admin_User==true){
-                                sesionTrue();                                          
+                                $("body").fadeOut("fast");                                       
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",true);
                                 localStorage.setItem("ID", data.ID);
@@ -51,7 +47,7 @@ function iniciarSesion(){
                                 window.location="Administrador/index.jsp";
                             }
                             else{
-                                sesionTrue();
+                                $("body").fadeOut("fast");
                                 localStorage.setItem("Sesion",true);
                                 localStorage.setItem("Admin",false);
                                 localStorage.setItem("ID", data.ID);
@@ -60,18 +56,29 @@ function iniciarSesion(){
                             }
                         }
                         else{
-                            localStorage.setItem("Sesion",false);
-                            localStorage.setItem("Admin",false);
-                            sesionFalse(data.Mensaje);                              
+                            if(data.Error == true){
+                                sesionFalse(data.Mensaje, "Error");
+                            } else{
+                                sesionFalse(data.Mensaje, "NoError");      
+                            }
                             //window.location="index.jsp";
                         }
                     },
                     error:function(xhr ,ajaxOptions, thrownError ){
-                        alert(xhr.statusText);
+                        sesionError("Ha ocurrido un error");
                     }
                 });
                 return false;
             }
+
+function cerrarSesion(){
+    localStorage.removeItem("Nombre");
+    localStorage.removeItem("Sesion");
+    localStorage.removeItem("Admin");
+    localStorage.removeItem("ID");
+    $("body").fadeOut("fast",function(){window.location.href="../index.jsp";});
+}
+
 function registrarEvento(){
     var sourceInfo={};
     sourceInfo.Nombre=jQuery("#nombre").val();

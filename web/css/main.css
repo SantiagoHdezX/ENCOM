@@ -41,6 +41,7 @@ img.logo{
 div.main-cont{
 	width: 900px;
 	margin: auto;
+        position: relative;
 	padding-bottom: 10px;	
 }
 
@@ -95,11 +96,11 @@ div.nav-bar{
 	width: 800px;
 	height: 130px;
 	margin: auto;
-        margin-bottom: 40px;
+        margin-bottom: 60px;
 	padding-top: 25px;
 }
 
-div.nav-bar div{
+div.nav-bar div:not(.bottomln){
 	position: relative;
 }
 
@@ -114,40 +115,35 @@ div.nav-bar div.firstln{
 div.nav-bar div.nextln{
 	height: 10px;
 	width: 770px;
+        border-radius: 0 5px 5px 0;
 	top: 30px;
 	left: 30px;
 	background-color: rgb(200,200,200);
 }
 
-div.nav-bar div.session{
-	height: 70px;
-	width: 150px;
-	top: -10px;
+div.nav-bar div.scnd-menu-image{
+	height: 100px;
+	width: 100px;
+        background-size: 100% 100%;
+	top: -25px; 
 	left: 650px;
         text-align: center;
         padding-left: 10px;
         padding-right: 10px;
         font-size: small;
-	border-radius: 10px;
+	border-radius: 50%;
 	background-color: rgb(200,200,200);
 }
 
 div.nav-bar section{
 	left: 30px;
-	bottom: 110px;
+	bottom: 140px;
 }
 
 
 div.scnd-menu{
-    top: -135px;
+    top: -145px;
     height: 0px;
-}
-
-div.scnd-menu div.bottomln{
-        width: 10px;
-        height: 20px;   
-        display: none;
-        background-color: rgb(200,200,200);
 }
 
 div.scnd-menu div.next-menu{
@@ -157,30 +153,45 @@ div.scnd-menu div.next-menu{
         background-color: rgb(200,200,200);
 }
 
-.li1 .bottomln{
-    left: 75px;
+.bottomln{
+    position: absolute;
+    display: none;
 }
 
-.li2 .bottomln{
-    left: 195px;
+.ln1{
+    width: 10px;
+    height: 45px;
+    left: 696px;
+    top: -20px;
+    border-radius: 0 0 5px 0;
+    background-color: rgb(200,200,200);
 }
 
-.li3 .bottomln{
-    left: 311px;
-}
-
-.li4 .bottomln{
-    left: 432px;
+.ln2{
+    width: 700px;
+    height: 10px;
+    top: 15px;
+    border-radius: 5px 0 5px 5px;
+    background-color: rgb(200,200,200);
 }
 
 ul.scnd-menu-options{
-    padding: 10px;
+    padding: 10px 10px 0 10px;
+    height: inherit;
+    margin: 0;
 }
 
 ul.scnd-menu-options li{
     display: inline;
-    margin: 0 15px;
+    padding: 10px 15px;
+    position: static;
     height: 30px;
+    margin-left: -4px;
+    cursor: pointer;
+}
+
+ul.scnd-menu-options li:first-child{
+    margin:0;
 }
 
 div.cont-box{

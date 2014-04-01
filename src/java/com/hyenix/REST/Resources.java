@@ -109,8 +109,7 @@ public class Resources {
             }
             catch(ClassNotFoundException cnfEx)
             {
-                mensaje.put("Sesion", false);
-                mensaje.put("Admin_User", false);
+                mensaje.put("Error", true);
                 mensaje.put("Mensaje", "No se ha encontrado el driver");
             }
             Connection conexion=DriverManager.getConnection("jdbc:mysql://localhost/ENCOM","root","n0m3l0");
@@ -135,15 +134,13 @@ public class Resources {
                 }
             }
             else{
-                mensaje.put("Sesion", false);
-                mensaje.put("Admin_User", false);
+                mensaje.put("Error", false);
                 mensaje.put("Mensaje", "Los datos introducidos son incorrectos");
             }
         }
         catch(SQLException sqlEx)
         {
-            mensaje.put("Sesion", false);
-            mensaje.put("Admin_User", false);
+            mensaje.put("Error", true);
             mensaje.put("Mensaje", "Ha ocurrido un problema");
         }
         return mensaje.toString();

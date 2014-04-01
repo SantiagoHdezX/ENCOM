@@ -17,6 +17,7 @@
         <script src="../js/jquery.color-2.1.2.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/client.js"></script>
+        <script src="../js/nav-bar.js"></script>
         <script src="../js/administrador.js"></script>
         <script>
             
@@ -56,20 +57,12 @@
                 </p>
             </div>
         </div>
-        <div class="main-cont">
-            <div class="news news-cont">
-                <div class="news news-cont-access" id="news-access">
-                    <span>Noticias</span>
-                </div>
-                <div class="news news-cont-box" id="news-mostrar">
-
-                </div>				
-            </div>
+        <div class="main-cont">        
             <div class="main-cont-box">
                 <div class="nav-bar">
                     <div class="firstln"></div>
                     <div class="nextln"></div>
-                    <div class="session"></div>
+                    <div class="scnd-menu-image"></div>
                     <section class="main">
                         <ul class="ch-grid">
                             <li>
@@ -103,16 +96,22 @@
                         </ul>                       
                     </section>
                     <div class="scnd-menu">
+                        <div class="bottomln ln1 ex"></div>
+                        <div class="bottomln ln2 ex"></div>
                         <div class="li1">
-                            <div class="bottomln ex m1"></div>
-                            <div class="next-menu ex m1"></div>
+                            <div class="next-menu ex m1">
+                                <ul class="scnd-menu-options">
+                                    
+                                </ul>
+                            </div>
                         </div>
                         <div class="li2">
-                            <div class="bottomln ex m2"></div>
-                            <div class="next-menu ex m2"></div>
+                            <div class="next-menu ex m2">
+                                <ul class="scnd-menu-options">
+                                </ul>
+                            </div>
                         </div>
-                        <div class="li3">
-                            <div class="bottomln ex m3"></div>
+                        <div class="li3">                            
                             <div class="next-menu ex m3">
                                 <ul class="scnd-menu-options">
                                     <li>Registrar Evento</li>
@@ -123,8 +122,15 @@
                             </div>
                         </div>
                         <div class="li4">
-                            <div class="bottomln ex m4"></div>
-                            <div class="next-menu ex m4"></div>
+                            <div class="next-menu ex m4">
+                                <ul class="scnd-menu-options">
+                                    <li>Registrar Usuarios</li>
+                                    <li>Consulta General</li>
+                                    <li>Consulta Individual</li>
+                                    <li>Modificar Usuario</li>
+                                    <li>Eliminar Usuario</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,6 +163,7 @@
                             <a href="#">Panel Incidencias(Proximamente)</a><br />
                         </div>
                     </div>
+                    <div onclick="cerrarSesion()">Cerrar Sesion</div>
                 </div>
             </div>
         </div>			

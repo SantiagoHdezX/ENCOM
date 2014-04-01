@@ -5,6 +5,8 @@
  */
 package com.hyenix.REST;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import org.json.*;
 import java.sql.*;
 import javax.ws.rs.GET;
@@ -23,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/Horarios")
 public class Horarios {
 
-    @Path("/RegistarH")
+    @Path("/RegistrarH")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,7 +34,7 @@ public class Horarios {
         JSONObject rtnStmt = new JSONObject();
         try {
             try {
-                Class.forName("com.mysql-jdbc.Driver");
+                Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException cnfEx) {
                 rtnStmt.put("Registro", false);
                 rtnStmt.put("Mensaje", "Driver no encontrado");
@@ -49,9 +51,10 @@ public class Horarios {
                 JSONObject snt = materias.getJSONObject(i);
                 String idMat = snt.getString("idMateria");
                 JSONArray grupo = snt.getJSONArray("Horario");
-                for (int j = 0; i < snt.length(); j++) {
+                for (int j = 0; j < grupo.length(); j++) {
                     JSONObject currentGroup = grupo.getJSONObject(j);
-                    boolean notificacion = Reg_Grupo(conn, Profesor, idMat, currentGroup.toString());
+                    String notificacion = Reg_Grupo(conn, Profesor, idMat, currentGroup.toString());
+                    rtnStmt.put("Mensaje N" + j, notificacion);
                 }
             }
 
@@ -60,13 +63,13 @@ public class Horarios {
             rtnStmt.put("Mensaje", "SQLException");
             return rtnStmt.toString();
         }
-        return "{'Nada':0}";
+        return rtnStmt.toString();
     }
 
-    public boolean Reg_Grupo(Connection conn, int Profesor, String idMat, String datosGrupo) {
-        boolean dtr=true;
-        String nullHour="00:00:00";
-        String LEntrada,LSalida,MEntrada,MSalida, MiEntrada,MiSalida,JEntrada,JSalida,VEntrada,VSalida;
+    public String Reg_Grupo(Connection conn, int Profesor, String idMat, String datosGrupo) {
+        String dtr = null;
+        String nullHour = "00:00:00";
+        String LEntrada, LSalida, MEntrada, MSalida, MiEntrada, MiSalida, JEntrada, JSalida, VEntrada, VSalida;
         JSONObject currentGroup = new JSONObject(datosGrupo);
         String cntGp = currentGroup.getString("Grupo");
         if ((currentGroup.getJSONObject("Lunes").getBoolean("Clase")) == true) {
@@ -77,7 +80,7 @@ public class Horarios {
             LSalida = nullHour;
         }
 
-        if (currentGroup.getJSONObject("Martes").getBoolean("Clase")) {
+        if ((currentGroup.getJSONObject("Martes").getBoolean("Clase")) == true) {
             MEntrada = currentGroup.getJSONObject("Martes").getString("Entrada");
             MSalida = currentGroup.getJSONObject("Martes").getString("Salida");
         } else {
@@ -85,7 +88,7 @@ public class Horarios {
             MSalida = nullHour;
         }
 
-        if (currentGroup.getJSONObject("Miercoles").getBoolean("Clase")) {
+        if ((currentGroup.getJSONObject("Miercoles").getBoolean("Clase")) == true) {
             MiEntrada = currentGroup.getJSONObject("Miercoles").getString("Entrada");
             MiSalida = currentGroup.getJSONObject("Miercoles").getString("Salida");
         } else {
@@ -93,14 +96,14 @@ public class Horarios {
             MiSalida = nullHour;
         }
 
-        if (currentGroup.getJSONObject("Jueves").getBoolean("Clase")) {
+        if ((currentGroup.getJSONObject("Jueves").getBoolean("Clase")) == true) {
             JEntrada = currentGroup.getJSONObject("Jueves").getString("Entrada");
             JSalida = currentGroup.getJSONObject("Jueves").getString("Salida");
         } else {
             JEntrada = nullHour;
             JSalida = nullHour;
         }
-        if (currentGroup.getJSONObject("Viernes").getBoolean("Clase")) {
+        if ((currentGroup.getJSONObject("Viernes").getBoolean("Clase")) == true) {
             VEntrada = currentGroup.getJSONObject("Viernes").getString("Entrada");
             VSalida = currentGroup.getJSONObject("Viernes").getString("Salida");
         } else {
@@ -108,7 +111,22 @@ public class Horarios {
             VSalida = nullHour;
         }
         try {
-            PreparedStatement query=conn.prepareStatement("INSERT INTO horario(idProfesor,ID_Materia,Tag,LEntrada,LSalida, MEntrada,MSalida,MiEntrada,MiSalida,JEntrada,JSalida,VEntrada,VSalida) VALUES(?)");
+            PreparedStatement check = conn.prepareStatement("SELECT Tag from horario WHERE idMateria=? AND Tag=?");
+            check.setString(1, idMat);
+            check.setString(2, cntGp);
+            ResultSet rs = check.executeQuery();
+            if (rs.next()) {
+                return "Ya existe esta materia para este grupo";
+            } else {
+
+            }
+        } catch (SQLException sqlEx) {
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            return sw.toString();
+        }
+        try {
+            PreparedStatement query = conn.prepareStatement("INSERT INTO horario(idProfesor, idMateria, Tag, LEntrada, LSalida, MEntrada, MSalida, MiEntrada, MiSalida, JEntrada,JSalida,VEntrada,VSalida) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             query.setInt(1, Profesor);
             query.setString(2, idMat);
             query.setString(3, cntGp);
@@ -122,24 +140,105 @@ public class Horarios {
             query.setTime(11, java.sql.Time.valueOf(JSalida));
             query.setTime(12, java.sql.Time.valueOf(VEntrada));
             query.setTime(13, java.sql.Time.valueOf(VSalida));
-            query.executeQuery();
-            PreparedStatement query2=conn.prepareStatement("SELECT COUNT(*) FROM horario WHERE idProfesor=? AND ID_Materia=? AND Tag=?");
-            query2.setInt(1, Profesor);
-            query2.setString(2, idMat);
-            query2.setString(3, cntGp);
-            ResultSet rset=query2.executeQuery();
-            if(rset.next()){
-                dtr=true;
-            }
-            else{
-                dtr=false;
+            query.executeUpdate();
+        } catch (SQLException sqlEx) {
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            return sw.toString();
+        }
+        try {
+            PreparedStatement query3 = conn.prepareStatement("SELECT Tag FROM horario WHERE idProfesor=? AND idMateria=? AND Tag=?");
+            query3.setInt(1, Profesor);
+            query3.setString(2, idMat);
+            query3.setString(3, cntGp);
+            ResultSet rset2 = query3.executeQuery();
+            if (rset2.next()) {
+                dtr = "La materia con el ID " + idMat + " para el " + cntGp + " impartida por el profesor con el ID " + Profesor + " registrada con exito";
+            } else {
+                dtr = "No registrado";
             }
         } catch (SQLException sqlEx) {
-            dtr=false;
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            return sw.toString();
         }
         return dtr;
     }
 
+    /*
+     JSON para pruebas:
+     {
+     "Profesor":2552,
+     "Materia":
+     [
+     {"idMateria":"P301","Horario":
+     [
+     {
+     "Grupo":"3IM7",
+     "Lunes":
+     {
+     "Clase":true,
+     "Entrada":"07:00:00",
+     "Salida":"08:00:00",
+     },
+     "Martes":
+     {
+     "Clase":false,
+     },
+     "Miercoles":
+     {
+     "Clase":true,
+     "Entrada":"07:00:00",
+     "Salida":"08:00:00",
+     },
+     "Jueves":
+     {
+     "Clase":false,
+     },
+     "Viernes":
+     {
+     "Clase":false,
+     }
+     },
+     {
+     "Grupo":"3IM8",
+     "Lunes":
+     {
+     "Clase":true,
+     "Entrada":"07:00:00",
+     "Salida":"08:00:00",
+     },
+     "Martes":
+     {
+     "Clase":false,
+     },
+     "Miercoles":
+     {
+     "Clase":true,
+     "Entrada":"07:00:00",
+     "Salida":"08:00:00",
+     },
+     "Jueves":
+     {
+     "Clase":false,
+     },
+     "Viernes":
+     {
+     "Clase":false,
+     }
+     },
+     ]
+     }
+     ]
+     }
+    
+     Cliente para REST:
+    
+     chrome://restclient/content/restclient.html
+    
+     Como usarla:
+     http://somersetson.com/?p=41
+     */
     @Path("/RegistrarMateria")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -147,40 +246,112 @@ public class Horarios {
     public String RegistrarMateria(String data) {
         JSONObject dataJS = new JSONObject(data);
         JSONObject dataReturn = new JSONObject();
-        try{
-            try{
+        try {
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
-            }
-            catch(ClassNotFoundException cnfEx){
+            } catch (ClassNotFoundException cnfEx) {
                 dataReturn.put("Registrado", false);
                 dataReturn.put("Mensaje", "No se ha cargado el driver");
                 return dataReturn.toString();
             }
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
-            String idMat=dataJS.getString("idMat");
-            String nombreMat=dataJS.getString("nombreMat");
-            int semestre=dataJS.getInt("Semestre");
-            Statement stmt=conn.createStatement();
-            ResultSet rset=stmt.executeQuery("SELECT COUNT(*) FROM catalogo_materias WHERE ID_Materia='"+idMat+"'");
-            if(rset.next()){
-            PreparedStatement update= conn.prepareStatement("INSERT INTO catalogo_materias (ID_Materia, nombreMat, semestre) VALUES(?,?);");
-            update.setString(1, idMat);
-            update.setString(2, nombreMat);
-            update.setInt(3, semestre);
-            update.executeUpdate();
-            dataReturn.put("Registrado", true);
-            dataReturn.put("Mensaje", "La materia '"+nombreMat+"' con el ID '"+idMat+"' para el semestre "+semestre+" ha sido registrada con exito");
-            }
-            else{
+            String idMat = dataJS.getString("idMat");
+            String nombreMat = dataJS.getString("nombreMat");
+            int semestre = dataJS.getInt("Semestre");
+            Statement stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery("SELECT * FROM catalogo_materias WHERE ID_Materia='" + idMat + "'");
+            if (rset.next()) {
                 dataReturn.put("Registrado", false);
                 dataReturn.put("Mensaje", "Ya existe una materia con ese ID");
+            } else {
+
+                PreparedStatement update = conn.prepareStatement("INSERT INTO catalogo_materias (ID_Materia, nombreMat, semestre) VALUES(?,?,?);");
+                update.setString(1, idMat);
+                update.setString(2, nombreMat);
+                update.setInt(3, semestre);
+                update.executeUpdate();
+                dataReturn.put("Registrado", true);
+                dataReturn.put("Mensaje", "La materia '" + nombreMat + "' con el ID '" + idMat + "' para el semestre " + semestre + " ha sido registrada con exito");
             }
-        }
-        catch(SQLException sqlEx){
+        } catch (SQLException sqlEx) {
             dataReturn.put("Registrado", false);
             dataReturn.put("Mensaje", "Ha ocurrido una SQLException");
             return dataReturn.toString();
         }
         return dataReturn.toString();
+    }
+
+    @Path("/ObtenerMaterias")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ObtenerMaterias() {
+        JSONObject dataReturn = new JSONObject();
+        try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException cnfEx) {
+                dataReturn.put("Exito", false);
+                dataReturn.put("Mensaje", "Driver no encontrado");
+            }
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias");
+            ResultSet rset = query.executeQuery();
+            if (rset.next()) {
+                JSONArray materias = new JSONArray();
+                rset.beforeFirst();
+                while (rset.next()) {
+                    JSONObject temporal = new JSONObject();
+                    temporal.put("ID", rset.getString("ID_Materia"));
+                    temporal.put("Nombre", rset.getString("nombreMat"));
+                    temporal.put("Semestre", rset.getInt("semestre"));
+                    materias.put(temporal);
+                }
+                dataReturn.put("Materias", materias);
+            } else {
+                dataReturn.put("Exito", false);
+                dataReturn.put("Mensaje", "No se han encontrado materias");
+            }
+        } catch (SQLException sqlEx) {
+            dataReturn.put("Exito", false);
+            dataReturn.put("Mensaje", "Ha ocurrido un error de SQL");
+        }
+        return dataReturn.toString();
+    }
+
+    @Path("/ObtenerDatosMateria")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ObtenerDatosMateria(String data) {
+        JSONObject dataJS = new JSONObject(data);
+        JSONObject dataReturn = new JSONObject();
+        String data2=null;
+        try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException cnfEx) {
+                dataReturn.put("Encontrado", false);
+                dataReturn.put("Mensaje", "No se encuentra el Driver");
+            }
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            String idMat = dataJS.getString("ID");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias WHERE ID_Materia=?");
+            query.setString(1, idMat);
+            ResultSet rset = query.executeQuery();
+            if (rset.next()) {
+                data2="{\"Encontrado\":true}";
+                dataJS.put("Encontrado", true);
+                dataJS.put("ID", rset.getString("ID_Materia"));
+                dataJS.put("Nombre", rset.getString("nombreMat"));
+                dataJS.put("Semestre", rset.getInt("semestre"));
+            } else {
+                dataReturn.put("Encontrado", false);
+                dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
+            }
+        } catch (SQLException sqlEx) {
+            dataReturn.put("Encontrado", false);
+            dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
+        }
+        return data2;
     }
 }

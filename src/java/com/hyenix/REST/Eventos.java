@@ -37,12 +37,7 @@ public class Eventos {
         int duracion = src.getInt("Duracion");
 
         try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException cnfEx) {
-                mensaje.put("Mensaje", "No se ha podido cargar el driver");
-                mensaje.put("Registrado", false);
-            }
+
             Connection conexion = DataConn.connect();
             Statement st2 = conexion.createStatement();
             ResultSet verified = st2.executeQuery("SELECT * from eventos WHERE Nombre_Evento='" + nameEvento + "'");

@@ -42,7 +42,7 @@ public class Horarios {
             for (int j = 0; j < grupo.length(); j++) {
                 JSONObject currentGroup = grupo.getJSONObject(j);
                 String notificacion = Reg_Grupo(Profesor, idMat, currentGroup.toString());
-                rtnStmt.put("Mensaje N" + j, notificacion);
+                rtnStmt.put("Mensaje " + j, notificacion);
             }
         }
         return rtnStmt.toString();
@@ -305,16 +305,25 @@ public class Horarios {
         JSONObject data = new JSONObject(dataR);
         JSONObject returnData = new JSONObject();
         String id = data.getString("ID");
+        String nullHour="00:00:00";
         try {
             Connection conn = DataConn.connect();
             if (conn == null) {
                 returnData.put("Busqueda", false);
                 returnData.put("Mensaje", "No se ha conseguido la conexion");
-                return returnData.toString();
             } else {
-                PreparedStatement query = conn.prepareStatement("SELECT * FROM horario WHERE idProfesor=?");
+                PreparedStatement query = conn.prepareStatement("SELECT * FROM horario WHERE idProfesor=? ORDER BY idMateria");
                 query.setString(1, id);
-                
+                ResultSet rset =query.executeQuery();
+                if(rset.next()){
+                    JSONArray materias=new JSONArray();
+                    returnData.put("Profesor", id);
+                    rset.beforeFirst();
+                    while(rset.next()){
+                        JSONObject temporal = new JSONObject();
+                        
+                    }
+                }
             }
         } catch (SQLException ex) {
 

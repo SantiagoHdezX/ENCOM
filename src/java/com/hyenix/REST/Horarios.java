@@ -325,17 +325,17 @@ public class Horarios {
     public String ObtenerDatosMateria(String data) {
         JSONObject dataJS = new JSONObject(data);
         JSONObject dataReturn = new JSONObject();
-        String data2=null;
+        String data2 = null;
         try {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException cnfEx) {
                 dataReturn.put("Encontrado", false);
                 dataReturn.put("Mensaje", "No se encuentra el Driver");
-                data2="{";
-                data2+="\"Encontrado\":false,";
-                data2+="\"Mensaje\":\"No se ha cargado el driver correctamente\"";
-                data2+="}";
+                data2 = "{";
+                data2 += "\"Encontrado\":false,";
+                data2 += "\"Mensaje\":\"No se ha cargado el driver correctamente\"";
+                data2 += "}";
             }
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
             String idMat = dataJS.getString("ID");
@@ -344,32 +344,73 @@ public class Horarios {
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
                 /*Debido a un error, hubo que crear el JSON a mano*/
-                data2="{\"Encontrado\":true,";
-                data2+="\"ID\":\""+rset.getString("ID_Materia")+"\",";
-                data2+="\"Nombre\":\""+rset.getString("nombreMat")+"\",";
-                data2+="\"Semestre\":"+rset.getInt("semestre");
-                data2+="}";
-                dataJS.put("Encontrado", true);
-                dataJS.put("ID", rset.getString("ID_Materia"));
-                dataJS.put("Nombre", rset.getString("nombreMat"));
-                dataJS.put("Semestre", rset.getInt("semestre"));
+                /*Ya encontre el error, pero fue una buena practica hacerlo a mano xD */
+                data2 = "{\"Encontrado\":true,";
+                data2 += "\"ID\":\"" + rset.getString("ID_Materia") + "\",";
+                data2 += "\"Nombre\":\"" + rset.getString("nombreMat") + "\",";
+                data2 += "\"Semestre\":" + rset.getInt("semestre");
+                data2 += "}";
+                dataReturn.put("Encontrado", true);
+                dataReturn.put("ID", rset.getString("ID_Materia"));
+                dataReturn.put("Nombre", rset.getString("nombreMat"));
+                dataReturn.put("Semestre", rset.getInt("semestre"));
             } else {
                 dataReturn.put("Encontrado", false);
                 dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
-                data2="{";
-                data2+="\"Encontrado\":false,";
-                data2+="\"Mensaje\":\"No se ha encontrado la materia\"";
-                data2+="}";
+                data2 = "{";
+                data2 += "\"Encontrado\":false,";
+                data2 += "\"Mensaje\":\"No se ha encontrado la materia\"";
+                data2 += "}";
             }
         } catch (SQLException sqlEx) {
-            data2="{";
-            data2+="\"Encontrado\":false,";
-            data2+="\"Mensaje\":\"Ha ocurrido un error SQL\"";
-            data2+="}";
+            data2 = "{";
+            data2 += "\"Encontrado\":false,";
+            data2 += "\"Mensaje\":\"Ha ocurrido un error SQL\"";
+            data2 += "}";
             dataReturn.put("Encontrado", false);
             dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
         }
         return data2;
     }
-    
+
+    @Path("/ObtenerGrupos")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ObtenerGrupos() {
+        JSONObject dataReturn = new JSONObject();
+        try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException cnfEx) {
+                dataReturn.put("Encontrado", false);
+                dataReturn.put("Mensaje", "No se encuentra el Driver");
+            }
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/ENCOM", "root", "n0m3l0");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_grupo");
+            ResultSet rset = query.executeQuery();
+            if (rset.next()) {
+                JSONArray grupos = new JSONArray();
+                rset.beforeFirst();
+                while (rset.next()) {
+                    JSONObject temporal = new JSONObject();
+                    temporal.put("NID", rset.getInt("ID_Grupo"));
+                    temporal.put("Semestre", rset.getInt("Semestre"));
+                    temporal.put("Numero", rset.getInt("Numero"));
+                    temporal.put("Matutino", rset.getBoolean("Matutino"));
+                    temporal.put("ID", rset.getString("Tag"));
+                    grupos.put(temporal);
+                }
+                dataReturn.put("Busqueda", true);
+                dataReturn.put("Grupos", grupos);
+            } else {
+                dataReturn.put("Busqueda", false);
+                dataReturn.put("Mensaje", "No hay grupos registrados");
+            }
+        } catch (SQLException sqlEx) {
+            dataReturn.put("Busqueda", false);
+            dataReturn.put("Mensaje", "Ha ocurrido un error SQL");
+        }
+        return dataReturn.toString();
+    }
+
 }

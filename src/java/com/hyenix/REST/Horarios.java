@@ -304,7 +304,7 @@ public class Horarios {
     public String ObtenerHorarioProfesor(String dataR) {
         JSONObject data = new JSONObject(dataR);
         JSONObject returnData = new JSONObject();
-        String id = data.getString("ID");
+        int id = data.getInt("Profesor");
         String nullHour="00:00:00";
         try {
             Connection conn = DataConn.connect();
@@ -313,7 +313,7 @@ public class Horarios {
                 returnData.put("Mensaje", "No se ha conseguido la conexion");
             } else {
                 PreparedStatement query = conn.prepareStatement("SELECT * FROM horario WHERE idProfesor=? ORDER BY idMateria");
-                query.setString(1, id);
+                query.setInt(1, id);
                 ResultSet rset =query.executeQuery();
                 if(rset.next()){
                     JSONArray materias=new JSONArray();
@@ -321,12 +321,30 @@ public class Horarios {
                     rset.beforeFirst();
                     while(rset.next()){
                         JSONObject temporal = new JSONObject();
-                        
+                        temporal.put("Materia",rset.getString("idMateria"));
+                        temporal.put("Grupo", rset.getString("Tag"));
+                        temporal.put("LEntrada", rset.getTime("LEntrada"));
+                        temporal.put("LSalida", rset.getTime("LSalida"));
+                        temporal.put("MEntrada", rset.getTime("MEntrada"));
+                        temporal.put("MSalida", rset.getTime("MSalida"));
+                        temporal.put("MiEntrada", rset.getTime("MiEntrada"));
+                        temporal.put("MiSalida", rset.getTime("MiSalida"));
+                        temporal.put("JEntrada", rset.getTime("JEntrada"));
+                        temporal.put("JSalida", rset.getTime("JSalida"));
+                        temporal.put("VEntrada", rset.getTime("VEntrada"));
+                        temporal.put("VSalida", rset.getTime("VSalida"));
+                        materias.put(temporal);
                     }
+                    returnData.put("Horario", materias);
+                }
+                else{
+                    returnData.put("Busqueda", false);
+                    returnData.put("Mensaje", "No hay materias registradas con este profesor");
                 }
             }
         } catch (SQLException ex) {
-
+            returnData.put("Busqueda", false);
+            returnData.put("Mensaje", "SQLException");
         }
         return returnData.toString();
     }

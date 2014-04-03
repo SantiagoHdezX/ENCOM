@@ -57,7 +57,7 @@ public class Eventos {
 
                 if (rset.next()) {
                     mensaje.put("Registrado", true);
-                    mensaje.put("Mensaje", "El evento " + nameEvento + " ha sido creado");
+                    mensaje.put("Mensaje", "El evento " + nameEvento + " ha sido creado con el ID "+rset.getInt("idEvento"));
                 } else {
                     mensaje.put("Registro", false);
                     mensaje.put("Mensaje", "El evento no se ha podido crear");
@@ -85,6 +85,7 @@ public class Eventos {
                 rset.beforeFirst();
                 while (rset.next()) {
                     JSONObject temporal = new JSONObject();
+                    temporal.put("ID_Evento", rset.getString("idEvento"));
                     temporal.put("Nombre", rset.getString("Nombre_Evento"));
                     temporal.put("Descripcion", rset.getString("Descripcion"));
                     temporal.put("Fecha", rset.getDate("Fecha"));

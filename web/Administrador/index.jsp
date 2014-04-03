@@ -163,7 +163,7 @@
                             <a href="#">Panel Incidencias(Proximamente)</a><br />
                         </div>
                     </div>
-                    <div onclick="cerrarSesion()">Cerrar Sesion</div>
+                    <div onclick="cerrarSesion()" class="btn btn-warning">Cerrar Sesion</div>
                 </div>
             </div>
         </div>			

@@ -120,23 +120,26 @@ function obtenerEventos(){
         success: function(data){
             for(var evento in data.Eventos){
                 var tr = document.createElement('tr');
+                var td = document.createElement('td');
                 var td1 = document.createElement('td');
                 var td2 = document.createElement('td');
                 var td3 = document.createElement('td');
                 var td4 = document.createElement('td');
                 var td5 = document.createElement('td');
                 var evts=data.Eventos[evento]; 
+                var text = document.createTextNode(evts.ID_Evento) ;
                 var text1 = document.createTextNode(evts.Nombre);
                 var text2 = document.createTextNode(evts.Descripcion);
                 var text3 = document.createTextNode(evts.Fecha);
                 var text4 = document.createTextNode(evts.Hora);
                 var text5 = document.createTextNode(evts.Duracion);
-
+                td.appendChild(text);
                 td1.appendChild(text1);
                 td2.appendChild(text2);
                 td3.appendChild(text3);
                 td4.appendChild(text4);
                 td5.appendChild(text5);
+                tr.appendChild(td);
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);

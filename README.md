@@ -43,9 +43,9 @@ Servidor
 -----------------------
 Necesita usar GlassFish 4, Red Hat JBoss o WildFly (No funciona en Tomcat 7, por alguna razón)
 
-"Como se consume el web service?"
+Como se consume el web service?
 ---------------------------------
-El Web Service  genera archivos JSON que deben ser interpretados por la aplicacion cliente.
+El Web Service genera archivos JSON que deben ser interpretados por la aplicacion cliente.
 
 En el caso de nuestra implementacion, jQuery hace una peticion AJAX y recibe el JSON como un objeto JavaScript
 
@@ -65,8 +65,8 @@ Modulos
 		-Terminado:Nada
 		-Falta:API REST, cliente JavaScript
 	-Horarios
-		-Terminado:Nada
-		-Falta:API REST y cliente JavaScript
+		-Terminado:API REST
+		-Falta:cliente JavaScript
 	-Chat
 		-Terminado:Nada
 		-Falta:Servidor y cliente Node.js o Java.WebSockets (Java EE 7)

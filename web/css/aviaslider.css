@@ -1,6 +1,7 @@
 .aviaslider{ 
 height: 100px;
 width: 800px;
+border-radius: 5px;
 margin: auto;
 overflow: hidden;
 position: relative;
@@ -15,6 +16,10 @@ position: absolute;
 top:0;
 left:0;
 z-index: 1;
+}
+
+.featured img{
+    position: relative;
 }
 
 .js_active .aviaslider li, .js_active .aviaslider .featured{

@@ -79,9 +79,10 @@
             <div class="main-cont-box">
                 <br/>
                 <div class="aviaslider" id="galery">
-                    <div class="featured"><a href=""><img src="images/slides/1.jpg" width="800px" alt="Imagenes de prueba"/></a></div>	
-                    <div class="featured"><a href=""><img src="images/slides/2.jpg" width="800px" alt=""/></a></div>	
-                    <div class="featured"><a href=""><img src="images/slides/3.jpg" width="800px" alt=""/></a></div>	
+                    <div class="featured"><img src="images/slides/ipn1.jpg" alt=""/></div>	
+                    <div class="featured"><img src="images/slides/ipn2.jpg" alt=""/></div>	
+                    <div class="featured"><img src="images/slides/ipn3.jpg" alt=""/></div>
+                    <div class="featured"><img src="images/slides/ipn4.jpg" alt=""/></div>
                 </div>
                 <br/>
                 <div class="cont-box">

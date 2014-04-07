@@ -31,15 +31,13 @@ public class Incidencias {
     public String RegistrarAsistencia(String srcInfo) {
         JSONObject mensaje = new JSONObject();
         JSONObject src = new JSONObject(srcInfo);
-        String nameEvento = src.getString("Nombre");
-        String descrpt = src.getString("Descripcion");
-        String fecha = src.getString("Fecha");
-        String hora = src.getString("Hora");
-        int duracion = src.getInt("Duracion");
+        int idProfesor=src.getInt("ID");
         try {
             Connection conexion = DataConn.connect();
-            PreparedStatement query = conexion.prepareStatement("call registrarEventos(?,?,?,?,?,@)");
-            query.setString(1, nameEvento);
+            CallableStatement query = conexion.prepareCall("call registrarAsistencia(?,?)");
+            query.setInt(1, idProfesor);
+            query.registerOutParameter(2, java.sql.Types.BOOLEAN);
+            
         } catch (SQLException sqlEx) {
 
         }

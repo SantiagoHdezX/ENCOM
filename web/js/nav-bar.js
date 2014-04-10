@@ -70,16 +70,15 @@ $(document).ready(function(){
         $(".scnd-menu-options li").not(".scnd-menu-options li:last-child").css("border-right","1px solid gray");
         $(".scnd-menu-options li").mouseover(function(){
             if($(this).filter(".click").length==0){
-                $(this).animate({"backgroundColor":"rgba(255,255,255,.3)"},150);                
-            }
-            $(this).click(function(){
-                $("li").not(this).animate({"backgroundColor":"rgba(0,0,0,0)"},150).removeClass("click");
-                $(this).animate({"backgroundColor":"rgba(255,255,255,.7)","fontWeight":"bold"},150);        
-                $(this).addClass("click");
-            })            
+                $(this).css("backgroundColor","rgba(255,255,255,.3)");
+            }   
         }).mouseout(function(){
             if($(this).filter(".click").length==0){
-                $(this).animate({"backgroundColor":"rgba(0,0,0,0)"},150);
+                $(this).css("backgroundColor","rgba(0,0,0,0)");
             }
-        });
+        }).click(function(){
+                $("li").not(this).animate({"backgroundColor":"rgba(0,0,0,0)"},150).removeClass("click");
+                $(this).animate({"backgroundColor":"rgba(255,255,255,.7)"},150); 
+                $(this).addClass("click");
+        });       ;
 });

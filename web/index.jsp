@@ -90,11 +90,11 @@
                         <p>Iniciar Sesion</p>
                         <form method="post" role="form">
                             <div class="input-group">
-                                <span class="input-group-addon" title="E-mail">@</span><input type="email" class="form-control" name="correo" id="correo" required autofocus ><br />
+                                <span class="input-group-addon" title="E-mail">@</span><input type="email" class="form-control" name="correo" id="correo" autofocus ><br />
                             </div>
                             <br />
                             <div class="input-group">
-                                <span class="input-group-addon" title="Contraseña">&nbsp;#&nbsp;</span><input type="password" class="form-control" name="passwd" id="passwd" required><br />
+                                <span class="input-group-addon" title="Contraseña">&nbsp;#&nbsp;</span><input type="password" class="form-control" name="passwd" id="passwd"><br />
                             </div>
                             <br />
                             <p id="rdBtns" align="right" style="padding: 0; margin: 0;">

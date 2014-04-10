@@ -54,6 +54,9 @@ public class Resources {
         boolean administrador = new JSONObject(sourceInfo).getBoolean("administrador");
         try {
             Connection conexion = DataConn.connect();
+            if (conexion == null) {
+                throw new SQLException();
+            }
             Statement st = conexion.createStatement();
             PreparedStatement query = conexion.prepareStatement("SELECT nombre FROM usuarios WHERE correo=? OR id=?");
             query.setString(1, correo);
@@ -90,6 +93,9 @@ public class Resources {
         boolean admin = new JSONObject(sourceInfo).getBoolean("administrador");
         try {
             Connection conexion = DataConn.connect();
+            if (conexion == null) {
+                throw new SQLException();
+            }
             PreparedStatement query = conexion.prepareStatement("SELECT * FROM usuarios WHERE correo=? AND password=? AND administrador=?");
             query.setString(1, correo);
             query.setString(2, password);
@@ -133,6 +139,9 @@ public class Resources {
         String correo = new JSONObject(sourceInfo).getString("correo");
         try {
             Connection conexion = DataConn.connect();
+            if (conexion == null) {
+                throw new SQLException();
+            }
             PreparedStatement query = conexion.prepareStatement("SELECT * FROM usuarios WHERE correo=?");
             query.setString(1, correo);
             ResultSet rset = query.executeQuery();
@@ -166,6 +175,9 @@ public class Resources {
         JSONObject mensaje = new JSONObject();
         try {
             Connection conexion = DataConn.connect();
+            if (conexion == null) {
+                throw new SQLException();
+            }
             Statement query = conexion.createStatement();
             ResultSet rset = query.executeQuery("SELECT correo,id,nombre,direccion FROM usuarios;");
             if (rset.next()) {
@@ -212,6 +224,9 @@ public class Resources {
         String password = new JSONObject(sourceInfo).getString("password");
         try {
             Connection conexion = DataConn.connect();
+            if (conexion == null) {
+                throw new SQLException();
+            }
             PreparedStatement query = conexion.prepareStatement("UPDATE usuarios SET password=?, id=?, direccion=? WHERE correo=?");
             query.setString(1, password);
             query.setInt(2, id);
@@ -252,6 +267,9 @@ public class Resources {
         JSONObject mensaje = new JSONObject();
         try {
             Connection conexion = DataConn.connect();
+            if (conexion == null) {
+                throw new SQLException();
+            }
             PreparedStatement query3 = conexion.prepareStatement("SELECT nombre from usuarios WHERE correo=?");
             query3.setString(1, correo);
             ResultSet rset2 = query3.executeQuery();

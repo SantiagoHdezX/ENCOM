@@ -5,12 +5,14 @@
  */
 
 function sesionFalse(men, status){
-    var color = (status=="Error")?"orange":"red";
-    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color:"+color+"; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
+    var color={};
+    color.rgb = (status=="Error")?"rgb(230,95,0)":"rgb(255,0,0)";
+    color.rgba = (status=="Error")?"rgba(230,95,0,.7)":"rgb(255,0,0,.7)";
+    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color:"+color.rgb+"; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
     var anim= $(".well, .input-group-addon");
         anim.animate({left: '15px'},100);
-        anim.animate({left: '0px', right: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100,function(){$("#msg").fadeIn("fast")});
-        anim.animate({right: '0px', left: '15px', backgroundColor: 'rgba(255,0,0,.7)', borderColor: 'rgb(255,0,0)'},100);
+        anim.animate({left: '0px', right: '15px', backgroundColor: color.rgba, borderColor: color.rgb},100,function(){$("#msg").fadeIn("fast")});
+        anim.animate({right: '0px', left: '15px'},100);
         anim.animate({left: '0px', backgroundColor: 'rgb(245,245,245)', borderColor: '#E3E3E3'},100); 
 }
 
@@ -19,6 +21,10 @@ function iniciarSesion(){
                 var sourceInfo={};
                 sourceInfo.correo = jQuery("#correo").val();
                 sourceInfo.password = jQuery("#passwd").val();
+                if(sourceInfo.correo==""||sourceInfo.password==""){
+                    sesionFalse("No puede dejar campos vacios","LOL");
+                    return false;
+                }
                 sourceInfo.administrador = false; //default
                 var admin=$('input:radio[name=typeusr]:checked').val();
                 if(admin == "1"){
@@ -64,8 +70,9 @@ function iniciarSesion(){
                             //window.location="index.jsp";
                         }
                     },
-                    error:function(xhr ,ajaxOptions, thrownError ){
-                        sesionError("Ha ocurrido un error");
+                    error:function(xhr ,ajaxOptions, thrownError){
+                        //sesionError("Ha ocurrido un error");
+                        alert(xhr.statusText);
                     }
                 });
                 return false;

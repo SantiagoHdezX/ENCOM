@@ -1,0 +1,1 @@
+$("head").prepend("<link href='../images/icons/administrador.ico' rel='shortcut icon' type='image/x-ico'>");

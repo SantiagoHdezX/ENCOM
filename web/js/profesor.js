@@ -8,3 +8,5 @@ $(function(){
 		$("#news-mostrar").fadeToggle(500);
 	});        
 });
+
+$("head").prepend("<link href='../images/icons/profesor.ico' rel='shortcut icon' type='image/x-ico'>");

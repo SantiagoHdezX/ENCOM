@@ -1,17 +1,16 @@
 <%-- 
-    Document   : menuAdministrador
-    Created on : 6/03/2014, 10:16:31 PM
+    Document   : index
+    Created on : 6/03/2014, 10:16:17 PM
     Author     : Santiago
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Administrador</title>
+        <title>Profesor</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../css/administrador.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/profesor.css"/>
         <link rel="stylesheet" type="text/css" href="../css/main.css"/>
         <link rel="stylesheet" type="text/css" href="../css/nav-bar.css"/>
         <script src="../js/jquery-1.11.0.min.js"></script>
@@ -21,28 +20,17 @@
         <script src="../js/nav-bar.js"></script>
         <script src="../js/administrador.js"></script>
         <script>
-            
-            if(localStorage.getItem("Sesion")!=null){
-                 if(localStorage.getItem("Admin").toString()=="false"){
-                     window.location.href="../index.jsp";
-                 }
-             } else{
-                 window.location.href="../index.jsp";
-             }
-             
-            $(document).ready(function(){
-               jQuery("#eventos").hide();
-               jQuery("#usuarios").hide();
+        if(localStorage.getItem("Sesion")!=null){
+            if(localStorage.getItem("Admin").toString()=="true"){
+                window.location.href="../index.jsp";
+            }
+        } else{
+            window.location.href="../index.jsp";
+        }
+                
+            $(document).ready(function(){       
+               obtenerEventos(); 
             });
-            
-            function ShowEventos(){
-                jQuery("#eventos").show();
-                jQuery("#usuarios").hide();
-            }
-            function ShowUsuarios(){
-                jQuery("#eventos").hide();
-                jQuery("#usuarios").show();
-            }
         </script>
     </head>        
     <body>
@@ -136,37 +124,34 @@
                     </div>
                 </div>
                 <div class="cont-box">
-                    <div class="panel panel-primary">
-                        <div class="panel panel-heading">
-                            Menu Administrador
-                        </div>
-                        <div class="panel panel-body">
-                            <a href="#" onclick="return ShowEventos()">Panel Eventos</a><br />
-                            <div id="eventos">
-                                <ol>
-                                    <li><a href="Eventos/RegistrarEvento.jsp">Registrar Eventos</a></li>
-                                    <li><a href="Eventos/ConsultaEventos.jsp">Consultar Eventos</a></li>
-                                    <li><a href="Eventos/ModificarEvento.jsp">Modificar Eventos</a></li>
-                                    <li><a href="Eventos/CaducarEvento.jsp">Caducar Eventos</a></li>
-                                </ol>
-                            </div>
-                            <a href="#" onclick="return ShowUsuarios()">Panel Usuarios</a><br />
-                            <div id="usuarios">
-                                <ol>
-                                    <li><a href="Usuarios/RegistrarUsuarios.jsp">Registrar Usuarios</a></li>
-                                    <li><a href="Usuarios/ConsultarUsuario.jsp">Consulta General Usuarios</a></li>
-                                    <li><a href="Usuarios/ConsultaUsuario.jsp">Consulta Individual Usuario</a></li>
-                                    <li><a href="Usuarios/ModificarUsuario.jsp">Modificar Usuario</a></li>
-                                    <li><a href="Usuarios/EliminarUsuario.jsp">Eliminar Usuario</a></li>
-                                </ol>
-                            </div>
-                            <a href="#">Panel Horarios(Proximamente)</a><br />
-                            <a href="#">Panel Incidencias(Proximamente)</a><br />
-                        </div>
-                    </div>
+                    <ol class="breadcrumb">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Menu Usuarios</a></li>
+                        <li class="active">Consulta Eventos</li>
+                    </ol>
+
+                    <table class="table table-striped" id="tabla">
+                        <tr>
+                            <th>Nombre Evento</th>
+                            <th>Descripcion</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Duracion</th>
+                        </tr>
+                    </table>
                     <div onclick="cerrarSesion()" class="btn btn-warning">Cerrar Sesion</div>
                 </div>
             </div>
         </div>			
     </body>
 </html>
+    <!--
+    <div class="news news-cont">
+        <div class="news news-cont-access" id="news-access">
+            <span>Noticias</span>
+        </div>
+        <div class="news news-cont-box" id="news-mostrar">
+
+        </div>				
+    </div>
+    -->

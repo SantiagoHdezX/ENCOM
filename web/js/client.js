@@ -58,7 +58,7 @@ function iniciarSesion(){
                                 localStorage.setItem("Admin",false);
                                 localStorage.setItem("ID", data.ID);
                                 localStorage.setItem("Nombre", data.Nombre);
-                                window.location="Profesor/menuUsuario.jsp";
+                                window.location="Profesor/index.jsp";
                             }
                         }
                         else{

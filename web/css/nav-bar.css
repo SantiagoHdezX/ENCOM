@@ -47,22 +47,6 @@
 	background-size: 100px 100px;
 }
 
-.ch-img-1 { 
-	background-image: url('../images/navbar/Incidencias.png');
-}
-
-.ch-img-2 { 
-	background-image: url('../images/navbar/Horario.png');
-}
-
-.ch-img-3 { 
-	background-image: url('../images/navbar/Eventos.png');
-}
-.ch-img-4 { 
-	background-image: url('../images/navbar/Usuarios.png');
-}
-
-
 .ch-info {
 	position: absolute;
 	background: rgba(109,26,66,.8);

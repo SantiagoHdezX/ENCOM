@@ -20,22 +20,6 @@
         <script src="js/client.js"></script>
 	<script src='js/aviaSlider.js'></script>
         <script src="js/index.js"></script>
-        <script>
-            /*Nota
-             * Ya funciona :)
-             * 
-             * JI JI JI
-             * */
-            if(localStorage.getItem("Sesion")!==null){
-                if(localStorage.getItem("Admin").toString()=="true"){
-                    window.location.href="Administrador/index.jsp";
-                }
-                else{
-                    window.location.href="Profesor/menuUsuario.jsp";
-                }
-            }
-            
-        </script>
         <style>
             div.well{
                 width: 380px; 

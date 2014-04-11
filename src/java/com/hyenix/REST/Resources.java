@@ -119,7 +119,7 @@ public class Resources {
             }
         } catch (SQLException sqlEx) {
             mensaje.put("Error", true);
-            mensaje.put("Mensaje", "Ha ocurrido un problema");
+            mensaje.put("Mensaje", "Ha ocurrido un problema con la base de datos");
         }
         return mensaje.toString();
 

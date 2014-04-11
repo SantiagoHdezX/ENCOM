@@ -20,30 +20,6 @@
         <script src="../js/client.js"></script>
         <script src="../js/nav-bar.js"></script>
         <script src="../js/administrador.js"></script>
-        <script>
-            
-            if(localStorage.getItem("Sesion")!=null){
-                 if(localStorage.getItem("Admin").toString()=="false"){
-                     window.location.href="../index.jsp";
-                 }
-             } else{
-                 window.location.href="../index.jsp";
-             }
-             
-            $(document).ready(function(){
-               jQuery("#eventos").hide();
-               jQuery("#usuarios").hide();
-            });
-            
-            function ShowEventos(){
-                jQuery("#eventos").show();
-                jQuery("#usuarios").hide();
-            }
-            function ShowUsuarios(){
-                jQuery("#eventos").hide();
-                jQuery("#usuarios").show();
-            }
-        </script>
     </head>        
     <body>
         <div class="notif-box" id="notif-box">
@@ -102,7 +78,7 @@
                         <div class="li1">
                             <div class="next-menu ex m1">
                                 <ul class="scnd-menu-options">
-                                    
+                                   
                                 </ul>
                             </div>
                         </div>

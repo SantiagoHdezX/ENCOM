@@ -1,7 +1,12 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+if(localStorage.getItem("Sesion")!==null){
+    if(localStorage.getItem("Admin").toString()=="true"){
+        window.location.href="Administrador/";
+    }
+    else{
+        window.location.href="Profesor/";
+    }
+}
+            
 $(document).ready(function(){
    $("#rdProf").click(function(){
        $(".sesion-image-admin").fadeOut("fast",function(){

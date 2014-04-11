@@ -6,14 +6,18 @@
 
 function sesionFalse(men, status){
     var color={};
-    color.rgb = (status=="Error")?"rgb(230,95,0)":"rgb(255,0,0)";
-    color.rgba = (status=="Error")?"rgba(230,95,0,.7)":"rgb(255,0,0,.7)";
-    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color:"+color.rgb+"; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
+    color.rgb = (status=="BDError")?"rgb(230,95,0)":"rgb(255,0,0)";
+    color.rgba = (status=="BDError")?"rgba(230,95,0,.7)":"rgb(255,0,0,.7)";
+    color.msg = (status=="FatalError")?"white":color.rgb;
+    color.finalBck = (status=="FatalError")?color.rgba:"rgb(245,245,245)";
+    color.finalBrd =(status=="FatalError")?color.rgba:"#E3E3E3";
+    men = (men=="Not Found")?"Houston tenemos un problema :(":men;
+    $("#rdBtns").append("<span id='msg' style='display:none; width: 100px; color:"+color.msg+"; position:relative; float: left; font-size: small; text-align: left; bottom: 20px'>"+men+"</span>");
     var anim= $(".well, .input-group-addon");
         anim.animate({left: '15px'},100);
         anim.animate({left: '0px', right: '15px', backgroundColor: color.rgba, borderColor: color.rgb},100,function(){$("#msg").fadeIn("fast")});
         anim.animate({right: '0px', left: '15px'},100);
-        anim.animate({left: '0px', backgroundColor: 'rgb(245,245,245)', borderColor: '#E3E3E3'},100); 
+        anim.animate({left: '0px', backgroundColor: color.finalBck, borderColor: color.finalBrd},100); 
 }
 
 function iniciarSesion(){
@@ -22,7 +26,7 @@ function iniciarSesion(){
                 sourceInfo.correo = jQuery("#correo").val();
                 sourceInfo.password = jQuery("#passwd").val();
                 if(sourceInfo.correo==""||sourceInfo.password==""){
-                    sesionFalse("No puede dejar campos vacios","LOL");
+                    sesionFalse("No puede dejar campos vacios","NoError");
                     return false;
                 }
                 sourceInfo.administrador = false; //default
@@ -50,7 +54,7 @@ function iniciarSesion(){
                                 localStorage.setItem("Admin",true);
                                 localStorage.setItem("ID", data.ID);
                                 localStorage.setItem("Nombre", data.Nombre);
-                                window.location="Administrador/index.jsp";
+                                window.location="Administrador/";
                             }
                             else{
                                 $("body").fadeOut("fast");
@@ -58,12 +62,12 @@ function iniciarSesion(){
                                 localStorage.setItem("Admin",false);
                                 localStorage.setItem("ID", data.ID);
                                 localStorage.setItem("Nombre", data.Nombre);
-                                window.location="Profesor/index.jsp";
+                                window.location="Profesor/";
                             }
                         }
                         else{
                             if(data.Error == true){
-                                sesionFalse(data.Mensaje, "Error");
+                                sesionFalse(data.Mensaje, "BDError");
                             } else{
                                 sesionFalse(data.Mensaje, "NoError");      
                             }
@@ -71,8 +75,7 @@ function iniciarSesion(){
                         }
                     },
                     error:function(xhr ,ajaxOptions, thrownError){
-                        //sesionError("Ha ocurrido un error");
-                        alert(xhr.statusText);
+                        sesionFalse(xhr.statusText,"FatalError");
                     }
                 });
                 return false;
@@ -83,7 +86,7 @@ function cerrarSesion(){
     localStorage.removeItem("Sesion");
     localStorage.removeItem("Admin");
     localStorage.removeItem("ID");
-    $("body").fadeOut("fast",function(){window.location.href="../index.jsp";});
+    $("body").fadeOut("fast",function(){window.location.href="../";});
 }
 
 function registrarEvento(){

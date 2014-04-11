@@ -18,20 +18,7 @@
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/client.js"></script>
         <script src="../js/nav-bar.js"></script>
-        <script src="../js/administrador.js"></script>
-        <script>
-        if(localStorage.getItem("Sesion")!=null){
-            if(localStorage.getItem("Admin").toString()=="true"){
-                window.location.href="../index.jsp";
-            }
-        } else{
-            window.location.href="../index.jsp";
-        }
-                
-            $(document).ready(function(){       
-               obtenerEventos(); 
-            });
-        </script>
+        <script src="../js/profesor.js"></script>
     </head>        
     <body>
         <div class="notif-box" id="notif-box">

@@ -90,6 +90,23 @@ function cerrarSesion(){
 }
 
 function registrarEvento(){
+    if($("#nombre").val()==""){
+            alert("Ingrese un nombre para el evento.");
+            $("#nombre").focus();
+            return false;
+    }else if($("#fecha").val()==""){
+            alert("Ingrese una fecha para el evento.");
+            $("#fecha").focus();
+            return false;
+    }else if($("#hora").val()==""){
+            alert("Ingrese una hora para el evento.");
+            $("#hora").focus();
+            return false;
+    }else if($("#descripcion").val()==""){
+            alert("Ingrese una descripción ara el evento.");
+            $("#descripcion").focus();
+            return false;
+    }
     var sourceInfo={};
     sourceInfo.Nombre=jQuery("#nombre").val();
     sourceInfo.Descripcion=jQuery("#descripcion").val();
@@ -165,6 +182,11 @@ function obtenerEventos(){
     return false;
 }
 function obtenerEventoIndividual(){
+    var x=$("#nombre").val();
+    if(x==""){
+            alert("Ingrese un nombre en el campo.");
+            return false;
+    }
     var src={};
     src.Nombre=jQuery("#nombre").val();
     var srcJs=JSON.stringify(src);
@@ -196,6 +218,19 @@ function obtenerEventoIndividual(){
     return false;
 }
 function actualizarEvento(){
+    if($("#fecha").val()==""){
+            alert("Revise el campo de fecha.");
+            $("#fecha").focus();
+            return false;
+    }else if($("#hora").val()==""){
+            alert("Revise el campo de hora.");
+            $("#hora").focus();
+            return false;
+    }else if($("#descripcion").val()==""){
+            alert("Revise el campo de descripción.");
+            $("#descripcion").focus();
+            return false;
+    }
     var sourceInfo={};
     sourceInfo.Nombre=jQuery("#nombre2").val();
     sourceInfo.Descripcion=jQuery("#descripcion").val();
@@ -261,6 +296,27 @@ else{
 }
         
 function registrarUsuario(){
+    if($("#correodiv").attr("i")==1){
+            alert("Revise el campo de correo electrónico.");
+            $("#correo").focus();
+            return false;
+    }else if($("#passwddiv").attr("i")==1){
+            alert("Revise los campos de password y confirmar password.");
+            $("#passwd").focus();
+            return false;
+    }else if($("#numdiv").attr("i")==1){
+            alert("Revise el campo de número de trabajador.");
+            $("#idW").focus();
+            return false;
+    }else if($("#nomdiv").attr("i")==1){
+            alert("Revise el campo de nombre de usuario.");
+            $("#nombre").focus();
+            return false;
+    }else if($("#dirdiv").attr("i")==1){
+            alert("Revise el campo de direccion.");
+            $("#direccion").focus();
+            return false;
+    }
     var src={};
     src.correo=jQuery("#correo").val();
     src.password=jQuery("#passwd").val();
@@ -422,6 +478,19 @@ function busquedaUsuarioM(){
     return false;
 }
 function updateUser(){
+    if($("#passwddiv").attr("i")==1){
+            alert("Revise los campos de password y confirmar password.");
+            $("#passwd").focus();
+            return false;
+    }else if($("#numdiv").attr("i")==1){
+            alert("Revise el campo de número de trabajador.");
+            $("#idW").focus();
+            return false;
+    }else if($("#dirdiv").attr("i")==1){
+            alert("Revise el campo de direccion.");
+            $("#direccion").focus();
+            return false;
+    }
     var src={};
     src.correo=jQuery("#correo").val();
     src.password=jQuery("#passwd").val();

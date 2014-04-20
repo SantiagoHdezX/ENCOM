@@ -91,21 +91,21 @@
                         <div class="li3">                            
                             <div class="next-menu ex m3">
                                 <ul class="scnd-menu-options">
-                                    <li>Registrar Evento</li>
-                                    <li>Consultar Evento</li>
-                                    <li>Modificar Evento</li>
-                                    <li>Caducar Evento</li>
+                                    <li id="Ev_Reg">Registrar Evento</li>
+                                    <li id="Ev_Con">Consultar Evento</li>
+                                    <li id="Ev_Mod">Modificar Evento</li>
+                                    <li id="Ev_Cad">Caducar Evento</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="li4">
                             <div class="next-menu ex m4">
                                 <ul class="scnd-menu-options">
-                                    <li>Registrar Usuarios</li>
-                                    <li>Consulta General</li>
-                                    <li>Consulta Individual</li>
-                                    <li>Modificar Usuario</li>
-                                    <li>Eliminar Usuario</li>
+                                    <li id="Us_Reg">Registrar Usuarios</li>
+                                    <li id="Us_ConG">Consulta General</li>
+                                    <li id="Us_ConI">Consulta Individual</li>
+                                    <li id="Us_Mod">Modificar Usuario</li>
+                                    <li id="Us_Eli">Eliminar Usuario</li>
                                 </ul>
                             </div>
                         </div>
@@ -140,6 +140,7 @@
                             <a href="#">Panel Incidencias(Proximamente)</a><br />
                         </div>
                     </div>
+                    |
                     <div onclick="cerrarSesion()" class="btn btn-warning">Cerrar Sesion</div>
                 </div>
             </div>

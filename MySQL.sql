@@ -4,7 +4,7 @@ USE `encom`;
 --
 -- Host: localhost    Database: encom
 -- ------------------------------------------------------
--- Server version	5.5.21
+-- Server version	5.6.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -87,7 +87,7 @@ CREATE TABLE `eventos` (
   `Duracion` int(11) NOT NULL,
   `Habilitado` tinyint(4) NOT NULL,
   PRIMARY KEY (`idEvento`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='Tabla Eventos';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='Tabla Eventos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (15,'inFamous Second Son','Keynote de ENCOM','2014-04-03','09:00:00',2,0),(16,'InFamous','Ya mero sale :3','2014-03-22','04:01:00',2,0),(17,'InFamous 2','Va a estar piolas','2014-03-14','01:01:00',1,0),(18,'InFamous Second Son 3','Keynote de ENCOM','2014-04-03','09:00:00',2,1);
+INSERT INTO `eventos` VALUES (15,'inFamous Second Son','Keynote de ENCOM','2014-04-03','09:00:00',2,0),(16,'InFamous','Ya mero sale :3','2014-03-22','04:01:00',2,0),(17,'InFamous 2','Va a estar piolas','2014-03-14','01:01:00',1,0),(18,'InFamous Second Son 3','Keynote de ENCOM','2014-04-03','09:00:00',2,1),(19,'Gremlin','Holis','2014-12-31','12:59:00',1,1);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,6 +200,10 @@ INSERT INTO `usuarios` VALUES ('mmafarah225@gmail.com','Vocas225',2553,'Margarit
 UNLOCK TABLES;
 
 --
+-- Dumping events for database 'encom'
+--
+
+--
 -- Dumping routines for database 'encom'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `Consul_Inci` */;
@@ -274,6 +278,40 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `registrarAsistencia` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarAsistencia`(in id int, out confirmacion boolean)
+BEGIN
+	DECLARE dia INT;
+	DECLARE entrada time;
+	DECLARE salida time;
+	SET dia=(SELECT weekday(curdate()));
+	if dia=0 then
+		SELECT DISTINCT LEntrada, LSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
+	elseif dia=1 then
+		SELECT DISTINCT MEntrada, MSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
+	elseif dia=2 then
+		SELECT DISTINCT MiEntrada, MiSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
+	elseif dia=3 then
+		SELECT DISTINCT JEntrada, JSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
+	elseif dia=4 then
+		SELECT DISTINCT VEntrada, VSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
+	
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -284,4 +322,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-07 13:45:22
+-- Dump completed on 2014-04-23 10:31:19

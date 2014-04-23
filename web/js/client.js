@@ -130,7 +130,7 @@ function registrarEvento(){
                 data:jsonString,
                 success:function(data){
                     alert(data.Mensaje);
-                    window.location="ConsultaEventos.jsp";
+                    window.location="ConsultarEvento.jsp";
                 },
                 error:function(xhr ,ajaxOptions, thrownError ){
                     alert(xhr.statusText);

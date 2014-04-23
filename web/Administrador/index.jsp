@@ -121,7 +121,7 @@
                             <div id="eventos">
                                 <ol>
                                     <li><a href="Eventos/RegistrarEvento.jsp">Registrar Eventos</a></li>
-                                    <li><a href="Eventos/ConsultaEventos.jsp">Consultar Eventos</a></li>
+                                    <li><a href="Eventos/ConsultarEvento.jsp">Consultar Eventos</a></li>
                                     <li><a href="Eventos/ModificarEvento.jsp">Modificar Eventos</a></li>
                                     <li><a href="Eventos/CaducarEvento.jsp">Caducar Eventos</a></li>
                                 </ol>

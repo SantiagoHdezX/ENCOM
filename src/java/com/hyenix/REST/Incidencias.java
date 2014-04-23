@@ -5,8 +5,12 @@
  */
 package com.hyenix.REST;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import org.json.*;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,21 +27,23 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/Incidencias")
 public class Incidencias {
-
     @Path("/RegistrarAsistencia")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String RegistrarAsistencia(String srcInfo) {
+        String[] dia = new String[2];
         JSONObject mensaje = new JSONObject();
         JSONObject src = new JSONObject(srcInfo);
         int idProfesor=src.getInt("ID");
         try {
-            Connection conexion = DataConn.connect();
-            CallableStatement query = conexion.prepareCall("call registrarAsistencia(?,?)");
-            query.setInt(1, idProfesor);
-            query.registerOutParameter(2, java.sql.Types.BOOLEAN);
-            
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("CALL obtenerDia(?,?)");
+            cs.setInt(1, idProfesor);
+            cs.registerOutParameter(2, java.sql.Types.BOOLEAN);
+            cs.execute();
+            boolean confirmacion=cs.getBoolean(2);               
+                    
         } catch (SQLException sqlEx) {
 
         }

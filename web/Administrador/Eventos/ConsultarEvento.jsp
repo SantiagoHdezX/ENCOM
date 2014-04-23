@@ -37,6 +37,7 @@
         <div class="mostrar">
         <table class="table table-striped" id="tabla">
             <tr>
+                <th>ID</th>
                 <th>Nombre Evento</th>
                 <th>Descripcion</th>
                 <th>Fecha</th>

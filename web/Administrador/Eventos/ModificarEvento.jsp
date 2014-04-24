@@ -8,36 +8,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
-        <script src="../../js/jquery-1.11.0.min.js"></script>
-        <script src="../../js/client.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
-		<script src="../../js/jquery.color-2.1.2.js"></script>
-		<script src="../../js/eventos.js"></script>
-		<style>
-			div.campo{
-				border:1px solid rgba(128,128,128,.4);
-				padding:10px;
-				width:500px;
-				border-radius:5px;
-				background-color:rgba(128,128,128,.1);
-			}
-			div.campog{
-				border:1px solid rgba(128,128,128,.4);
-				padding:10px;
-				width:525px;
-				border-radius:10px;
-				background-color:rgba(128,128,128,.03);
-			}
-		</style>
+        <script src="../js/jquery-1.11.0.min.js"></script>
+        <script src="../js/client.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.color-2.1.2.js"></script>
+        <script src="../js/eventos.js"></script>
+        <style>
+                div.campo{
+                        border:1px solid rgba(128,128,128,.4);
+                        padding:10px;
+                        width:500px;
+                        border-radius:5px;
+                        background-color:rgba(128,128,128,.1);
+                }
+                div.campog{
+                        border:1px solid rgba(128,128,128,.4);
+                        padding:10px;
+                        width:525px;
+                        border-radius:10px;
+                        background-color:rgba(128,128,128,.03);
+                }
+        </style>
         <script>
              $(document).ready(function(){
                jQuery("#busqueda").show();
                jQuery("#modificar").hide();
             });
         </script>
-        <title>Modificar Evento</title>
     </head>
     <body>
         <ol class="breadcrumb">

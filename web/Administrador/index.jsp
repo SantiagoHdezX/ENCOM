@@ -20,6 +20,7 @@
         <script src="../js/client.js"></script>
         <script src="../js/nav-bar.js"></script>
         <script src="../js/administrador.js"></script>
+        <script src="../js/AJAX.js"></script>
     </head>        
     <body>
         <div class="notif-box" id="notif-box">

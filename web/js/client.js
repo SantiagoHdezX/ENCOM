@@ -146,34 +146,18 @@ function obtenerEventos(){
         dataType: "json",
         success: function(data){
             for(var evento in data.Eventos){
-                var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                var td1 = document.createElement('td');
-                var td2 = document.createElement('td');
-                var td3 = document.createElement('td');
-                var td4 = document.createElement('td');
-                var td5 = document.createElement('td');
-                var evts=data.Eventos[evento]; 
-                var text = document.createTextNode(evts.ID_Evento) ;
-                var text1 = document.createTextNode(evts.Nombre);
-                var text2 = document.createTextNode(evts.Descripcion);
-                var text3 = document.createTextNode(evts.Fecha);
-                var text4 = document.createTextNode(evts.Hora);
-                var text5 = document.createTextNode(evts.Duracion);
-                td.appendChild(text);
-                td1.appendChild(text1);
-                td2.appendChild(text2);
-                td3.appendChild(text3);
-                td4.appendChild(text4);
-                td5.appendChild(text5);
-                tr.appendChild(td);
-                tr.appendChild(td1);
-                tr.appendChild(td2);
-                tr.appendChild(td3);
-                tr.appendChild(td4);
-                tr.appendChild(td5);
-                document.getElementById("tabla").appendChild(tr);
-            }
+                var evts=data.Eventos[evento];
+                var tr={};
+                tr.tdId="<td>"+evts.ID_Evento+"</td>";
+                tr.tdNo="<td>"+evts.Nombre+"</td>";
+                tr.tdDe="<td>"+evts.Descripcion+"</td>";
+                tr.tdFe="<td>"+evts.Fecha+"</td>";
+                tr.tdHo="<td>"+evts.Hora+"</td>";
+                tr.tdDu="<td>"+evts.Duracion+"</td>";
+                $("#tabla").append("<tr>"+tr.tdId+tr.tdNo+tr.tdDe+tr.tdFe+tr.tdHo+tr.tdDu+"</tr>");                
+            }            
+            $("#tabla tr").last().find("td").empty();
+            $("#tabla").css("margin-bottom","0px");
         },
         error:function(xhr ,ajaxOptions, thrownError ){
             alert(xhr.statusText);
@@ -254,7 +238,7 @@ function actualizarEvento(){
                 data:jsonString,
                 success:function(data){
                     alert(data.Mensaje);
-                    window.location="ConsultaEventos.jsp";
+                    window.location="ConsultarEvento.jsp";
                 },
                 error:function(xhr ,ajaxOptions, thrownError ){
                     alert(xhr.statusText);
@@ -278,7 +262,7 @@ function CaducarEvento(){
             success: function(data){
                 if(data.Deshabilitar==true){
                     alert(data.Mensaje);
-                    window.location="ConsultaEventos.jsp";
+                    window.location="ConsultarEvento.jsp";
                 }
                 else{
                     alert(data.Mensaje);

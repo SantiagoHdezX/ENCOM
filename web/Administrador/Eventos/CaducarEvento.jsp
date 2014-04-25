@@ -24,13 +24,7 @@
         </style>
     </head>
     <body>
-        <ol class="breadcrumb">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="../index.jsp">Menu Administrador</a></li>
-            <li><a href="#">Eventos</a></li>
-            <li class="active">Caducar Evento</li>
-        </ol>
-        <h1>Caducar Evento</h1>
+        <h3>Caducar Evento</h3>
 		<form>
 			<div class="campo">
 				<label for="nombre">Nombre del Evento(Tal y como fue creado)</label><br />

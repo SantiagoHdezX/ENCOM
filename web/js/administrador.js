@@ -22,6 +22,8 @@ $(function(){
     
     $(".scnd-menu li").click(function(){        
         path2=$(this).text().replace(" ","");
+        path2=(path1=="Usuarios"&&path2=="ConsultaIndividual")?"ConsultaUsuario":path2;
+        path2=(path1=="Usuarios"&&path2=="ConsultaGeneral")?"ConsultarUsuario":path2;
         url="http://localhost:8080/ENCOM/Administrador/"+path1+"/"+path2+".jsp";
         $.ajax({
             async:true,

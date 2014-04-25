@@ -14,67 +14,62 @@
         <script src="../js/jquery.color-2.1.2.js"></script>
         <script src="../js/eventos.js"></script>
         <style>
-                div.campo{
-                        border:1px solid rgba(128,128,128,.4);
-                        padding:10px;
-                        width:500px;
-                        border-radius:5px;
-                        background-color:rgba(128,128,128,.1);
-                }
-                div.campog{
-                        border:1px solid rgba(128,128,128,.4);
-                        padding:10px;
-                        width:525px;
-                        border-radius:10px;
-                        background-color:rgba(128,128,128,.03);
-                }
+            div.campo{
+                border:1px solid rgba(128,128,128,.4);
+                padding:10px;
+                width:500px;
+                border-radius:5px;
+                background-color:rgba(128,128,128,.1);
+            }
+            div.campog{
+                border:1px solid rgba(128,128,128,.4);
+                padding:10px;
+                width:525px;
+                border-radius:10px;
+                background-color:rgba(128,128,128,.03);
+            }
         </style>
         <script>
-             $(document).ready(function(){
-               jQuery("#busqueda").show();
-               jQuery("#modificar").hide();
+            $(document).ready(function() {
+                jQuery("#busqueda").show();
+                jQuery("#modificar").hide();
             });
         </script>
     </head>
     <body>
-        <ol class="breadcrumb">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="../index.jsp">Menu Administrador</a></li>
-            <li class="active">Modificar Eventos</li>
-        </ol>
+        <h3>Modificar Evento</h3>
         <div id="busqueda">
-            <h1>Buscar Evento</h1>
             <form method="post">
-				<div class="campo">
-					<label for="nombre">Nombre del Evento(Tal y como fue creado)</label><br />
-					<input type="text" name="Nombre" id="nombre" required>&emsp;&emsp;
-					<button type="submit" class="btn btn-default" onclick="return obtenerEventoIndividual()">Obtener datos</button>
-				</div>
+                <div class="campo">
+                    <label for="nombre">Nombre del Evento(Tal y como fue creado)</label><br />
+                    <input type="text" name="Nombre" id="nombre" required>&emsp;&emsp;
+                    <button type="submit" class="btn btn-default" onclick="return obtenerEventoIndividual()">Obtener datos</button>
+                </div>
             </form>
         </div><br>
         <div id="modificar" class="campog">
             <form method="post">
-				<div class="campo">
-					<label for="nombre2">Nombre del evento</label><br />
-					<input type="text" id="nombre2" name="nombre" readonly>
-				</div><br>
-				<div class="campo">
-					<label for="fecha">Fecha</label><br />
-					<input type="date" id="fecha" name="fecha" required>
-				</div><br>
-				<div class="campo">
-					<label for="hora">Hora</label><br />
-					<input type="time" id="hora" name="hora" required>
-				</div><br>
-				<div class="campo">	
-					<label for="duracion">Duracion(en horas)</label>
-					<input type="number" name="duracion" value=1 id="duracion" min="1" max="5">
-				</div><br>
-				<div class="campo">	
-					<label for="descripcion">Descripcion del evento</label><br />
-					<textarea id="descripcion" name="descripcion" required></textarea>
+                <div class="campo">
+                    <label for="nombre2">Nombre del evento</label><br />
+                    <input type="text" id="nombre2" name="nombre" readonly>
                 </div><br>
-				<button type="submit" class="btn btn-success" onclick="return actualizarEvento()">Registrar Evento</button>
+                <div class="campo">
+                    <label for="fecha">Fecha</label><br />
+                    <input type="date" id="fecha" name="fecha" required>
+                </div><br>
+                <div class="campo">
+                    <label for="hora">Hora</label><br />
+                    <input type="time" id="hora" name="hora" required>
+                </div><br>
+                <div class="campo">	
+                    <label for="duracion">Duracion(en horas)</label>
+                    <input type="number" name="duracion" value=1 id="duracion" min="1" max="5">
+                </div><br>
+                <div class="campo">	
+                    <label for="descripcion">Descripcion del evento</label><br />
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                </div><br>
+                <button type="submit" class="btn btn-success" onclick="return actualizarEvento()">Registrar Evento</button>
             </form>
         </div>
     </body>

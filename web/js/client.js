@@ -130,7 +130,7 @@ function registrarEvento(){
                 data:jsonString,
                 success:function(data){
                     alert(data.Mensaje);
-                    window.location="ConsultarEvento.jsp";
+                    $("#Ev_Con").click();
                 },
                 error:function(xhr ,ajaxOptions, thrownError ){
                     alert(xhr.statusText);
@@ -156,7 +156,7 @@ function obtenerEventos(){
                 tr.tdDu="<td>"+evts.Duracion+"</td>";
                 $("#tabla").append("<tr>"+tr.tdId+tr.tdNo+tr.tdDe+tr.tdFe+tr.tdHo+tr.tdDu+"</tr>");                
             }            
-            $("#tabla tr").last().find("td").empty();
+            $("#tabla tr").last().empty();
             $("#tabla").css("margin-bottom","0px");
         },
         error:function(xhr ,ajaxOptions, thrownError ){
@@ -183,8 +183,9 @@ function obtenerEventoIndividual(){
         success: function(data){
             if(data.Busqueda==true)
             {
-                jQuery("#busqueda").hide();
-                jQuery("#modificar").show();
+                jQuery("#busqueda").fadeOut("fast");
+                jQuery("#modificar").fadeIn("fast");
+                $("#modificar form").prepend("<input type='hidden' id='id' value='"+data.Id+"'/>");
                 $("#nombre2").val(data.Nombre);
                 $("#descripcion").val(data.Descripcion);
                 $("#fecha").val(data.Fecha);
@@ -216,6 +217,7 @@ function actualizarEvento(){
             return false;
     }
     var sourceInfo={};
+    sourceInfo.Id=jQuery("#id").val();
     sourceInfo.Nombre=jQuery("#nombre2").val();
     sourceInfo.Descripcion=jQuery("#descripcion").val();
     sourceInfo.Fecha=jQuery("#fecha").val();
@@ -238,7 +240,7 @@ function actualizarEvento(){
                 data:jsonString,
                 success:function(data){
                     alert(data.Mensaje);
-                    window.location="ConsultarEvento.jsp";
+                    $("#Ev_Con").click();
                 },
                 error:function(xhr ,ajaxOptions, thrownError ){
                     alert(xhr.statusText);
@@ -248,6 +250,11 @@ function actualizarEvento(){
     return false;
 }
 function CaducarEvento(){
+    if($("#nombre").val()==""){        
+        alert("Ingrese un nombre en el campo."); 
+        $("#nombre").focus();
+        return false;
+    }
     var x=confirm("Esta seguro que quiere caducar el evento? Una vez realizado no se podra recuperar");
     if(x==true){
         var src={};
@@ -262,7 +269,7 @@ function CaducarEvento(){
             success: function(data){
                 if(data.Deshabilitar==true){
                     alert(data.Mensaje);
-                    window.location="ConsultarEvento.jsp";
+                    $("#Ev_Con").click();
                 }
                 else{
                     alert(data.Mensaje);

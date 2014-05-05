@@ -30,6 +30,7 @@
     </head>
     <body>
         <h3>Consultar Eventos</h3>
+        <br/>
         <div class="mostrar">
             <table class="table table-striped" id="tabla">
                 <tr>

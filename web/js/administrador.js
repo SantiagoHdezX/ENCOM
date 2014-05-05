@@ -14,7 +14,7 @@ $(function(){
    $("#eventos").hide();
    $("#usuarios").hide();
    
-//navbar funcionalidad inicio
+//navbar funcionalidad
     
     $(".ch-item").click(function(){
         path1=$(this).find("h3").text();
@@ -35,7 +35,7 @@ $(function(){
     });
 });
 
-//navbar funcionalidad fin
+//navbar funcionalidad
 
 function ShowEventos(){
     $("#eventos").show();

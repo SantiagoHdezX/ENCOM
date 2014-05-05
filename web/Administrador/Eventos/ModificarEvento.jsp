@@ -1,7 +1,7 @@
 <%-- 
     Document   : ModificarEvento
     Created on : 9/03/2014, 10:17:27 PM
-    Author     : Santiago
+    Author     : HYENIX
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,12 +21,8 @@
                 border-radius:5px;
                 background-color:rgba(128,128,128,.1);
             }
-            div.campog{
-                border:1px solid rgba(128,128,128,.4);
-                padding:10px;
-                width:525px;
-                border-radius:10px;
-                background-color:rgba(128,128,128,.03);
+            div.campo label{
+                padding: 10px 0;
             }
         </style>
         <script>
@@ -38,20 +34,24 @@
     </head>
     <body>
         <h3>Modificar Evento</h3>
+        <br/>
         <div id="busqueda">
             <form method="post">
                 <div class="campo">
-                    <label for="nombre">Nombre del Evento(Tal y como fue creado)</label><br />
-                    <input type="text" name="Nombre" id="nombre" required>&emsp;&emsp;
+                    <label for="nombre">Nombre del Evento</label><br />
+                    <input type="text" name="Nombre" id="nombre" placeholder="Ingrese el nombre exacto del evento"required>                    
+                </div>
+                <br/>
+                <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">
                     <button type="submit" class="btn btn-default" onclick="return obtenerEventoIndividual()">Obtener datos</button>
                 </div>
             </form>
-        </div><br>
-        <div id="modificar" class="campog">
+        </div>
+        <div id="modificar">
             <form method="post">
                 <div class="campo">
                     <label for="nombre2">Nombre del evento</label><br />
-                    <input type="text" id="nombre2" name="nombre" readonly>
+                    <input type="text" id="nombre2" name="nombre" required>
                 </div><br>
                 <div class="campo">
                     <label for="fecha">Fecha</label><br />
@@ -68,8 +68,11 @@
                 <div class="campo">	
                     <label for="descripcion">Descripcion del evento</label><br />
                     <textarea id="descripcion" name="descripcion" required></textarea>
-                </div><br>
-                <button type="submit" class="btn btn-success" onclick="return actualizarEvento()">Registrar Evento</button>
+                </div>
+                <br>
+                <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">
+                    <button type="submit" class="btn btn-success" onclick="return actualizarEvento()">Modificar Evento</button>
+                </div>
             </form>
         </div>
     </body>

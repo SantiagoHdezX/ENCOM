@@ -30,10 +30,11 @@
     <body>
         <div>
             <h3>Registrar evento</h3>
+            <br/>
             <form method="post">
                 <div class="campo">
                     <label for="nombre">Nombre del evento</label><br />
-                    <input style="width:300px;" type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del evento" required><br>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del evento" required><br>
                 </div><br>
                 <div class="campo">
                     <label for="fecha">Fecha</label><br />
@@ -49,10 +50,12 @@
                 </div><br>
                 <div class="campo">
                     <label for="descripcion">Descripcion del evento</label><br />
-                    <textarea style="width:300px; height: 100px; resize: none; overflow-y: auto;" id="descripcion" name="descripcion" required></textarea><br />
+                    <textarea id="descripcion" name="descripcion" required></textarea><br />
                 </div><br>
-                <button type="submit" class="btn btn-success" onclick="return registrarEvento()">Registrar Evento</button>
-                <button type="reset" class="btn btn-warning">Reset</button>
+                <div class="campo" style="width: 407px; margin:auto; padding:10px 50px">
+                    <button type="submit" class="btn btn-success" onclick="return registrarEvento()">Registrar Evento</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </div>
             </form>
         </div>
     </body>

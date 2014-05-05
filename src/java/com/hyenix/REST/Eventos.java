@@ -124,6 +124,7 @@ public class Eventos {
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
                 mensaje.put("Busqueda", true);
+                mensaje.put("Id", rset.getInt("idEvento"));
                 mensaje.put("Nombre", rset.getString("Nombre_Evento"));
                 mensaje.put("Descripcion", rset.getString("Descripcion"));
                 mensaje.put("Fecha", rset.getDate("Fecha"));
@@ -147,6 +148,7 @@ public class Eventos {
     public String ModificarEvento(String src) {
         JSONObject fuente = new JSONObject(src);
         JSONObject mensaje = new JSONObject();
+        int id = fuente.getInt("Id");
         String nombre = fuente.getString("Nombre");
         String descripcion = fuente.getString("Descripcion");
         String fecha = fuente.getString("Fecha");
@@ -155,14 +157,15 @@ public class Eventos {
         try {
             Connection conexion = DataConn.connect();
             Statement st = conexion.createStatement();
-            ResultSet rset = st.executeQuery("SELECT * FROM eventos WHERE Nombre_Evento='" + nombre + "'");
+            ResultSet rset = st.executeQuery("SELECT * FROM eventos WHERE idEvento=" + id);
             if (rset.next()) {
-                PreparedStatement query = conexion.prepareStatement("UPDATE eventos SET Descripcion=?, Fecha=?, Hora=?, Duracion=? WHERE Nombre_Evento=? AND Habilitado=TRUE");
-                query.setString(1, descripcion);
-                query.setDate(2, java.sql.Date.valueOf(fecha));
-                query.setTime(3, java.sql.Time.valueOf(hora));
-                query.setInt(4, duracion);
-                query.setString(5, nombre);
+                PreparedStatement query = conexion.prepareStatement("UPDATE eventos SET Nombre_Evento=?, Descripcion=?, Fecha=?, Hora=?, Duracion=? WHERE idEvento=? AND Habilitado=TRUE");
+                query.setString(1, nombre);
+                query.setString(2, descripcion);
+                query.setDate(3, java.sql.Date.valueOf(fecha));
+                query.setTime(4, java.sql.Time.valueOf(hora));
+                query.setInt(5, duracion);
+                query.setInt(6, id);
                 query.executeUpdate();
                 mensaje.put("Mensaje", "Se ha actualizado correctamente");
                 mensaje.put("Actualizado", true);

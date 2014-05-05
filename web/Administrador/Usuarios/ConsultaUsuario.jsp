@@ -10,14 +10,11 @@
     <head>
         <script src="../js/jquery-1.11.0.min.js"></script>
         <script src="../js/client.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
         <script src="../js/jquery.color-2.1.2.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script src="../js/usuarios.js"></script>
-        <title>Consulta Usuario</title>
         <script>
             $(document).ready(function() {
-                jQuery("#busqueda").show();
-                jQuery("#mostrar").hide();
                 $("input").focus(function() {
                     $(this).parent().css({
                         "border": "1px solid rgba(0,0,255,.4)",
@@ -47,21 +44,28 @@
             div.campo{
                 width:500px;
             }
+            div.campo label{
+                padding: 10px 0;
+            }
             div#mostrar{
                 background-color:rgba(128,128,128,.05);
             }
         </style>
     </head>
     <body>
-        <h3>Consulta Individual de Usuario</h3>
+        <h3>Consultar Usuario</h3>
+        <br/>
         <form>
             <div id="busqueda" class="campo ajax">
-                <label for="idW">Correo Trabajador</label><br />
-                <input type="email" id="idW" name="idW" required>&emsp;&emsp;
+                <label for="idW">Correo del trabajador</label><br />
+                <input type="email" id="idW" name="idW" placeholder="Ingrese el e-mail del trabajador" required>                
+            </div>
+            <br/>
+            <div class="campo ajax" style="width: 250px; margin:auto; padding:10px 50px">
                 <button type="submit" class="btn btn-info" onclick="return busquedaUsuario()">Buscar Usuario</button>
             </div>
         </form>
-        <div id="mostrar" class="ajax">
+        <div id="mostrar" class="ajax" style="display:none">
             <table class="table table-bordered" id="tabla">
                 <tr>
                     <th>Correo</th>

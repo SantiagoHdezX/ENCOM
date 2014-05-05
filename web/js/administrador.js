@@ -25,6 +25,7 @@ $(function(){
         path2=(path1=="Usuarios"&&path2=="ConsultaIndividual")?"ConsultaUsuario":path2;
         path2=(path1=="Usuarios"&&path2=="ConsultaGeneral")?"ConsultarUsuario":path2;
         url="http://localhost:8080/ENCOM/Administrador/"+path1+"/"+path2+".jsp";
+        document.location.hash=path1+"_"+path2;
         $.ajax({
             async:true,
             url: url,

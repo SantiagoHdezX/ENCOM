@@ -7,9 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Consultar Eventos</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <head>        
         <script src="../js/jquery-1.11.0.min.js"></script>
         <script src="../js/client.js"></script>
         <script src="../js/bootstrap.min.js"></script>

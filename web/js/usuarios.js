@@ -1,10 +1,16 @@
 $(document).ready(function() {
-    $("input,textarea").css({
+     $("input,textarea").css({
         "border-radius":"5px",
         "border": "solid 1px rgb(169,169,169)"
     });
-    $("input,textarea").not("input[type='button']").css({
-       "padding":"5px 5px" 
+    $("input,textarea").not("input[type='button'],input[type='date']").css("padding","5px 5px");
+    $("input[type='text'],input[type='password'],input[type='email']").css("width","300px");
+    $("input[type='button'],button").css("width","150px");
+    $("textarea").css({
+       "width":"300px",
+       "height":"100px",
+       "resize":"none",
+       "overflow-y": "auto" 
     });
     $("input").focus(function() {
         $(this).parent().css({

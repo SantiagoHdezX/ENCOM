@@ -86,6 +86,7 @@
                         <div class="li2">
                             <div class="next-menu ex m2">
                                 <ul class="scnd-menu-options">
+                                    <li id="Ho_Reg">Registrar Horario</li>
                                 </ul>
                             </div>
                         </div>
@@ -112,38 +113,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="cont-box">
-                    <div class="panel panel-primary">
-                        <div class="panel panel-heading">
-                            Menu Administrador
-                        </div>
-                        <div class="panel panel-body">
-                            <a href="#" onclick="return ShowEventos()">Panel Eventos</a><br />
-                            <div id="eventos">
-                                <ol>
-                                    <li><a href="Eventos/RegistrarEvento.jsp">Registrar Eventos</a></li>
-                                    <li><a href="Eventos/ConsultarEvento.jsp">Consultar Eventos</a></li>
-                                    <li><a href="Eventos/ModificarEvento.jsp">Modificar Eventos</a></li>
-                                    <li><a href="Eventos/CaducarEvento.jsp">Caducar Eventos</a></li>
-                                </ol>
-                            </div>
-                            <a href="#" onclick="return ShowUsuarios()">Panel Usuarios</a><br />
-                            <div id="usuarios">
-                                <ol>
-                                    <li><a href="Usuarios/RegistrarUsuarios.jsp">Registrar Usuarios</a></li>
-                                    <li><a href="Usuarios/ConsultarUsuario.jsp">Consulta General Usuarios</a></li>
-                                    <li><a href="Usuarios/ConsultaUsuario.jsp">Consulta Individual Usuario</a></li>
-                                    <li><a href="Usuarios/ModificarUsuario.jsp">Modificar Usuario</a></li>
-                                    <li><a href="Usuarios/EliminarUsuario.jsp">Eliminar Usuario</a></li>
-                                </ol>
-                            </div>
-                            <a href="#">Panel Horarios(Proximamente)</a><br />
-                            <a href="#">Panel Incidencias(Proximamente)</a><br />
-                        </div>
-                    </div>
-                    |
-                    <div onclick="cerrarSesion()" class="btn btn-warning">Cerrar Sesion</div>
-                </div>
+                <div class="cont-box">                
+                </div>                
+                <div onclick="cerrarSesion()" style="margin:10px 30px;float:right;" class="btn btn-warning">Cerrar Sesion</div>
+                <br/>
+                <br/>
+            </div>
+            <div class="footer">
+                Sitio Web creado por HYENIX.
             </div>
         </div>			
     </body>

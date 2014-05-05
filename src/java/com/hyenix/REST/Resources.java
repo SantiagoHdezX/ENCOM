@@ -183,7 +183,7 @@ public class Resources {
                 throw new SQLException();
             }
             Statement query = conexion.createStatement();
-            ResultSet rset = query.executeQuery("SELECT correo,id,nombre,direccion FROM usuarios;");
+            ResultSet rset = query.executeQuery("SELECT * FROM usuarios order by administrador");
             if (rset.next()) {
                 JSONArray data = new JSONArray();
                 rset.beforeFirst();
@@ -193,6 +193,7 @@ public class Resources {
                     temporal.put("ID", rset.getInt("id"));
                     temporal.put("Nombre", rset.getString("nombre"));
                     temporal.put("Direccion", rset.getString("direccion"));
+                    temporal.put("Administrador", rset.getInt("administrador"));
                     data.put(temporal);
                 }
                 mensaje.put("Busqueda", true);

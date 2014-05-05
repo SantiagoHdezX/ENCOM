@@ -346,29 +346,20 @@ function obtenerUsuarios(){
             url: 'http://localhost:8080/ENCOM/API/Usuarios/ObtenerDatosGenerales',
             dataType: "json",
             success: function(data){
-                for(var profile in data.Usuarios){
-                    var tr = document.createElement('tr');
-                    var td1 = document.createElement('td');
-                    var td2 = document.createElement('td');
-                    var td3 = document.createElement('td');
-                    var td4 = document.createElement('td');
-                    var usr=data.Usuarios[profile]; 
-                    var text1 = document.createTextNode(usr.Correo);
-                    var text2 = document.createTextNode(usr.ID);
-                    var text3 = document.createTextNode(usr.Nombre);
-                    var text4 = document.createTextNode(usr.Direccion);
-                    //HTML DOM
-                    td1.appendChild(text1);
-                    td2.appendChild(text2);
-                    td3.appendChild(text3);
-                    td4.appendChild(text4);
-                    tr.appendChild(td1);
-                    tr.appendChild(td2);
-                    tr.appendChild(td3);
-                    tr.appendChild(td4);
-                    document.getElementById("tabla").appendChild(tr);
-                }
-            },
+                for(var usuario in data.Usuarios){
+                var users=data.Usuarios[usuario];
+                var tr={};
+                var admin=(users.Administrador==1)?"Si":"No";
+                tr.tdCo="<td>"+users.Correo+"</td>";
+                tr.tdId="<td>"+users.ID+"</td>";
+                tr.tdNo="<td>"+users.Nombre+"</td>";
+                tr.tdDi="<td>"+users.Direccion+"</td>";
+                tr.tdAd="<td>"+admin+"</td>";
+                $("#tabla").append("<tr>"+tr.tdNo+tr.tdId+tr.tdCo+tr.tdDi+tr.tdAd+"</tr>");                
+            }            
+            $("#tabla tr").last().empty();
+            $("#tabla").css("margin-bottom","0px");
+        },
             error:function(xhr ,ajaxOptions, thrownError ){
                 alert(xhr.statusText);
             }
@@ -388,38 +379,17 @@ function busquedaUsuario(){
         success: function(data){
             if(data.Busqueda==true)
             {
-                var tr = document.createElement('tr');
-                var td1 = document.createElement('td');
-                var td2 = document.createElement('td');
-                var td3 = document.createElement('td');
-                var td4 = document.createElement('td');
-                var td5 = document.createElement('td');
-                var td6 = document.createElement('td');
+                var admin=(data.Administrador==1)?"Si":"No";
+                tr.tdCo="<td>"+data.Correo+"</td>";
+                tr.tdId="<td>"+data.ID+"</td>";
+                tr.tdNo="<td>"+data.Nombre+"</td>";
+                tr.tdDi="<td>"+data.Direccion+"</td>";
+                tr.trPa="<td>"+data.Password+"</td>";
+                tr.tdAd="<td>"+admin+"</td>";
+                $("#tabla").append("<tr>"+tr.tdId+tr.tdNo+tr.tdCo+tr.tdDi+tr.tdPa+tr.tdAd+"</tr>"); 
 
-                var text1 = document.createTextNode(data.Correo);
-                var text2 = document.createTextNode(data.Password);
-                var text3 = document.createTextNode(data.ID);
-                var text4 = document.createTextNode(data.Nombre);
-                var text5 = document.createTextNode(data.Direccion);
-                var text6 = document.createTextNode(data.Administrador);
-
-                td1.appendChild(text1);
-                td2.appendChild(text2);
-                td3.appendChild(text3);
-                td4.appendChild(text4);
-                td5.appendChild(text5);
-                td6.appendChild(text6)
-                tr.appendChild(td1);
-                tr.appendChild(td2);
-                tr.appendChild(td3);
-                tr.appendChild(td4);
-                tr.appendChild(td5);
-                tr.appendChild(td6);
-
-                document.getElementById("tabla").appendChild(tr);
-
-                jQuery("#busqueda").hide();
-                jQuery("#mostrar").show();
+                jQuery("#busqueda").fadeOut("fast");
+                jQuery("#mostrar").fadeIn("fast");
             }
             else{
                 alert(data.Mensaje);
@@ -455,8 +425,8 @@ function busquedaUsuarioM(){
                 else{
                     jQuery("#typeusr").val("Permisos de usuario estandar");
                 }
-                $("#search").hide();
-                $("#change").show();
+                $("#search").fadeOut("fast");
+                $("#change").fadeIn("fast");
             }
             else{
                 alert(data.Mensaje);

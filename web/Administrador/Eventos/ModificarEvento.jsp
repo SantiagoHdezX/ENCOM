@@ -25,12 +25,6 @@
                 padding: 10px 0;
             }
         </style>
-        <script>
-            $(document).ready(function() {
-                jQuery("#busqueda").show();
-                jQuery("#modificar").hide();
-            });
-        </script>
     </head>
     <body>
         <h3>Modificar Evento</h3>
@@ -43,11 +37,11 @@
                 </div>
                 <br/>
                 <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">
-                    <button type="submit" class="btn btn-default" onclick="return obtenerEventoIndividual()">Obtener datos</button>
+                    <button type="submit" class="btn btn-info" onclick="return obtenerEventoIndividual()">Obtener datos</button>
                 </div>
             </form>
         </div>
-        <div id="modificar">
+        <div id="modificar" style="display:none;">
             <form method="post">
                 <div class="campo">
                     <label for="nombre2">Nombre del evento</label><br />

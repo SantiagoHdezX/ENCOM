@@ -41,11 +41,11 @@
                     <input style="height:32px;" type="date" id="fecha" name="fecha" required><br />
                 </div><br>
                 <div class="campo">
-                    <label for="hora">Hora (formato 24 hr)</label><br />
+                    <label for="hora">Hora (Formato 24 hr)</label><br />
                     <input style="height:32px;" type="time" id="hora" name="hora" min="08:00" max="20:00" required><br />
                 </div><br>
                 <div class="campo">
-                    <label for="duracion">Duracion(en horas)</label>
+                    <label for="duracion">Duracion (En horas)</label><br/>
                     <input style="height:32px;" type="number" name="duracion" value=1 id="duracion" min="1" max="5"><br />
                 </div><br>
                 <div class="campo">

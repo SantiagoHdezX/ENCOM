@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hyenix.REST;
+package com.hyenix.sicoin;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -32,7 +32,6 @@ public class Incidencias {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String RegistrarAsistencia(String srcInfo) {
-        String[] dia = new String[2];
         JSONObject mensaje = new JSONObject();
         JSONObject src = new JSONObject(srcInfo);
         int idProfesor=src.getInt("ID");

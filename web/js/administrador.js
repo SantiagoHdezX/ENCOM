@@ -8,16 +8,24 @@ if(localStorage.getItem("Sesion")!=null){
      window.location.href="../";
  }
  
-var path1,path2,url,callback;
+var path1,path2,url;
 
-$(function(){
-   $("#eventos").hide();
-   $("#usuarios").hide();
+$(function(){  
+    
    
 //navbar funcionalidad
     
     $(".ch-item").click(function(){
         path1=$(this).find("h3").text();
+        var hash_temp = document.location.hash;
+        if(hash_temp!=""&&hash_temp!=("#"+path1)){                    
+            var i = hash_temp.indexOf("&");
+            hash_temp = hash_temp.substr(0,i);            
+        }        
+        document.location.hash=(hash_temp==("#"+path1))?"Index":path1;
+        if(document.location.hash=="#Index"){
+            UrlHash();
+        }
     });
     
     $(".scnd-menu li").click(function(){        
@@ -25,7 +33,7 @@ $(function(){
         path2=(path1=="Usuarios"&&path2=="ConsultaIndividual")?"ConsultaUsuario":path2;
         path2=(path1=="Usuarios"&&path2=="ConsultaGeneral")?"ConsultarUsuario":path2;
         url="http://localhost:8080/ENCOM/Administrador/"+path1+"/"+path2+".jsp";
-        document.location.hash=path1+"_"+path2;
+        document.location.hash=path1+"&"+$(this).attr("id");
         $.ajax({
             async:true,
             url: url,
@@ -34,15 +42,36 @@ $(function(){
             }
         });
     });
+    
+//navbar funcionalidad
+    
+//url-hash ajax
+
+UrlHash();
+    
+//url-hash ajax
+
 });
 
-//navbar funcionalidad
-
-function ShowEventos(){
-    $("#eventos").show();
-    $("#usuarios").hide();
-}
-function ShowUsuarios(){
-    $("#eventos").hide();
-    $("#usuarios").show();
+function UrlHash(){
+    var hash_temp = document.location.hash;
+    var ajax1= "", ajax2="";
+    if(hash_temp=="#Index" || hash_temp==""){
+        $.ajax({
+            async:true,
+            url: "http://localhost:8080/ENCOM/Administrador/index_ajax.jsp",
+            success:function(data){              
+                $(".cont-box").html(data);                
+            }
+        });
+    } else if(hash_temp!=""){
+        var i = hash_temp.indexOf("&");        
+        ajax1 = (i!=-1)?hash_temp.substr(1,(i-1)):hash_temp.substr(1);
+        $("h3:contains('"+ajax1+"')").parents("div.ch-item").click();
+        if(i!=-1){
+            ajax2=hash_temp.substr(i+1);
+            $("li[id='"+ajax2+"']").click();
+        }
+    }
+    
 }

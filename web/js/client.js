@@ -22,6 +22,7 @@ function sesionFalse(men, status){
 
 function AlertMessage(element, id, message, status) {
     if (status == true) {
+        element.animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow");
         if (element.find(".alert").length == 0) {
             element.append("<div class='alert frst'></div><div class='alert message'></div>");
             element.find(".frst").css({
@@ -61,8 +62,12 @@ function AlertMessage(element, id, message, status) {
         if (element.find(".message li#"+id).length != 0) {
             element.find("li#"+id).remove();
             if(element.find(".message li").length==0){
-                element.find(".alert").fadeTo("fast","0",function(){element.find(".alert").remove();});                
+                element.find(".alert").fadeTo("fast","0",function(){element.find(".alert").remove();});                  
             }
+        }
+        
+        if (element.find(".alert").length==0){
+            element.animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow");
         }
     }
 }
@@ -163,8 +168,8 @@ function cerrarSesion(){
 
 function registrarEvento(){
     //validaciones inicio
-    if($("#nombre").val()==""){   
-        alert($("#fecha").val());
+    if($("#nombre").val()==""){  
+            $("#nombre").focus();
             return false;
     }else if($("#fecha").val()==""){
             $("#fecha").focus();
@@ -176,6 +181,11 @@ function registrarEvento(){
             $("#descripcion").focus();
             return false;
     }      
+    
+    if($("div.campo .alert").length!=0){
+        $("div.campo .alert").eq(0).parents(".campo").find("input").focus();
+        return false;
+    }
     //validaciones fin
     
     var sourceInfo={};

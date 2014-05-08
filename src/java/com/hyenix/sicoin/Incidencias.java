@@ -73,60 +73,105 @@ public class Incidencias {
             }
 
         } catch (SQLException sqlEx) {
-
+            mensaje.put("Mensaje", "Ha ocurrido un problema con la base de datos");
         }
         return mensaje.toString();
     }
-    
+
     /*Consumir este es sencillo, no tienes qe enviar data, solo tienes que hacer esto en el URI
-    url: http://localhost:8080/ENCOM/API/Incidencias/"+jquery.(#datoformulario).val();
+     url: http://localhost:8080/ENCOM/API/Incidencias/"+jquery.(#datoformulario).val();
     
-    ;)
-    */
+     ;)
+     */
     @Path("{idProfesor}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String ObtenerAsistencia(@PathParam("idProfesor")int idProfesor){
+    public String ObtenerAsistencia(@PathParam("idProfesor") int idProfesor) {
         JSONObject mensaje = new JSONObject();
-        try{
-        Connection conn=DataConn.connect();
-        CallableStatement cs= conn.prepareCall("Call ObtenerIncidencias(?,?)");
-        cs.setInt(1, idProfesor);
-        cs.registerOutParameter(2, Types.BOOLEAN);
-        cs.execute();
-        if(cs.getBoolean(2)){
-            ResultSet rset = cs.getResultSet();
-            JSONArray temporal= new JSONArray();
-            while(rset.next()){
-                JSONObject objTemporal= new JSONObject();
-                objTemporal.put("Dia", rset.getTimestamp("Dia"));
-                if(rset.getBoolean("Asistencia")){
-                    objTemporal.put("Type","Asistencia");
+        try {
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("Call ObtenerIncidencias(?,?)");
+            cs.setInt(1, idProfesor);
+            cs.registerOutParameter(2, Types.BOOLEAN);
+            cs.execute();
+            if (cs.getBoolean(2)) {
+                ResultSet rset = cs.getResultSet();
+                JSONArray temporal = new JSONArray();
+                while (rset.next()) {
+                    JSONObject objTemporal = new JSONObject();
+                    objTemporal.put("Dia", rset.getDate("Dia"));
+                    objTemporal.put("Hora", rset.getTime("Hora"));
+                    if (rset.getBoolean("Asistencia")) {
+                        objTemporal.put("Type", "Asistencia");
+                    } else if (rset.getBoolean("Retardo")) {
+                        objTemporal.put("Type", "Retardo");
+                    } else if (rset.getBoolean("Falta")) {
+                        objTemporal.put("Type", "Falta");
+                    }
+                    temporal.put(objTemporal);
                 }
-                else if(rset.getBoolean("Retardo")){
-                    objTemporal.put("Type","Retardo");    
-                }
-                else if(rset.getBoolean("Falta")){
-                    objTemporal.put("Type","Falta");
-                }
-                temporal.put(objTemporal);
+                mensaje.put("Exito", true);
+                mensaje.put("Incidencias", temporal);
+            } else {
+                mensaje.put("Exito", false);
+                mensaje.put("Mensaje", "No se ha encontrado el usuario");
             }
-            mensaje.put("Exito", true);
-            mensaje.put("Incidencias",temporal);
-        }
-        else{
-            mensaje.put("Exito", false);
-            mensaje.put("Mensaje", "No se ha encontrado el usuario");
-        }
-        }catch(SQLException sqlEx){
+        } catch (SQLException sqlEx) {
             mensaje.put("Exito", false);
             mensaje.put("Mensaje", "Ha ocurrido un problema con la base de datos");
         }
         return mensaje.toString();
     }
+
+    @Path("/SolicitarDiaE")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String Solicitud(String sourceInf) {
+        JSONObject src = new JSONObject(sourceInf);
+        JSONObject mensaje = new JSONObject();
+        int idProfesor = src.getInt("idProfesor");
+        String dia = src.getString("Dia");
+        try {
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("Call SolicitarDiaE(?,?,?,?)");
+            cs.setInt(1, idProfesor);
+            cs.setDate(2, Date.valueOf(dia));
+            cs.registerOutParameter(3, Types.BOOLEAN);
+            cs.registerOutParameter(4, Types.NVARCHAR);
+            cs.execute();
+            mensaje.put("Exito", cs.getBoolean(3));
+            mensaje.put("Mensaje", cs.getString(4));
+        } catch (SQLException sqlEx) {
+            mensaje.put("Exito", false);
+            mensaje.put("Mensaje", "Ha ocurrido un problema con la base de datos");
+        }
+        return mensaje.toString();
+    }
+
+    @Path("/DecidirDiaE")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String Decidir(String srcI) {
+        JSONObject mensaje=new JSONObject();
+        int idProfesor=new JSONObject(srcI).getInt("idProfesor");
+        String fecha=new JSONObject(srcI).getString("Dia");
+        boolean decision=new JSONObject(srcI).getBoolean("Decision");
+        try{
+            Connection conn= DataConn.connect();
+            CallableStatement cs = conn.prepareCall("Call Decision(?,?,?,?");
+            cs.setInt(1, idProfesor);
+            cs.setDate(2, Date.valueOf(fecha));
+            cs.setBoolean(3, decision);
+            cs.registerOutParameter(4, Types.NVARCHAR);
+            cs.execute();
+            mensaje.put("Mensaje",cs.getString(4));
+        }catch(SQLException sqlEx){
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            mensaje.put("Mensaje",sw.toString());
+        }
+        return mensaje.toString();
+    }
 }
-
-/*
- RegistrarFaltas
-
- */

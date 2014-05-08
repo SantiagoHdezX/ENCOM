@@ -160,7 +160,7 @@ public class Incidencias {
         boolean decision=new JSONObject(srcI).getBoolean("Decision");
         try{
             Connection conn= DataConn.connect();
-            CallableStatement cs = conn.prepareCall("Call Decision(?,?,?,?");
+            CallableStatement cs = conn.prepareCall("Call Decision(?,?,?,?)");
             cs.setInt(1, idProfesor);
             cs.setDate(2, Date.valueOf(fecha));
             cs.setBoolean(3, decision);

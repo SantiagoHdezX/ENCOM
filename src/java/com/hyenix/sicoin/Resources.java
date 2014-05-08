@@ -227,16 +227,18 @@ public class Resources {
         String correo = new JSONObject(sourceInfo).getString("correo");
         String direccion = new JSONObject(sourceInfo).getString("direccion");
         String password = new JSONObject(sourceInfo).getString("password");
+        String user = new JSONObject(sourceInfo).getString("usuario");
         try {
             Connection conexion = DataConn.connect();
             if (conexion == null) {
                 throw new SQLException();
             }
-            PreparedStatement query = conexion.prepareStatement("UPDATE usuarios SET password=?, id=?, direccion=? WHERE correo=?");
+            PreparedStatement query = conexion.prepareStatement("UPDATE usuarios SET password=?, id=?, direccion=?, nombre=? WHERE correo=?");
             query.setString(1, password);
             query.setInt(2, id);
             query.setString(3, direccion);
-            query.setString(4, correo);
+            query.setString(4, user);
+            query.setString(5, correo);
             int qr = query.executeUpdate();
             PreparedStatement query2 = conexion.prepareStatement("SELECT * from usuarios WHERE correo=? AND password=? AND direccion=? and id=?");
             query2.setString(1, correo);

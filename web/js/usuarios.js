@@ -6,101 +6,83 @@ $(document).ready(function() {
     $("input,textarea").not("input[type='button'],input[type='date']").css("padding","5px 5px");
     $("input[type='text'],input[type='password'],input[type='email']").css("width","300px");
     $("input[type='button'],button").css("width","150px");
+    $("div.campo").css("position", "relative");
     $("textarea").css({
        "width":"300px",
        "height":"100px",
        "resize":"none",
        "overflow-y": "auto" 
     });
-    $("input").focus(function() {
+    
+    $("input,textarea").focus(function() {
+        var element = $(this).parents("div.campo");
         $(this).parent().css({
             "border": "1px solid rgba(0,0,255,.4)",
-            "background-color": "rgba(0,0,255,.3)"});
+            "background-color": "rgba(0,0,255,.3)"
+        });
+        AlertMessage_Display(element, true);
     });
-    $("input").blur(function() {
+    $("button[type='reset']").click(function() {
+        $("input,textarea").parent().animate({"backgroundColor": "rgba(128,128,128,.1)", "border": "1px solid rgba(128,128,128,.4)"}, "slow");
+        $(".campo .alert").fadeTo("slow",0,function(){$(this).remove();});
+    });
+    $("input,textarea").blur(function() {
+        var x = $(this).val();
+        var element = $(this).parents("div.campo");
+        AlertMessage_Display(element, false);
         $(this).parent().css("border", "1px solid rgba(128,128,128,.4)");
         $(this).parent().css("background-color", "rgba(128,128,128,.1)");
+        if (x == "") {            
+            AlertMessage(element, "empty", "El campo está vacio.", true);
+        } else {            
+            AlertMessage(element, "empty", "", false);
+        }
     });
 
-    $("#correo").blur(function() {
+    $("#correo, #idWT").blur(function() {
         var x = $(this).val();
-        var atpos = x.indexOf("@");
-        var dotpos = x.lastIndexOf(".");
-        if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length)
-        {
-            $("#errorescorreo").remove();
-            $(this).after("<ul id=errorescorreo><b><br><li>Debe llevar @ y por lo menos un punto.</li></b></ul>");
-            $(this).parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow").attr("i", "1");
-        }
-        else {
-            $("#errorescorreo").remove();
-            $(this).parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow").attr("i", "0");
+        if(x!=""){
+            var element = $(this).parents("div.campo");
+            var atpos = x.indexOf("@");
+            var dotpos = x.lastIndexOf(".");
+            if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length){
+                AlertMessage(element, "mail", "No es un e-mail válido", true);
+            }
+            else {
+                AlertMessage(element, "mail", "", false);
+            }
         }
     });
 
     $("#passwd, #cpasswd").blur(function() {
         var y = $("#passwd").val();
+        var element_pa = $("#passwd").parents("div.campo");
         var x = $("#cpasswd").val();
+        var element_conf = $("#cpasswd").parents("div.campo");
         if (x != "" && y != "") {
+            AlertMessage(element_conf, "pass_em", "", false);
             if (x == y) {
-                $("#errorespass").remove();
-                $("#cpasswd").after("<ul id=errorespass><b><br><li>Las contrase�as coinciden.</li></b></ul>");
-                $("#cpasswd").parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow");
-                $("#passwd").parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow").attr("i", "0");
+                AlertMessage(element_pa, "pass_co", "", false);
+                AlertMessage(element_conf, "pass_co", "", false);
             }
             else {
-                $("#errorespass").remove();
-                $("#cpasswd").after("<ul id=errorespass><b><br><li>Las contrase�as NO coinciden.</li></b></ul>");
-                $("#cpasswd").parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow");
-                $("#passwd").parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow").attr("i", "1");
+                AlertMessage(element_conf, "pass_co", "La contraseña no coincide", true);
             }
-        }
-        else {
-            $("#errorespass").remove();
-            $("#cpasswd").after("<ul id=errorespass><b><br><li>No deben estar en blanco los campos de contrase�as.</li></b></ul>");
-            $("#cpasswd").parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow");
-            $("#passwd").parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow").attr("i", "1");
+        } else{
+            AlertMessage(element_conf, "pass_em", "La contraseña no coincide", true);
         }
     });
     $("#idW").blur(function() {
         var x = $(this).val();
-        if (x <= 0)
-        {
-            $("#erroresnum").remove();
-            $(this).after("<ul id=erroresnum><b><br><li>No es un n�mero de trabajador v�lido.</li></b></ul>");
-            $(this).parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow").attr("i", "1");
-        }
-        else {
-            $("#erroresnum").remove();
-            $(this).parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow").attr("i", "0");
-        }
-    });
-    $("#nombre").blur(function() {
-        if ($(this).val() == "") {
-            $(this).parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow").attr("i", "1");
-        }
-        else {
-            $(this).parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow").attr("i", "0");
-        }
-    });
-    $("#direccion").blur(function() {
-        if ($(this).val() == "") {
-            $(this).parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow").attr("i", "1");
-        }
-        else {
-            $(this).parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow").attr("i", "0");
-        }
-    });
-    $("#idWT").blur(function() {
-        var x = $(this).val();
-        var atpos = x.indexOf("@");
-        var dotpos = x.lastIndexOf(".");
-        if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length)
-        {
-            $(this).parent().animate({"backgroundColor": "rgba(255,0,0,.3)", "border": "1px solid rgba(255,0,0,.4)"}, "slow");
-        }
-        else {
-            $(this).parent().animate({"backgroundColor": "rgba(0,255,0,.3)", "border": "1px solid rgba(0,255,0,.4)"}, "slow");
+        var element = $(this).parents("div.campo");
+        if(x!=""){
+            if (x <= 0)
+            {
+                AlertMessage(element, "num", "No es un numero valido", true);
+            }
+            else {
+                AlertMessage(element, "num", "", false);
+            }
         }
     });
 });

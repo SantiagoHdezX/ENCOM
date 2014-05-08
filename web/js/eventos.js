@@ -14,6 +14,7 @@ $(document).ready(function() {
         "overflow-y": "auto"
     });
     $("input[type='date']").css("padding", "0 5px");
+    
     $("input,textarea").focus(function() {
         var element = $(this).parents("div.campo");
         $(this).parent().css({
@@ -22,10 +23,12 @@ $(document).ready(function() {
         });
         AlertMessage_Display(element, true);
     });
+    
     $("button[type='reset']").click(function() {
         $("input,textarea").parent().animate({"backgroundColor": "rgba(128,128,128,.1)", "border": "1px solid rgba(128,128,128,.4)"}, "slow");
         $(".campo .alert").fadeTo("slow",0,function(){$(this).remove();});
     });
+    
     $("input,textarea").blur(function() {
         var x = $(this).val();
         var element = $(this).parents("div.campo");

@@ -30,13 +30,15 @@
         <h3>Modificar Usuario</h3>
         <br/>
         <form method="post">
-            <div id="search" class="campo">
-                <label for="idWT">Correo Electronico</label><br />
-                <input type="email" id="idWT" placeholder="Ingrese un e-mail válido" required />
-            </div>
-            <br/>
-            <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">
-                <button type="submit" class="btn btn-warning" id="btn" onclick="return busquedaUsuarioM()">Buscar Usuario</button>
+            <div id="search">
+                <div class="campo">
+                    <label for="idWT">Correo Electronico</label><br />
+                    <input type="email" id="idWT" placeholder="Ingrese un e-mail válido" required />
+                </div>
+                <br/>
+                <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">
+                    <button type="submit" class="btn btn-warning" id="btn" onclick="return busquedaUsuarioM()">Buscar Usuario</button>
+                </div>
             </div>
         </form>
         <br>
@@ -44,7 +46,8 @@
             <form method="post">
                 <div class="campo">
                     <label for="correo">Correo Electronico</label><br>
-                    <input type="email" id="correo" name="correo" placeholder="ejemplo@xxx.com" readonly>
+                    <input type="email" id="correo" name="correo" disabled="disabled" placeholder="ejemplo@xxx.com">
+                    <input type="hidden" id="correo" name="correo">
                 </div>
                 <br>
                 <div class="campo" id="passwddiv" i=1>
@@ -58,23 +61,23 @@
                 </div>
                 <br>
                 <div class="campo" id="numdiv" i=1>
-                    <label for="idW">Numero de Trabajador</label><br>
+                    <label for="idW">Numero de Empleado</label><br>
                     <input type="number" id="idW" name="idW">
                 </div>
                 <br>
                 <div class="campo">
                     <label for="nombre">Nombre Usuario</label><br>
-                    <input type="text" id="nombre" name="nombre" readonly>
+                    <input type="text" id="nombre" name="nombre">
                 </div>
                 <br>
                 <div class="campo" id="dirdiv" i=1>
                     <label for="direccion">Direccion</label><br>
-                    <input type="text" id="direccion" name="direccion" size="30">
+                    <textarea id="direccion" name="direccion"></textarea>
                 </div>
                 <br>
                 <div class="campo">
                     <label for="permisos">Permisos</label><br>
-                    <input type="text" id="typeusr" readonly size="25">
+                    <input type="text" disabled="disabled" id="typeusr">
                 </div>
                 <br>
                 <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">

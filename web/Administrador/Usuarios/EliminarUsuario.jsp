@@ -53,7 +53,7 @@
         <form method="post">
             <div class="campo">
                 <label for="nombre">Correo Electronico del Usuario</label><br />
-                <input type="email" name="idW" id="idW" placeholder="Ingrese el e-mail del usuario" required>                
+                <input type="email" name="idWT" id="idW" placeholder="Ingrese el e-mail del usuario" required>                
             </div>
             <br/>
             <div class="campo" style="width: 250px; margin:auto; padding:10px 50px">

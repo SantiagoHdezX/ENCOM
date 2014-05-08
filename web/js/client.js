@@ -90,20 +90,16 @@ function cerrarSesion(){
 }
 
 function registrarEvento(){
-    if($("#nombre").val()==""){
-            alert("Ingrese un nombre para el evento.");
+    if($("#nombre").val()==""){            
             $("#nombre").focus();
             return false;
     }else if($("#fecha").val()==""){
-            alert("Ingrese una fecha para el evento.");
             $("#fecha").focus();
             return false;
     }else if($("#hora").val()==""){
-            alert("Ingrese una hora para el evento.");
             $("#hora").focus();
             return false;
     }else if($("#descripcion").val()==""){
-            alert("Ingrese una descripción ara el evento.");
             $("#descripcion").focus();
             return false;
     }

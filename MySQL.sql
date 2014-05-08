@@ -304,7 +304,6 @@ BEGIN
 		SELECT DISTINCT JEntrada, JSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
 	elseif dia=4 then
 		SELECT DISTINCT VEntrada, VSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
-	
 	end if;
 END ;;
 DELIMITER ;

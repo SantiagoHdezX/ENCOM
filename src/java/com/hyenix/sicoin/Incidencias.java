@@ -5,6 +5,8 @@
  */
 package com.hyenix.sicoin;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import org.json.*;
@@ -83,12 +85,44 @@ public class Incidencias {
     */
     @Path("{idProfesor}")
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String ObtenerAsistencia(@PathParam("idProfesor")String idProfesor){
+    public String ObtenerAsistencia(@PathParam("idProfesor")int idProfesor){
         JSONObject mensaje = new JSONObject();
-        
-        return null;
+        try{
+        Connection conn=DataConn.connect();
+        CallableStatement cs= conn.prepareCall("Call ObtenerIncidencias(?,?)");
+        cs.setInt(1, idProfesor);
+        cs.registerOutParameter(2, Types.BOOLEAN);
+        cs.execute();
+        if(cs.getBoolean(2)){
+            ResultSet rset = cs.getResultSet();
+            JSONArray temporal= new JSONArray();
+            while(rset.next()){
+                JSONObject objTemporal= new JSONObject();
+                objTemporal.put("Dia", rset.getTimestamp("Dia"));
+                if(rset.getBoolean("Asistencia")){
+                    objTemporal.put("Type","Asistencia");
+                }
+                else if(rset.getBoolean("Retardo")){
+                    objTemporal.put("Type","Retardo");    
+                }
+                else if(rset.getBoolean("Falta")){
+                    objTemporal.put("Type","Falta");
+                }
+                temporal.put(objTemporal);
+            }
+            mensaje.put("Exito", true);
+            mensaje.put("Incidencias",temporal);
+        }
+        else{
+            mensaje.put("Exito", false);
+            mensaje.put("Mensaje", "No se ha encontrado el usuario");
+        }
+        }catch(SQLException sqlEx){
+            mensaje.put("Exito", false);
+            mensaje.put("Mensaje", "Ha ocurrido un problema con la base de datos");
+        }
+        return mensaje.toString();
     }
 }
 

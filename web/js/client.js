@@ -628,5 +628,49 @@ function EliminarUsuario() {
     }
 }
 
+function registrarMateria() {
+
+    if ($("#idMat").val() == "") {
+        $("#idMat").focus();
+        return false;
+    } else if ($("#nombreMat").val() == "") {
+        $("#nombreMat").focus();
+        return false;
+    } else if ($("#semestre").val() == "") {
+        $("#semestre").focus();
+        return false;
+    }
+    if ($("div.campo .alert").length != 0) {
+        $("div.campo .alert").eq(0).parents(".campo").find("input").focus();
+        return false;
+    }
+
+    var sourceInfo = {};
+    sourceInfo.nombreMat = jQuery("#nombreMat").val();
+    sourceInfo.idMat = jQuery("#idMat").val();
+    sourceInfo.Semestre = jQuery("#semestre").val();
+    var jsonString = JSON.stringify(sourceInfo);
+    $.ajax({
+        async: true,
+        type: 'POST',
+        contentType: 'application/json',
+        url: 'http://localhost:8080/ENCOM/API/Horarios/RegistrarMateria',
+        dataType: "json",
+        data: jsonString,
+        success: function(data) {
+            alert(data.Mensaje);
+            if (data.ID != true) {
+                $("#Ho_RegMa").click();
+            } else {
+                $("#idMat").focus();
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.statusText);
+        }
+    }
+    );
+    return false;
+}
 
             

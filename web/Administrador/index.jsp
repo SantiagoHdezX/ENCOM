@@ -86,7 +86,9 @@
                         <div class="li2">
                             <div class="next-menu ex m2">
                                 <ul class="scnd-menu-options">
+                                    <li id="Ho_RegMa">Registrar Materia</li>
                                     <li id="Ho_Reg">Registrar Horario</li>
+                                    <li id="Ho_Con">Consultar Horario</li>
                                 </ul>
                             </div>
                         </div>

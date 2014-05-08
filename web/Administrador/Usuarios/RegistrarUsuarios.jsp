@@ -31,12 +31,12 @@
         <br/>
         <form method="post" name="RegisUs">
 
-            <div class="campo" id="correodiv" i=1>
+            <div class="campo" id="correodiv">
                 <label for="correo">Correo Electronico</label><br>
                 <input type="email" id="correo" name="correo" placeholder="Ingrese un e-mail válido">
             </div>
             <br>
-            <div class="campo" id="passwddiv" i=1>
+            <div class="campo" id="passwddiv">
                 <label for="passwd">Password</label><br>
                 <input type="password" id="passwd" name="passwd" placeholder="Ingrese una contraseña" />
             </div>
@@ -46,17 +46,17 @@
                 <input type="password" id="cpasswd" name="cpasswd" placeholder="Ingrese nuevamente la contraseña">
             </div>
             <br>
-            <div class="campo" id="numdiv" i=1>
+            <div class="campo" id="numdiv">
                 <label for="idW">Numero de Trabajador</label><br>
                 <input type="number" id="idW" name="idW" min="1" placeholder="0000">
             </div>
             <br>
-            <div class="campo" id="nomdiv" i=1>
+            <div class="campo" id="nomdiv">
                 <label for="nombre">Nombre Usuario</label><br>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingrese un nombre de usuario">
             </div>
             <br>
-            <div class="campo" id="dirdiv" i=1>
+            <div class="campo" id="dirdiv">
                 <label for="direccion">Direccion</label><br>
                 <textarea  id="direccion" name="direccion" rows="3" placeholder="Ingrese una dirección"></textarea>
             </div>

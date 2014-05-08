@@ -214,6 +214,7 @@ public class Horarios {
             ResultSet rset = stmt.executeQuery("SELECT * FROM catalogo_materias WHERE ID_Materia='" + idMat + "'");
             if (rset.next()) {
                 dataReturn.put("Registrado", false);
+                dataReturn.put("ID", true);
                 dataReturn.put("Mensaje", "Ya existe una materia con ese ID");
             } else {
                 PreparedStatement update = conn.prepareStatement("INSERT INTO catalogo_materias (ID_Materia, nombreMat, semestre) VALUES(?,?,?);");
@@ -232,13 +233,16 @@ public class Horarios {
     }
 
     @Path("/ObtenerMaterias")
-    @GET
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String ObtenerMaterias() {
+    public String ObtenerMaterias(String data) {
+        JSONObject dataPr = new JSONObject(data);
+        int sem = dataPr.getInt("semestre");
         JSONObject dataReturn = new JSONObject();
         try {
             Connection conn = DataConn.connect();
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias where semestre="+sem);
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
                 JSONArray materias = new JSONArray();
@@ -251,6 +255,7 @@ public class Horarios {
                     materias.put(temporal);
                 }
                 dataReturn.put("Materias", materias);
+                dataReturn.put("Exito", true);
             } else {
                 dataReturn.put("Exito", false);
                 dataReturn.put("Mensaje", "No se han encontrado materias");
@@ -311,13 +316,16 @@ public class Horarios {
     }
 
     @Path("/ObtenerGrupos")
-    @GET
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String ObtenerGrupos() {
+    public String ObtenerGrupos(String data) {
+        JSONObject dataPr = new JSONObject(data);
+        int semestre = dataPr.getInt("semestre");
         JSONObject dataReturn = new JSONObject();
         try {
             Connection conn = DataConn.connect();
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_grupo");
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_grupo where semestre="+semestre);
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
                 JSONArray grupos = new JSONArray();

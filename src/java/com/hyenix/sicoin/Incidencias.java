@@ -9,8 +9,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import org.json.*;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Types;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -27,6 +31,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/Incidencias")
 public class Incidencias {
+
     @Path("/RegistrarAsistencia")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -34,23 +39,60 @@ public class Incidencias {
     public String RegistrarAsistencia(String srcInfo) {
         JSONObject mensaje = new JSONObject();
         JSONObject src = new JSONObject(srcInfo);
-        int idProfesor=src.getInt("ID");
+        String nullHour = "00:00:00";
+        int idProfesor = src.getInt("Profesor");
         try {
             Connection conn = DataConn.connect();
-            CallableStatement cs = conn.prepareCall("CALL obtenerDia(?,?)");
+            CallableStatement cs = conn.prepareCall("CALL obtenerHorarioAsistencia(?,?,?)");
             cs.setInt(1, idProfesor);
-            cs.registerOutParameter(2, java.sql.Types.BOOLEAN);
+            cs.registerOutParameter(2, Types.BOOLEAN);
+            cs.registerOutParameter(3, Types.NVARCHAR);
             cs.execute();
-            boolean confirmacion=cs.getBoolean(2);               
-                    
+            if (cs.getBoolean(2)) {
+                ResultSet rs = cs.getResultSet();
+                while (rs.next()) {
+                    String horaObtenida = rs.getTime("Entrada").toString();
+                    if ((java.sql.Time.valueOf(horaObtenida)).equals(java.sql.Time.valueOf(nullHour))) {
+                        continue;
+                    } else {
+                        CallableStatement cs2 = conn.prepareCall("CALL RegistrarAsistencia(?,?,?)");
+                        cs2.setInt(1, idProfesor);
+                        cs.setTime(2, Time.valueOf(horaObtenida));
+                        cs.registerOutParameter(3, Types.NVARCHAR);
+                        cs.execute();
+                        String temporal = cs.getString(3);
+                        mensaje.put("Mensaje", temporal);
+                        break;
+                    }
+
+                }
+            } else {
+                mensaje.put("Mensaje", cs.getString(3));
+            }
+
         } catch (SQLException sqlEx) {
 
         }
+        return mensaje.toString();
+    }
+    
+    /*Consumir este es sencillo, no tienes qe enviar data, solo tienes que hacer esto en el URI
+    url: http://localhost:8080/ENCOM/API/Incidencias/"+jquery.(#datoformulario).val();
+    
+    ;)
+    */
+    @Path("{idProfesor}")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ObtenerAsistencia(@PathParam("idProfesor")String idProfesor){
+        JSONObject mensaje = new JSONObject();
+        
         return null;
     }
 }
 
 /*
-RegistrarFaltas
+ RegistrarFaltas
 
-*/
+ */

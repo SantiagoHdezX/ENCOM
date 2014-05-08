@@ -18,6 +18,34 @@ USE `encom`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `asistencia`
+--
+
+DROP TABLE IF EXISTS `asistencia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asistencia` (
+  `idAsistencia` int(11) NOT NULL AUTO_INCREMENT,
+  `idProfesor` int(11) DEFAULT NULL,
+  `Dia` datetime DEFAULT NULL,
+  `Asistencia` tinyint(4) DEFAULT '0',
+  `Retardo` tinyint(4) DEFAULT '0',
+  `Falta` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`idAsistencia`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asistencia`
+--
+
+LOCK TABLES `asistencia` WRITE;
+/*!40000 ALTER TABLE `asistencia` DISABLE KEYS */;
+INSERT INTO `asistencia` VALUES (3,2552,'2014-05-08 01:22:16',0,0,1);
+/*!40000 ALTER TABLE `asistencia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `catalogo_grupo`
 --
 
@@ -87,7 +115,7 @@ CREATE TABLE `eventos` (
   `Duracion` int(11) NOT NULL,
   `Habilitado` tinyint(4) NOT NULL,
   PRIMARY KEY (`idEvento`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='Tabla Eventos';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='Tabla Eventos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +124,7 @@ CREATE TABLE `eventos` (
 
 LOCK TABLES `eventos` WRITE;
 /*!40000 ALTER TABLE `eventos` DISABLE KEYS */;
-INSERT INTO `eventos` VALUES (15,'inFamous Second Son','Keynote de ENCOM','2014-04-03','09:00:00',2,0),(16,'InFamous','Ya mero sale :3','2014-03-22','04:01:00',2,0),(17,'InFamous 2','Va a estar piolas','2014-03-14','01:01:00',1,0),(18,'InFamous Second Son 3','Keynote de ENCOM','2014-04-03','09:00:00',2,1),(19,'Gremlin','Holis','2014-12-31','12:59:00',1,1);
+INSERT INTO `eventos` VALUES (15,'inFamous Second Son','Keynote de ENCOM','2014-04-03','09:00:00',2,0),(16,'InFamous','Ya mero sale :3','2014-03-22','04:01:00',2,0),(17,'InFamous 2','Va a estar piolas','2014-03-14','01:01:00',1,0),(18,'InFamous Second Son 3','Keynote de ENCOM','2014-04-03','09:00:00',2,1),(19,'Gremlin','Holis','2014-12-31','12:59:00',1,1),(20,'MurgaLol','Hola Mundo!','2014-07-05','09:00:00',1,1),(21,'MurgaLOL 2','Hola Murga','2014-09-07','09:00:00',1,1);
 /*!40000 ALTER TABLE `eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +151,7 @@ CREATE TABLE `horario` (
   `VEntrada` time DEFAULT NULL,
   `VSalida` time DEFAULT NULL,
   PRIMARY KEY (`idhorario`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,8 +160,35 @@ CREATE TABLE `horario` (
 
 LOCK TABLES `horario` WRITE;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
-INSERT INTO `horario` VALUES (8,2552,'P301','3IM7','07:00:00','08:00:00','00:00:00','00:00:00','07:00:00','08:00:00','00:00:00','00:00:00','00:00:00','00:00:00'),(9,2552,'P301','3IM8','07:00:00','08:00:00','00:00:00','00:00:00','07:00:00','08:00:00','00:00:00','00:00:00','00:00:00','00:00:00');
+INSERT INTO `horario` VALUES (16,2552,'P301','3IM7','07:00:00','08:00:00','00:00:00','00:00:00','07:00:00','08:00:00','00:00:00','00:00:00','00:00:00','00:00:00'),(17,2552,'P301','3IM8','07:00:00','08:00:00','00:00:00','00:00:00','07:00:00','08:00:00','00:00:00','00:00:00','00:00:00','00:00:00');
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `horario_nxt`
+--
+
+DROP TABLE IF EXISTS `horario_nxt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horario_nxt` (
+  `idProfesor` int(11) DEFAULT NULL,
+  `idMateria` varchar(10) DEFAULT NULL,
+  `Tag` varchar(45) DEFAULT NULL,
+  `Dia` varchar(45) DEFAULT NULL,
+  `Entrada` varchar(45) DEFAULT NULL,
+  `Salida` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `horario_nxt`
+--
+
+LOCK TABLES `horario_nxt` WRITE;
+/*!40000 ALTER TABLE `horario_nxt` DISABLE KEYS */;
+INSERT INTO `horario_nxt` VALUES (2552,'P301','3IM7','0','07:00:00','08:00:00'),(2552,'P301','3IM7','1','00:00:00','00:00:00'),(2552,'P301','3IM7','2','07:00:00','08:00:00'),(2552,'P301','3IM7','3','00:00:00','00:00:00'),(2552,'P301','3IM7','4','00:00:00','00:00:00'),(2552,'P301','3IM8','0','07:00:00','08:00:00'),(2552,'P301','3IM8','1','00:00:00','00:00:00'),(2552,'P301','3IM8','2','07:00:00','08:00:00'),(2552,'P301','3IM8','3','00:00:00','00:00:00'),(2552,'P301','3IM8','4','00:00:00','00:00:00');
+/*!40000 ALTER TABLE `horario_nxt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -195,7 +250,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('mmafarah225@gmail.com','Vocas225',2553,'Margarita','Tlahuac',0),('sslkeyregit@gmail.com','Paola',2552,'Santiago','Tlahuac',1);
+INSERT INTO `usuarios` VALUES ('caro.chomps@gato.com','chuchu',666,'CaroChomps','Ecatepec',0),('mmafarah225@gmail.com','Vocas225',2553,'Margarita','Tlahuac',0),('sslkeyregit@gmail.com','Paola',2552,'Santiago','Tlahuac',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,7 +333,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `registrarAsistencia` */;
+/*!50003 DROP PROCEDURE IF EXISTS `obtenerHorarioAsistencia` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -288,23 +343,101 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarAsistencia`(in id int, out confirmacion boolean)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerHorarioAsistencia`(in id int, out confirmacion boolean, out mensaje nvarchar(4000))
 BEGIN
-	DECLARE dia INT;
-	DECLARE entrada time;
-	DECLARE salida time;
-	SET dia=(SELECT weekday(curdate()));
-	if dia=0 then
-		SELECT DISTINCT LEntrada, LSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
-	elseif dia=1 then
-		SELECT DISTINCT MEntrada, MSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
-	elseif dia=2 then
-		SELECT DISTINCT MiEntrada, MiSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
-	elseif dia=3 then
-		SELECT DISTINCT JEntrada, JSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
-	elseif dia=4 then
-		SELECT DISTINCT VEntrada, VSalida FROM horario WHERE idProfesor=id AND LEntrada BETWEEN '07:00:00' AND (curtime());
-	end if;
+	DECLARE diaN INT;
+	DECLARE comprobar INT;
+	SET diaN=(SELECT weekday(curdate()));
+		SET comprobar=(SELECT COUNT(*) FROM horario_nxt WHERE idProfesor=id AND Dia=diaN);
+		IF comprobar=0 then
+			set confirmacion=FALSE;
+			SET mensaje=(SELECT concat('El profesor con el ID ', id, ' no tiene que trabajar hoy'));
+		else
+			SET comprobar=(SELECT count(*) FROM horario_nxt WHERE idProfesor=id AND Dia=diaN AND Entrada NOT BETWEEN '07:00:00' AND (SELECT CURTIME()) AND Entrada !='00:00:00' ORDER BY Entrada ASC);
+			IF comprobar > 0 THEN
+				set confirmacion=TRUE;
+				set mensaje=NULL;
+				SELECT Entrada, Salida FROM horario_nxt WHERE idProfesor=id AND Dia=diaN AND Entrada NOT BETWEEN '07:00:00' AND (SELECT CURTIME()) ORDER BY Entrada ASC;
+			ELSE
+				set confirmacion=FALSE;
+				SET mensaje=(SELECT concat('El profesor con el ID ' ,id, ' no se presento en su horario establecido'));
+				INSERT INTO asistencia(idProfesor, Dia, Falta) VALUES (id, (SELECT NOW()), TRUE);
+			END IF;
+		END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `RegistrarAsistencia` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RegistrarAsistencia`(in id int, in Hora time, out mensaje NVARCHAR(4000))
+BEGIN
+	DECLARE horaEntrada TIME;
+	DECLARE currentDia INT;
+	SELECT weekday(curdate()) INTO currentDia;
+	IF currentDia > 4 then
+		SELECT CONCAT('El profesor con el ID ', id, ' no tenia que venir hoy') INTO mensaje;
+	ELSE
+		IF NOT exists(SELECT DISTINCT Entrada FROM horario_nxt WHERE idProfesor=id AND Entrada!='00:00:00' ORDER BY Entrada ASC LIMIT 1) THEN
+			SELECT CONCAT('El profesor con el ID ', id, ' no tenia que venir hoy') INTO mensaje;
+		else
+			SELECT DISTINCT Entrada INTO horaEntrada FROM horario_nxt WHERE idProfesor=id AND Entrada!='00:00:00' ORDER BY Entrada ASC LIMIT 1;
+			IF Hora between horaEntrada AND (SELECT ADDTIME(horaEntrada,'00:10:00')) THEN
+				INSERT INTO asistencia(idProfesor,Dia, Asistencia) VALUES(id, (SELECT NOW()),TRUE);
+				SELECT CONCAT('El profesor con el ID ', id, ' ha llegado a tiempo') INTO mensaje;
+			ELSE
+				INSERT INTO asistencia(idProfesor,Dia,Retardo) VALUES(id, (SELECT NOW()),TRUE);
+				SELECT CONCAT('El profesor con el ID ', id, ' ha llegado con retraso') INTO mensaje;
+			END IF;
+		END IF;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `VerificarHorario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `VerificarHorario`(in Entrada time, in Salida time, in dia int, out confirmacion boolean)
+BEGIN
+	DECLARE hora INT;
+	IF dia=0 then
+		SELECT COUNT(*) INTO hora FROM horario WHERE LEntrada between Entrada and Salida LIMIT 1;
+	ELSEIF dia=1 then
+		SELECT COUNT(*) INTO hora FROM horario WHERE MEntrada between Entrada and Salida LIMIT 1;
+	ELSEIF dia=2 then
+		SELECT COUNT(*) INTO hora FROM horario WHERE MiEntrada between Entrada and Salida LIMIT 1;
+	ELSEIF dia=3 then
+		SELECT COUNT(*) INTO hora FROM horario WHERE JEntrada between Entrada and Salida LIMIT 1;
+	ELSEIF dia=4 then
+		SELECT COUNT(*) INTO hora FROM horario WHERE VEntrada between Entrada and Salida LIMIT 1;
+	ELSE
+		SET hora=(SELECT 0);
+	END IF;
+	IF hora > 0 then
+		SET confirmacion=FALSE;
+	else
+		SET confirmacion=TRUE;
+	END IF;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -321,4 +454,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-23 10:31:19
+-- Dump completed on 2014-05-08  1:59:59

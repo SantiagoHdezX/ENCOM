@@ -12,6 +12,7 @@ package com.hyenix.sicoin;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Time;
 
 public class DataConn {
 
@@ -32,6 +33,5 @@ public class DataConn {
         } catch (ClassNotFoundException | SQLException e) {
             return null;
         }
-
     }
 }

@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -405,5 +407,34 @@ public class Horarios {
         }
         return returnData.toString();
     }
-
+    
+    @Path("/EliminarHorario")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String Eliminar(String srt){
+        JSONObject mensaje=new JSONObject();
+        try{
+            Connection conn=DataConn.connect();
+            CallableStatement cs= conn.prepareCall("CALL EliminarHorario(?,?,?,?,?)");
+            cs.setInt(1, new JSONObject(srt).getInt("idProfesor"));
+            cs.setInt(2, new JSONObject(srt).getInt("idMateria"));
+            cs.setString(3, new JSONObject(srt).getString("Tag"));
+            cs.registerOutParameter(4, Types.BOOLEAN);
+            cs.registerOutParameter(5, Types.NVARCHAR);
+            cs.execute();
+            if(cs.getBoolean(4)){
+                mensaje.put("Exito",true);
+                mensaje.put("Mensaje", cs.getString(5));
+            }
+            else{
+                mensaje.put("Exito", false);
+                mensaje.put("Mensaje", cs.getString(5));
+            }
+        }catch(SQLException sqlEx){
+            mensaje.put("Exito", false);
+            mensaje.put("Mensaje", "Error en la base de datos");
+        }
+        return mensaje.toString();
+    }
 }

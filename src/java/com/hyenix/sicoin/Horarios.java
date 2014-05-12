@@ -13,12 +13,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.Types;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.json.JSONArray;
@@ -157,7 +159,7 @@ public class Horarios {
                 ingreso.setInt(1, Profesor);
                 ingreso.setString(2, idMat);
                 ingreso.setString(3, cntGp);
-                ingreso.setInt(4,i);
+                ingreso.setInt(4, i);
                 ingreso.setTime(5, java.sql.Time.valueOf(horas[i][0]));
                 ingreso.setTime(6, java.sql.Time.valueOf(horas[i][1]));
 
@@ -244,7 +246,7 @@ public class Horarios {
         JSONObject dataReturn = new JSONObject();
         try {
             Connection conn = DataConn.connect();
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias where semestre="+sem);
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_materias where semestre=" + sem);
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
                 JSONArray materias = new JSONArray();
@@ -327,7 +329,7 @@ public class Horarios {
         JSONObject dataReturn = new JSONObject();
         try {
             Connection conn = DataConn.connect();
-            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_grupo where semestre="+semestre);
+            PreparedStatement query = conn.prepareStatement("SELECT * FROM catalogo_grupo where semestre=" + semestre);
             ResultSet rset = query.executeQuery();
             if (rset.next()) {
                 JSONArray grupos = new JSONArray();
@@ -407,33 +409,84 @@ public class Horarios {
         }
         return returnData.toString();
     }
-    
+
     @Path("/EliminarHorario")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String Eliminar(String srt){
-        JSONObject mensaje=new JSONObject();
-        try{
-            Connection conn=DataConn.connect();
-            CallableStatement cs= conn.prepareCall("CALL EliminarHorario(?,?,?,?,?)");
+    public String Eliminar(String srt) {
+        JSONObject mensaje = new JSONObject();
+        try {
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("CALL EliminarHorario(?,?,?,?,?)");
             cs.setInt(1, new JSONObject(srt).getInt("idProfesor"));
             cs.setInt(2, new JSONObject(srt).getInt("idMateria"));
             cs.setString(3, new JSONObject(srt).getString("Tag"));
             cs.registerOutParameter(4, Types.BOOLEAN);
             cs.registerOutParameter(5, Types.NVARCHAR);
             cs.execute();
-            if(cs.getBoolean(4)){
-                mensaje.put("Exito",true);
+            if (cs.getBoolean(4)) {
+                mensaje.put("Exito", true);
                 mensaje.put("Mensaje", cs.getString(5));
-            }
-            else{
+            } else {
                 mensaje.put("Exito", false);
                 mensaje.put("Mensaje", cs.getString(5));
             }
-        }catch(SQLException sqlEx){
+        } catch (SQLException sqlEx) {
             mensaje.put("Exito", false);
             mensaje.put("Mensaje", "Error en la base de datos");
+        }
+        return mensaje.toString();
+    }
+
+    @Path("/RegHorarioDescarga")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String Download(String srt) {
+        JSONObject src = new JSONObject(srt);
+        JSONObject mensaje = new JSONObject();
+        int profesor = src.getInt("idProfesor");
+        try {
+            Connection conn = DataConn.connect();
+            JSONArray temp = new JSONArray();
+            for (int i = 0; i < src.getJSONArray("Horario").length(); i++) {
+                JSONObject temporal = src.getJSONArray("Horario").getJSONObject(1);
+                CallableStatement cs = conn.prepareCall("Call DownloadSche(?,?,?,?,?,?)");
+                cs.setInt(1, profesor);
+                cs.setTime(2, Time.valueOf(temporal.getString("Entrada")));
+                cs.setTime(3, Time.valueOf(temporal.getString("Salida")));
+                cs.setInt(4, temporal.getInt("Dia"));
+                cs.registerOutParameter(5, Types.BOOLEAN);
+                cs.registerOutParameter(6, Types.NVARCHAR);
+                cs.execute();
+                JSONObject ratchet = new JSONObject();
+                ratchet.put("Exito", cs.getBoolean(5));
+                ratchet.put("Mensaje", cs.getString(6));
+                temp.put(ratchet);
+                cs.close();
+            }
+            mensaje.put("Resultados", temp);
+            mensaje.put("Error", false);
+        } catch (SQLException sqlEx) {
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            mensaje.put("Error", true);
+            mensaje.put("Datos", sw.toString());
+        }
+        return mensaje.toString();
+    }
+
+    @Path("/search/id/{idProfesor}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getHorarioId(@PathParam("idProfesor") int idProfesor) {
+        JSONObject mensaje = new JSONObject();
+        try {
+            Connection conn=DataConn.connect();
+            CallableStatement cs= conn.prepareCall("");
+        } catch (SQLException sqlEx) {
+
         }
         return mensaje.toString();
     }

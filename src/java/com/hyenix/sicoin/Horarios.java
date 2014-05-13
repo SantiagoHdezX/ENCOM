@@ -477,16 +477,56 @@ public class Horarios {
         return mensaje.toString();
     }
 
-    @Path("/search/id/{idProfesor}")
+    @Path("/search/horario/{idProfesor}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getHorarioId(@PathParam("idProfesor") int idProfesor) {
         JSONObject mensaje = new JSONObject();
         try {
-            Connection conn=DataConn.connect();
-            CallableStatement cs= conn.prepareCall("");
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("Call getHorarioId(?,?,?)");
+            cs.setInt(1, idProfesor);
+            cs.registerOutParameter(2, Types.BOOLEAN);
+            cs.registerOutParameter(3, Types.NVARCHAR);
+            boolean data = cs.execute();
+            if (!cs.getBoolean(2) || !data) {
+                mensaje.put("Exito", false);
+                mensaje.put("Error", false);
+                mensaje.put("Mensaje", "No se ha encontrado al profesor o un horario de este");
+            } else {
+                ResultSet rset = cs.getResultSet();
+                JSONArray tmp = new JSONArray();
+                while (rset.next()) {
+                    JSONObject temp = new JSONObject();
+                    temp.put("Materia", rset.getString("idMateria"));
+                    temp.put("Tag", rset.getString("Tag"));
+                    temp.put("Dia", rset.getInt("Dia"));
+                    temp.put("Entrada", rset.getTime("Entrada"));
+                    temp.put("Salida", rset.getTime("Salida"));
+                    tmp.put(temp);
+                }
+                mensaje.put("Carga", tmp);
+                if (cs.getMoreResults()) {
+                    tmp = new JSONArray();
+                    ResultSet rset2 = cs.getResultSet();
+                    while (rset2.next()) {
+                        JSONObject temp = new JSONObject();
+                        temp.put("Dia", rset2.getInt("Dia"));
+                        temp.put("Entrada", rset2.getTime("Entrada"));
+                        temp.put("Salida", rset.getTime("Salida"));
+                        tmp.put(temp);
+                    }
+                    mensaje.put("Descarga", tmp);
+                }
+                mensaje.put("Exito", true);
+                mensaje.put("Error", false);
+            }
         } catch (SQLException sqlEx) {
-
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            mensaje.put("Exito", false);
+            mensaje.put("Error", true);
+            mensaje.put("Mensaje", "Ha ocurrido un error en la base de datos");
         }
         return mensaje.toString();
     }

@@ -5,13 +5,13 @@
  */
 package com.hyenix.sicoin;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import org.json.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -20,7 +20,6 @@ import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
@@ -31,6 +30,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author santiago
  */
+@Stateless
 @Path("/Incidencias")
 public class Incidencias {
 
@@ -83,7 +83,7 @@ public class Incidencias {
     
      ;)
      */
-    @Path("{idProfesor}")
+    @Path("/search/asistencia/{idProfesor}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String ObtenerAsistencia(@PathParam("idProfesor") int idProfesor) {
@@ -154,23 +154,99 @@ public class Incidencias {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String Decidir(String srcI) {
-        JSONObject mensaje=new JSONObject();
-        int idProfesor=new JSONObject(srcI).getInt("idProfesor");
-        String fecha=new JSONObject(srcI).getString("Dia");
-        boolean decision=new JSONObject(srcI).getBoolean("Decision");
-        try{
-            Connection conn= DataConn.connect();
+        JSONObject mensaje = new JSONObject();
+        int idProfesor = new JSONObject(srcI).getInt("idProfesor");
+        String fecha = new JSONObject(srcI).getString("Dia");
+        boolean decision = new JSONObject(srcI).getBoolean("Decision");
+        try {
+            Connection conn = DataConn.connect();
             CallableStatement cs = conn.prepareCall("Call Decision(?,?,?,?)");
             cs.setInt(1, idProfesor);
             cs.setDate(2, Date.valueOf(fecha));
             cs.setBoolean(3, decision);
             cs.registerOutParameter(4, Types.NVARCHAR);
             cs.execute();
-            mensaje.put("Mensaje",cs.getString(4));
-        }catch(SQLException sqlEx){
+            mensaje.put("Mensaje", cs.getString(4));
+        } catch (SQLException sqlEx) {
             StringWriter sw = new StringWriter();
             sqlEx.printStackTrace(new PrintWriter(sw));
-            mensaje.put("Mensaje",sw.toString());
+            mensaje.put("Mensaje", sw.toString());
+        }
+        return mensaje.toString();
+    }
+
+    @Path("/search/economicos/{idProfesor}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String searchReport(@PathParam("idProfesor") int idProfesor) {
+        JSONObject mensaje = new JSONObject();
+        try {
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("Call obtenerEconomicos(?,?,?)");
+            cs.setInt(1, idProfesor);
+            cs.registerOutParameter(2, Types.BOOLEAN);
+            cs.registerOutParameter(3, Types.INTEGER);
+            boolean data = cs.execute();
+            if (!data || !cs.getBoolean(2)) {
+                mensaje.put("Exito", false);
+                mensaje.put("Error", false);
+                mensaje.put("Mensaje", "No se encontraron resultados");
+            } else {
+                JSONArray tmp = new JSONArray();
+                ResultSet rset = cs.getResultSet();
+                while (rset.next()) {
+                    JSONObject temporal = new JSONObject();
+                    temporal.put("Dia", rset.getDate("Dia"));
+                    temporal.put("Status", rset.getString("Status_X"));
+                    tmp.put(temporal);
+                }
+                mensaje.put("Exito", true);
+                mensaje.put("Economicos", tmp);
+                mensaje.put("Solicitados", cs.getInt(3));
+            }
+        } catch (SQLException sqlEx) {
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            mensaje.put("Exito", false);
+            mensaje.put("Error", true);
+            mensaje.put("Mensaje", sw.toString());
+        }
+        return mensaje.toString();
+    }
+
+    @Path("/get/reporte/{idProfesor}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String reporte(@PathParam("idProfesor") int idProfesor) {
+        JSONObject mensaje = new JSONObject();
+        try {
+            Connection conn = DataConn.connect();
+            CallableStatement cs = conn.prepareCall("Call ObtenerReporte(?,?)");
+            cs.setInt(1, idProfesor);
+            cs.registerOutParameter(2, Types.BOOLEAN);
+            boolean data = cs.execute();
+            if (!data || !cs.getBoolean(2)) {
+                ResultSet rset = cs.getResultSet();
+                mensaje.put("Profesor", idProfesor);
+                JSONArray tmp = new JSONArray();
+                while (rset.next()) {
+                    JSONObject temporal = new JSONObject();
+                    temporal.put("Materia", rset.getString("idMateria"));
+                    temporal.put("Grupo", rset.getString("Tag"));
+                    temporal.put("Dia", rset.getInt("Dia"));
+                    temporal.put("Entrada", rset.getTime("Entrada"));
+                    temporal.put("Salida", rset.getTime("Salida"));
+                    tmp.put(temporal);
+                }
+                
+            }
+
+        } catch (SQLException sqlEx) {
+            mensaje.put("Exito", false);
+            mensaje.put("Error", true);
+            StringWriter sw = new StringWriter();
+            sqlEx.printStackTrace(new PrintWriter(sw));
+            mensaje.put("Mensaje", sw.toString());
         }
         return mensaje.toString();
     }

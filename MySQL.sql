@@ -468,6 +468,35 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getHorarioId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getHorarioId`(in idProf int, out confirmar boolean, out mensaje nvarchar(4000))
+BEGIN
+	DECLARE comprobar INT;
+	SET comprobar=(SELECT COUNT(*) FROM usuarios WHERE id=idProf);
+	IF comprobar > 0 THEN
+		SELECT TRUE into confirmar;
+		SELECT CONCAT('El profesor se ha encontrado') into mensaje;
+		SELECT * FROM horario_nxt WHERE idProfesor=idProf;
+		SELECT * FROM horario_down WHERE idProfesor=idProf;
+	ELSE
+		SELECT FALSE INTO confirmar;
+		SELECT CONCAT('El profesor no esta registrado') INTO mensaje;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `New_Incidencia` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -497,6 +526,33 @@ else
 SET horacomp=nullHour;
 END if;
 end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ObtenerEconomicos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerEconomicos`(in idProf int, out confirmar boolean,out dias_r int)
+BEGIN
+	DECLARE comprobar INT;
+	SELECT COUNT(*) INTO comprobar FROM dias_economicos WHERE idProfesor=idProf;
+	IF comprobar > 0 then
+		SELECT * FROM dias_economicos WHERE idProfesor=idProf;
+		SELECT TRUE INTO confirmar;
+		SELECT DiasSolicitados INTO dias_r FROM contador_dias_economicos WHERE idProfesor=idProf;
+	ELSE
+		SELECT FALSE INTO confirmar;
+	END IF;
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -712,4 +768,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-11 22:41:30
+-- Dump completed on 2014-05-12 11:29:38
